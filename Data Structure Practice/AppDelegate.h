@@ -7,7 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "MyLinkedLists.h"
+#import "MySinglyLinkedLists.h"
 
 @interface AppDelegate : UIResponder <UIApplicationDelegate>
 

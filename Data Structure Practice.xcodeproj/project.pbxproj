@@ -14,10 +14,9 @@
 		F203D4051CB451ED0067A092 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F203D4041CB451ED0067A092 /* Assets.xcassets */; };
 		F203D4081CB451ED0067A092 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F203D4061CB451ED0067A092 /* LaunchScreen.storyboard */; };
 		F203D4131CB451ED0067A092 /* Data_Structure_PracticeTests.m in Sources */ = {isa = PBXBuildFile; fileRef = F203D4121CB451ED0067A092 /* Data_Structure_PracticeTests.m */; };
-		F203D41F1CB4522B0067A092 /* MyDataStructures.m in Sources */ = {isa = PBXBuildFile; fileRef = F203D41E1CB4522B0067A092 /* MyDataStructures.m */; };
-		F203D4221CB452AE0067A092 /* MyLinkedLists.m in Sources */ = {isa = PBXBuildFile; fileRef = F203D4211CB452AE0067A092 /* MyLinkedLists.m */; };
-		F203D4241CB453430067A092 /* MyLinkedListTests.m in Sources */ = {isa = PBXBuildFile; fileRef = F203D4231CB453430067A092 /* MyLinkedListTests.m */; };
-		F203D4261CB45E720067A092 /* MyLinkedLists.m in Sources */ = {isa = PBXBuildFile; fileRef = F203D4211CB452AE0067A092 /* MyLinkedLists.m */; };
+		F203D4221CB452AE0067A092 /* MySinglyLinkedLists.m in Sources */ = {isa = PBXBuildFile; fileRef = F203D4211CB452AE0067A092 /* MySinglyLinkedLists.m */; };
+		F203D4241CB453430067A092 /* MySinglyLinkedListTests.m in Sources */ = {isa = PBXBuildFile; fileRef = F203D4231CB453430067A092 /* MySinglyLinkedListTests.m */; };
+		F203D4261CB45E720067A092 /* MySinglyLinkedLists.m in Sources */ = {isa = PBXBuildFile; fileRef = F203D4211CB452AE0067A092 /* MySinglyLinkedLists.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -44,11 +43,9 @@
 		F203D40E1CB451ED0067A092 /* Data Structure PracticeTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Data Structure PracticeTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		F203D4121CB451ED0067A092 /* Data_Structure_PracticeTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Data_Structure_PracticeTests.m; sourceTree = "<group>"; };
 		F203D4141CB451ED0067A092 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		F203D41D1CB4522B0067A092 /* MyDataStructures.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyDataStructures.h; sourceTree = "<group>"; };
-		F203D41E1CB4522B0067A092 /* MyDataStructures.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MyDataStructures.m; sourceTree = "<group>"; };
-		F203D4201CB452AE0067A092 /* MyLinkedLists.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyLinkedLists.h; sourceTree = "<group>"; };
-		F203D4211CB452AE0067A092 /* MyLinkedLists.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MyLinkedLists.m; sourceTree = "<group>"; };
-		F203D4231CB453430067A092 /* MyLinkedListTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MyLinkedListTests.m; sourceTree = "<group>"; };
+		F203D4201CB452AE0067A092 /* MySinglyLinkedLists.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MySinglyLinkedLists.h; sourceTree = "<group>"; };
+		F203D4211CB452AE0067A092 /* MySinglyLinkedLists.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MySinglyLinkedLists.m; sourceTree = "<group>"; };
+		F203D4231CB453430067A092 /* MySinglyLinkedListTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MySinglyLinkedListTests.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -94,10 +91,8 @@
 				F203D3FC1CB451ED0067A092 /* AppDelegate.m */,
 				F203D3FE1CB451ED0067A092 /* ViewController.h */,
 				F203D3FF1CB451ED0067A092 /* ViewController.m */,
-				F203D41D1CB4522B0067A092 /* MyDataStructures.h */,
-				F203D41E1CB4522B0067A092 /* MyDataStructures.m */,
-				F203D4201CB452AE0067A092 /* MyLinkedLists.h */,
-				F203D4211CB452AE0067A092 /* MyLinkedLists.m */,
+				F203D4201CB452AE0067A092 /* MySinglyLinkedLists.h */,
+				F203D4211CB452AE0067A092 /* MySinglyLinkedLists.m */,
 				F203D4011CB451ED0067A092 /* Main.storyboard */,
 				F203D4041CB451ED0067A092 /* Assets.xcassets */,
 				F203D4061CB451ED0067A092 /* LaunchScreen.storyboard */,
@@ -119,7 +114,7 @@
 			isa = PBXGroup;
 			children = (
 				F203D4121CB451ED0067A092 /* Data_Structure_PracticeTests.m */,
-				F203D4231CB453430067A092 /* MyLinkedListTests.m */,
+				F203D4231CB453430067A092 /* MySinglyLinkedListTests.m */,
 				F203D4141CB451ED0067A092 /* Info.plist */,
 			);
 			path = "Data Structure PracticeTests";
@@ -226,8 +221,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				F203D4001CB451ED0067A092 /* ViewController.m in Sources */,
-				F203D4221CB452AE0067A092 /* MyLinkedLists.m in Sources */,
-				F203D41F1CB4522B0067A092 /* MyDataStructures.m in Sources */,
+				F203D4221CB452AE0067A092 /* MySinglyLinkedLists.m in Sources */,
 				F203D3FD1CB451ED0067A092 /* AppDelegate.m in Sources */,
 				F203D3FA1CB451ED0067A092 /* main.m in Sources */,
 			);
@@ -237,8 +231,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				F203D4241CB453430067A092 /* MyLinkedListTests.m in Sources */,
-				F203D4261CB45E720067A092 /* MyLinkedLists.m in Sources */,
+				F203D4241CB453430067A092 /* MySinglyLinkedListTests.m in Sources */,
+				F203D4261CB45E720067A092 /* MySinglyLinkedLists.m in Sources */,
 				F203D4131CB451ED0067A092 /* Data_Structure_PracticeTests.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -423,6 +417,7 @@
 				F203D4191CB451ED0067A092 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		F203D41A1CB451ED0067A092 /* Build configuration list for PBXNativeTarget "Data Structure PracticeTests" */ = {
 			isa = XCConfigurationList;
@@ -431,6 +426,7 @@
 				F203D41C1CB451ED0067A092 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

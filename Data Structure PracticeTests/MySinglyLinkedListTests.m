@@ -7,20 +7,20 @@
 //
 
 #import <XCTest/XCTest.h>
-#import "MyLinkedLists.h"
+#import "MySinglyLinkedLists.h"
 
-@interface MyLinkedListTests : XCTestCase {
+@interface MySinglyLinkedListTests : XCTestCase {
     SinglyLinkedList *mySinglyLinkedList;
 }
 
 @end
 
-@implementation MyLinkedListTests
+@implementation MySinglyLinkedListTests
 
 - (void)setUp {
     [super setUp];
     mySinglyLinkedList = NULL;
-    mySinglyLinkedList = CreateSinglyLinkedList();
+    mySinglyLinkedList = SinglyLinkedListCreate();
     XCTAssert(NULL!=mySinglyLinkedList);
     // Put setup code here. This method is called before the invocation of each test method in the class.
 }
@@ -48,23 +48,23 @@ float random_list_data()
     for (int i = 0; i<length; i++) {
         float random_data = random_list_data();
         list_data[i] = random_data;
-        SinglyLinkedListNode *toInsert = CreateSinglyLinkedListNode();
+        SinglyLinkedListElement *toInsert = SinglyLinkedListElementCreate();
         toInsert->tag = i;
-        SinglyLinkedListInsertNode(mySinglyLinkedList, toInsert,(void *)(&random_data));
+        SinglyLinkedListInsertElement(mySinglyLinkedList, toInsert,(void *)(&random_data));
         printf("\ninserted data value %.1f at index %d",random_data,i);
-        SinglyLinkedListNodePrint(toInsert);
+        SinglyLinkedListElementPrint(toInsert);
         SinglyLinkedListPrint(mySinglyLinkedList);
     }
     
     XCTAssertTrue(mySinglyLinkedList->length==length);
-    SinglyLinkedListNode *node = mySinglyLinkedList->head;
+    SinglyLinkedListElement *element = mySinglyLinkedList->head;
     
     for (int i = 0; i < length; i++) {
-        float *node_data = (float *)node->data;
-        float node_data_val = *node_data;
+        float *element_data = (float *)element->data;
+        float elem_data_val = *element_data;
         float list_data_val = list_data[i];
-        XCTAssertTrue(node_data_val==list_data_val,"node data value %.1f does not match list data value %.1f at index %d",node_data_val,list_data_val,i);
-        node = node->next;
+        XCTAssertTrue(elem_data_val==list_data_val,"element data value %.1f does not match list data value %.1f at index %d",elem_data_val,list_data_val,i);
+        element = element->next;
     }
 }
 
