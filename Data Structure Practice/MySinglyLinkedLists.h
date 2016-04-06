@@ -8,6 +8,12 @@
 
 #import <Foundation/Foundation.h>
 
+#define sll_init            SinglyLinkedListCreate
+#define sll_append          SinglyLinkedListAppend
+#define sll_insert_next     SinglyLinkedListInsertNext
+#define sll_remove_next     SinglyLinkedListRemoveNext
+#define sll_destroy         SinglyLinkedListDestroy
+
 @interface MySinglyLinkedLists : NSObject
 
 typedef struct MySinglyLinkedListElement{
@@ -43,20 +49,12 @@ int SinglyLinkedListInsertNext(SinglyLinkedList *list,
                                             SinglyLinkedListElement *element,
                                             void *toInsert);
 
-int SinglyLinkedListInsertNextData(SinglyLinkedList *list,
-                                    void *toFind,
-                                    void *toInsert);
-
 int SinglyLinkedListAppend(SinglyLinkedList *list,
                             void* data);
 
 int SinglyLinkedListRemoveNext(SinglyLinkedList *list,
                                 SinglyLinkedListElement *element,
                                 void **data);
-
-int SinglyLinkedListRemoveNextData(SinglyLinkedList *list,
-                                    void *toFind,
-                                    void **data);
 
 void SinglyLinkedListPrint(SinglyLinkedList *list);
 

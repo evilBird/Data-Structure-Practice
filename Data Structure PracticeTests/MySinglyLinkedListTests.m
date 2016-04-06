@@ -26,6 +26,7 @@
         SinglyLinkedListAppend(mySinglyLinkedList, (void *)(&(list_data[i])));
     }
     SinglyLinkedListElement *element = mySinglyLinkedList->head;
+    
     for (int i = 0; i < length; i++) {
         XCTAssertTrue((*(float*)(element->data)) == list_data[i],@"data in singly linked list element at index %d = %f does not match inserted data %f",i,(*(float*)(element->data)),list_data[i]);
         element = element->next;
@@ -71,33 +72,7 @@
     XCTAssert(NULL!=result);
 }
 
-- (void)testSinglyLinkedListInsertHead
-{
-    int length = 10;
-    float list_data[10] = {};
-    for (int i = 0; i<length; i++) {
-        list_data[i] = random_list_data(100);
-        SinglyLinkedListAppend(mySinglyLinkedList, (void *)(&(list_data[i])));
-    }
-    
-    float revised_list_data[11] = {};
-    float *my_revised_list_ptr = revised_list_data;
-    memcpy(++my_revised_list_ptr, list_data, sizeof(float)*length);
-    revised_list_data[0] = random_list_data(100);
-    SinglyLinkedListInsertNext(mySinglyLinkedList, NULL,(void*)(&(revised_list_data[0])));
-    SinglyLinkedListElement *element = mySinglyLinkedList->head;
-    
-    for (int i = 0; i < (length + 1); i ++) {
-        XCTAssertTrue((*((float *)(element->data)))==revised_list_data[i],@"data for element %d %.f does not match revised list data element %.f",i,(*(float*)(element->data)),revised_list_data[i]);
-        if (!element->next) {
-            break;
-        }
-        
-        element = element->next;
-    }
-}
-
-- (void)testSinglyLinkedListInsertAfterElementWithData
+- (void)testSinglyLinkedListSearchAndInsertAfterElement
 {
     int length = 10;
     float list_data[10] = {};
@@ -108,8 +83,7 @@
     
     int randomIdx = (int)arc4random_uniform(length-1);
     float newData = random_list_data(100);
-    
-    SinglyLinkedListInsertNextData(mySinglyLinkedList, (void *)(&(list_data[randomIdx])), (void*)(&newData));
+    SinglyLinkedListInsertNext(mySinglyLinkedList, SinglyLinkedListSearch(mySinglyLinkedList, (void *)(&(list_data[randomIdx]))), (void *)(&newData));
     SinglyLinkedListElement *thePrecedingElement = SinglyLinkedListSearch(mySinglyLinkedList, (void *)(&(list_data[randomIdx])));
     XCTAssert(NULL!=thePrecedingElement);
     SinglyLinkedListElement *theInsertedElement = thePrecedingElement->next;
@@ -126,18 +100,24 @@
         list_data[i] = random_list_data(100);
         SinglyLinkedListAppend(mySinglyLinkedList, (void *)(&(list_data[i])));
     }
+    
     int i = length;
-    while (--i) {
-        SinglyLinkedListElement *toRemove = SinglyLinkedListSearch(mySinglyLinkedList, (void*)&(list_data[i]));
-        if (toRemove->next) {
-            void *myData;
-            SinglyLinkedListRemoveNext(mySinglyLinkedList, toRemove, &myData);
-            XCTAssert(mySinglyLinkedList->count = (i-1));
-            if (&(*myData)) {
-                float myDataValue = *(float*)(&myData);
-                float listDataValue = list_data[i];
-                XCTAssert(myDataValue==listDataValue);
-            }
+    while (mySinglyLinkedList->count) {
+
+        void *myData;
+        int prevCount = mySinglyLinkedList->count;
+        int result = SinglyLinkedListRemoveNext(mySinglyLinkedList, NULL, &myData);
+        
+        if (result != 0) {
+            break;
+        }
+        
+        XCTAssert(mySinglyLinkedList->count = (prevCount-1),@"expected count = %d, actual count = %d",prevCount,mySinglyLinkedList->count);
+        
+        if (&(*myData)) {
+            float myDataValue = *(float*)(&(*myData));
+            float listDataValue = list_data[i];
+            XCTAssert(myDataValue==listDataValue,@"expected data value = %.2f, actual data value = %.2f",listDataValue,myDataValue);
         }
     }
 }

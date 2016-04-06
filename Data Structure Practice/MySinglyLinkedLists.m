@@ -103,15 +103,8 @@ int SinglyLinkedListInsertNext(SinglyLinkedList *list, SinglyLinkedListElement *
     
 }
 
-int SinglyLinkedListInsertNextData(SinglyLinkedList *list, void *toFind, void *toInsert){
-    
-    SinglyLinkedListElement *found = NULL;
-    found = SinglyLinkedListSearch(list, toFind);
-    return SinglyLinkedListInsertNext(list, found, toInsert);
-}
-
-
 int SinglyLinkedListAppend(SinglyLinkedList *list, void* data){
+    
     if (list->count) {
         return SinglyLinkedListInsertNext(list, list->tail, data);
     }else{
@@ -162,12 +155,6 @@ int SinglyLinkedListRemoveNext(SinglyLinkedList *list, SinglyLinkedListElement *
     list->count--;
     
     return 0;
-}
-
-int SinglyLinkedListRemoveNextData(SinglyLinkedList *list, void *toFind, void **data){
-    
-    SinglyLinkedListElement *found = SinglyLinkedListSearch(list, toFind);
-    return SinglyLinkedListRemoveNext(list, found, data);
 }
 
 void SinglyLinkedListPrint(SinglyLinkedList *list)

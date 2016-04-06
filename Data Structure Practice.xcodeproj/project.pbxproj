@@ -17,6 +17,13 @@
 		F203D4221CB452AE0067A092 /* MySinglyLinkedLists.m in Sources */ = {isa = PBXBuildFile; fileRef = F203D4211CB452AE0067A092 /* MySinglyLinkedLists.m */; };
 		F203D4241CB453430067A092 /* MySinglyLinkedListTests.m in Sources */ = {isa = PBXBuildFile; fileRef = F203D4231CB453430067A092 /* MySinglyLinkedListTests.m */; };
 		F203D4261CB45E720067A092 /* MySinglyLinkedLists.m in Sources */ = {isa = PBXBuildFile; fileRef = F203D4211CB452AE0067A092 /* MySinglyLinkedLists.m */; };
+		F220C09E1CB561EE00705F52 /* MyStacks.m in Sources */ = {isa = PBXBuildFile; fileRef = F220C09D1CB561EE00705F52 /* MyStacks.m */; };
+		F220C0A11CB5621100705F52 /* MyQueues.m in Sources */ = {isa = PBXBuildFile; fileRef = F220C0A01CB5621100705F52 /* MyQueues.m */; };
+		F220C0A41CB5622500705F52 /* MyChainedHashTables.m in Sources */ = {isa = PBXBuildFile; fileRef = F220C0A31CB5622500705F52 /* MyChainedHashTables.m */; };
+		F220C0A71CB5623300705F52 /* MyBinaryTrees.m in Sources */ = {isa = PBXBuildFile; fileRef = F220C0A61CB5623300705F52 /* MyBinaryTrees.m */; };
+		F220C0AA1CB5624600705F52 /* MyBinarySearchTrees.m in Sources */ = {isa = PBXBuildFile; fileRef = F220C0A91CB5624600705F52 /* MyBinarySearchTrees.m */; };
+		F220C0AD1CB5639A00705F52 /* MyDoublyLinkedLists.m in Sources */ = {isa = PBXBuildFile; fileRef = F220C0AC1CB5639A00705F52 /* MyDoublyLinkedLists.m */; };
+		F220C0B01CB563A600705F52 /* MyHeaps.m in Sources */ = {isa = PBXBuildFile; fileRef = F220C0AF1CB563A600705F52 /* MyHeaps.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -46,6 +53,20 @@
 		F203D4201CB452AE0067A092 /* MySinglyLinkedLists.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MySinglyLinkedLists.h; sourceTree = "<group>"; };
 		F203D4211CB452AE0067A092 /* MySinglyLinkedLists.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MySinglyLinkedLists.m; sourceTree = "<group>"; };
 		F203D4231CB453430067A092 /* MySinglyLinkedListTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MySinglyLinkedListTests.m; sourceTree = "<group>"; };
+		F220C09C1CB561EE00705F52 /* MyStacks.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyStacks.h; sourceTree = "<group>"; };
+		F220C09D1CB561EE00705F52 /* MyStacks.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MyStacks.m; sourceTree = "<group>"; };
+		F220C09F1CB5621100705F52 /* MyQueues.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyQueues.h; sourceTree = "<group>"; };
+		F220C0A01CB5621100705F52 /* MyQueues.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MyQueues.m; sourceTree = "<group>"; };
+		F220C0A21CB5622500705F52 /* MyChainedHashTables.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyChainedHashTables.h; sourceTree = "<group>"; };
+		F220C0A31CB5622500705F52 /* MyChainedHashTables.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MyChainedHashTables.m; sourceTree = "<group>"; };
+		F220C0A51CB5623300705F52 /* MyBinaryTrees.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyBinaryTrees.h; sourceTree = "<group>"; };
+		F220C0A61CB5623300705F52 /* MyBinaryTrees.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MyBinaryTrees.m; sourceTree = "<group>"; };
+		F220C0A81CB5624600705F52 /* MyBinarySearchTrees.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyBinarySearchTrees.h; sourceTree = "<group>"; };
+		F220C0A91CB5624600705F52 /* MyBinarySearchTrees.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MyBinarySearchTrees.m; sourceTree = "<group>"; };
+		F220C0AB1CB5639A00705F52 /* MyDoublyLinkedLists.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyDoublyLinkedLists.h; sourceTree = "<group>"; };
+		F220C0AC1CB5639A00705F52 /* MyDoublyLinkedLists.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MyDoublyLinkedLists.m; sourceTree = "<group>"; };
+		F220C0AE1CB563A600705F52 /* MyHeaps.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyHeaps.h; sourceTree = "<group>"; };
+		F220C0AF1CB563A600705F52 /* MyHeaps.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MyHeaps.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -93,6 +114,20 @@
 				F203D3FF1CB451ED0067A092 /* ViewController.m */,
 				F203D4201CB452AE0067A092 /* MySinglyLinkedLists.h */,
 				F203D4211CB452AE0067A092 /* MySinglyLinkedLists.m */,
+				F220C0AB1CB5639A00705F52 /* MyDoublyLinkedLists.h */,
+				F220C0AC1CB5639A00705F52 /* MyDoublyLinkedLists.m */,
+				F220C09C1CB561EE00705F52 /* MyStacks.h */,
+				F220C09D1CB561EE00705F52 /* MyStacks.m */,
+				F220C09F1CB5621100705F52 /* MyQueues.h */,
+				F220C0A01CB5621100705F52 /* MyQueues.m */,
+				F220C0A21CB5622500705F52 /* MyChainedHashTables.h */,
+				F220C0A31CB5622500705F52 /* MyChainedHashTables.m */,
+				F220C0A51CB5623300705F52 /* MyBinaryTrees.h */,
+				F220C0A61CB5623300705F52 /* MyBinaryTrees.m */,
+				F220C0A81CB5624600705F52 /* MyBinarySearchTrees.h */,
+				F220C0A91CB5624600705F52 /* MyBinarySearchTrees.m */,
+				F220C0AE1CB563A600705F52 /* MyHeaps.h */,
+				F220C0AF1CB563A600705F52 /* MyHeaps.m */,
 				F203D4011CB451ED0067A092 /* Main.storyboard */,
 				F203D4041CB451ED0067A092 /* Assets.xcassets */,
 				F203D4061CB451ED0067A092 /* LaunchScreen.storyboard */,
@@ -220,9 +255,16 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F220C0A71CB5623300705F52 /* MyBinaryTrees.m in Sources */,
 				F203D4001CB451ED0067A092 /* ViewController.m in Sources */,
+				F220C0AA1CB5624600705F52 /* MyBinarySearchTrees.m in Sources */,
+				F220C0AD1CB5639A00705F52 /* MyDoublyLinkedLists.m in Sources */,
+				F220C0B01CB563A600705F52 /* MyHeaps.m in Sources */,
+				F220C0A11CB5621100705F52 /* MyQueues.m in Sources */,
 				F203D4221CB452AE0067A092 /* MySinglyLinkedLists.m in Sources */,
 				F203D3FD1CB451ED0067A092 /* AppDelegate.m in Sources */,
+				F220C09E1CB561EE00705F52 /* MyStacks.m in Sources */,
+				F220C0A41CB5622500705F52 /* MyChainedHashTables.m in Sources */,
 				F203D3FA1CB451ED0067A092 /* main.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
