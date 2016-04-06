@@ -29,12 +29,12 @@ void SinglyLinkedListElementPrint(SinglyLinkedListElement *element);
 
 void SinglyLinkedListElementDestroy(SinglyLinkedListElement *toDestroy);
 
-
 typedef struct MySinglyLinkedList{
     
     SinglyLinkedListElement              *head;
     SinglyLinkedListElement              *tail;
     int                                  count;
+    int                                  (*match)(const void *key1, const void *key2);
     
 }SinglyLinkedList;
 
