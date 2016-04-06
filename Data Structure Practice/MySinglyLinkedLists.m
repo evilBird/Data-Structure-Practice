@@ -35,6 +35,7 @@ SinglyLinkedList* SinglyLinkedListCreate(){
     SinglyLinkedList *list = (SinglyLinkedList *)malloc(sizeof(SinglyLinkedList));
     list->head = NULL;
     list->tail = NULL;
+    list->count = 0;
     return list;
 }
 
@@ -68,90 +69,102 @@ SinglyLinkedListElement* SinglyLinkedListSearch(SinglyLinkedList *list, void *to
     return result;
 }
 
-void SinglyLinkedListInsertNext(SinglyLinkedList *list, SinglyLinkedListElement *element, void *toInsert)
+int SinglyLinkedListInsertNext(SinglyLinkedList *list, SinglyLinkedListElement *element, void *toInsert)
 {
-    SinglyLinkedListElement *new = SinglyLinkedListElementCreate();
+    SinglyLinkedListElement *new = NULL;
+    new = SinglyLinkedListElementCreate();
+    
+    if (!new) {
+        return -1;
+    }
+    
     new->data = (void*)toInsert;
     
     if (!element) {
         
-        if (list->head) {
+        if (list->count == 0) {
+            list->tail = new;
             new->next = list->head;
+            list->head = new;
         }
         
-        list->head = new;
-        if (!list->tail) {
-            list->tail = list->head;
+    }else{
+        if (!element->next) {
+            list->tail = new;
         }
-        return;
+        
+        new->next = element->next;
+        element->next = new;
     }
     
-    new->next = element->next;
-    element->next = new;
-    if (!new->next) {
-        list->tail = new;
-    }
+    list->count++;
+    
+    return 0;
+    
 }
 
-void SinglyLinkedListInsertNextData(SinglyLinkedList *list, void *toFind, void *toInsert){
+int SinglyLinkedListInsertNextData(SinglyLinkedList *list, void *toFind, void *toInsert){
     
     SinglyLinkedListElement *found = NULL;
     found = SinglyLinkedListSearch(list, toFind);
-    SinglyLinkedListInsertNext(list, found, toInsert);
+    return SinglyLinkedListInsertNext(list, found, toInsert);
 }
 
 
-void SinglyLinkedListAppend(SinglyLinkedList *list, void* data){
-    
-    if (list->tail) {
+int SinglyLinkedListAppend(SinglyLinkedList *list, void* data){
+    if (list->count) {
         return SinglyLinkedListInsertNext(list, list->tail, data);
     }else{
         return SinglyLinkedListInsertNext(list, NULL, data);
     }
 }
 
-void SinglyLinkedListRemoveNext(SinglyLinkedList *list, SinglyLinkedListElement *element, void **data){
+int SinglyLinkedListRemoveNext(SinglyLinkedList *list, SinglyLinkedListElement *element, void **data){
+    
+    SinglyLinkedListElement *toDestroy = NULL;
     
     if (!element) {
         
         if (!list->head) {
-            if (*data) {
-                *data = NULL;
-            }
-            return;
+            return -1;
         }
         
-        SinglyLinkedListElement *toDestroy = list->head;
-        
-        if (*data) {
-            *data = toDestroy->data;
+        if (data) {
+            *data = list->head->data;
         }
         
-        list->head = toDestroy->next;
-        SinglyLinkedListElementDestroy(toDestroy);
+        toDestroy = list->head;
+        list->head = list->head->next;
         
-        return;
+        if (list->count==1) {
+            list->tail = NULL;
+        }
+        
+    }else if (element->next){
+        
+        if (data) {
+            *data = element->next->data;
+        }
+        
+        toDestroy = element->next;
+        element->next = element->next->next;
+        
+        if (!element->next) {
+            list->tail = element;
+        }
+        
     }
     
-    SinglyLinkedListElement *toDestroy = element->next;
-    
-    if (!toDestroy) {
-        return;
+    if (toDestroy) {
+        free(toDestroy);
     }
     
-    if (toDestroy->next) {
-        element->next = toDestroy->next;
-    }
+    list->count--;
     
-    if (data) {
-        *data = toDestroy->data;
-    }
-    
-    SinglyLinkedListElementDestroy(toDestroy);
-    
+    return 0;
 }
 
-void SinglyLinkedListRemoveNextData(SinglyLinkedList *list, void *toFind, void **data){
+int SinglyLinkedListRemoveNextData(SinglyLinkedList *list, void *toFind, void **data){
     
     SinglyLinkedListElement *found = SinglyLinkedListSearch(list, toFind);
     return SinglyLinkedListRemoveNext(list, found, data);
@@ -171,19 +184,12 @@ void SinglyLinkedListPrint(SinglyLinkedList *list)
 
 void SinglyLinkedListDestroy(SinglyLinkedList *list)
 {
-    SinglyLinkedListElement *head = list->head;
-    SinglyLinkedListElement *element = head;
-    while (element->next) {
-        SinglyLinkedListElement *toDestroy = element->next;
-        SinglyLinkedListElement *newNext = toDestroy->next;
-        SinglyLinkedListRemoveNext(list, element, NULL);
-        element = head;
-        if (newNext) {
-            element->next = newNext;
+    while (list->count) {
+        if (SinglyLinkedListRemoveNext(list, NULL, NULL) != 0) {
+            break;
         }
     }
     
-    SinglyLinkedListElementDestroy(head);
     list->head = NULL;
     list->tail = NULL;
     free(list);

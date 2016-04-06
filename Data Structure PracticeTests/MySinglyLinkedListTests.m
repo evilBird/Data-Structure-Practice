@@ -51,6 +51,9 @@
         list_data[i] = random_list_data(100);
         SinglyLinkedListAppend(mySinglyLinkedList, (void *)(&(list_data[i])));
     }
+    
+    XCTAssert(mySinglyLinkedList->count == length);
+    
 }
 
 - (void)testSinglyLinkedListSearch
@@ -86,6 +89,10 @@
     
     for (int i = 0; i < (length + 1); i ++) {
         XCTAssertTrue((*((float *)(element->data)))==revised_list_data[i],@"data for element %d %.f does not match revised list data element %.f",i,(*(float*)(element->data)),revised_list_data[i]);
+        if (!element->next) {
+            break;
+        }
+        
         element = element->next;
     }
 }
@@ -125,8 +132,7 @@
         if (toRemove->next) {
             void *myData;
             SinglyLinkedListRemoveNext(mySinglyLinkedList, toRemove, &myData);
-            int newCount = SinglyLinkedListCountElements(mySinglyLinkedList);
-            XCTAssert(newCount = (i-1));
+            XCTAssert(mySinglyLinkedList->count = (i-1));
             if (&(*myData)) {
                 float myDataValue = *(float*)(&myData);
                 float listDataValue = list_data[i];
@@ -146,8 +152,7 @@
 - (void)tearDown {
     [super tearDown];
     SinglyLinkedListDestroy(mySinglyLinkedList);
-    int newCount = SinglyLinkedListCountElements(mySinglyLinkedList);
-    XCTAssert(newCount==0);
+    XCTAssert(mySinglyLinkedList->count==0);
     mySinglyLinkedList = NULL;
     XCTAssert(NULL==mySinglyLinkedList);
 }

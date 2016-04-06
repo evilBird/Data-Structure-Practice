@@ -28,6 +28,7 @@ typedef struct MySinglyLinkedList{
     
     SinglyLinkedListElement              *head;
     SinglyLinkedListElement              *tail;
+    int                                  count;
     
 }SinglyLinkedList;
 
@@ -38,22 +39,22 @@ int SinglyLinkedListCountElements(SinglyLinkedList *list);
 SinglyLinkedListElement* SinglyLinkedListSearch(SinglyLinkedList *list,
                                                     void *toFind);
 
-void SinglyLinkedListInsertNext(SinglyLinkedList *list,
+int SinglyLinkedListInsertNext(SinglyLinkedList *list,
                                             SinglyLinkedListElement *element,
                                             void *toInsert);
 
-void SinglyLinkedListInsertNextData(SinglyLinkedList *list,
+int SinglyLinkedListInsertNextData(SinglyLinkedList *list,
                                     void *toFind,
                                     void *toInsert);
 
-void SinglyLinkedListAppend(SinglyLinkedList *list,
+int SinglyLinkedListAppend(SinglyLinkedList *list,
                             void* data);
 
-void SinglyLinkedListRemoveNext(SinglyLinkedList *list,
+int SinglyLinkedListRemoveNext(SinglyLinkedList *list,
                                 SinglyLinkedListElement *element,
                                 void **data);
 
-void SinglyLinkedListRemoveNextData(SinglyLinkedList *list,
+int SinglyLinkedListRemoveNextData(SinglyLinkedList *list,
                                     void *toFind,
                                     void **data);
 
