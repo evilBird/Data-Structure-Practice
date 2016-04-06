@@ -13,38 +13,52 @@
 typedef struct MySinglyLinkedListElement{
     
     void                                *data;
-    int                                 tag;
     struct MySinglyLinkedListElement    *next;
     
 }SinglyLinkedListElement;
 
 SinglyLinkedListElement* SinglyLinkedListElementCreate();
 
-int SinglyLinkedListElementCompare(SinglyLinkedListElement *element1, SinglyLinkedListElement *element2);
-
 void SinglyLinkedListElementPrint(SinglyLinkedListElement *element);
 
-void SinglyLinkedListNodeDestroy(SinglyLinkedListElement *toDestroy);
+void SinglyLinkedListElementDestroy(SinglyLinkedListElement *toDestroy);
 
 
 typedef struct MySinglyLinkedList{
     
     SinglyLinkedListElement              *head;
     SinglyLinkedListElement              *tail;
-    int                                 length;
     
 }SinglyLinkedList;
 
 SinglyLinkedList* SinglyLinkedListCreate();
 
-void SinglyLinkedListDestroy(SinglyLinkedList *list);
+int SinglyLinkedListCountElements(SinglyLinkedList *list);
 
-void SinglyLinkedListInsertElement(SinglyLinkedList *list, SinglyLinkedListElement *toInsert, void* data);
+SinglyLinkedListElement* SinglyLinkedListSearch(SinglyLinkedList *list,
+                                                    void *toFind);
 
-void SinglyLinkedListDeleteElement(SinglyLinkedList *list, SinglyLinkedListElement *toDelete);
+void SinglyLinkedListInsertNext(SinglyLinkedList *list,
+                                            SinglyLinkedListElement *element,
+                                            void *toInsert);
 
-SinglyLinkedListElement* SinglyLinkedListFindElement(SinglyLinkedList *list, SinglyLinkedListElement *toFind);
+void SinglyLinkedListInsertNextData(SinglyLinkedList *list,
+                                    void *toFind,
+                                    void *toInsert);
+
+void SinglyLinkedListAppend(SinglyLinkedList *list,
+                            void* data);
+
+void SinglyLinkedListRemoveNext(SinglyLinkedList *list,
+                                SinglyLinkedListElement *element,
+                                void **data);
+
+void SinglyLinkedListRemoveNextData(SinglyLinkedList *list,
+                                    void *toFind,
+                                    void **data);
 
 void SinglyLinkedListPrint(SinglyLinkedList *list);
+
+void SinglyLinkedListDestroy(SinglyLinkedList *list);
 
 @end
