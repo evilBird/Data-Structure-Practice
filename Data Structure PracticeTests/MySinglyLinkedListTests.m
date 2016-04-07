@@ -9,8 +9,12 @@
 #import <XCTest/XCTest.h>
 #import "MySinglyLinkedLists.h"
 
+#define DEFAULT_LENGTH 10
+
 @interface MySinglyLinkedListTests : XCTestCase {
     SinglyLinkedList *mySinglyLinkedList;
+    int              length;
+    float            list_data[DEFAULT_LENGTH];
 }
 
 @end
@@ -19,14 +23,7 @@
 
 - (void)testSinglyLinkedListAppend
 {
-    int length = 10;
-    float list_data[10] = {};
-    for (int i = 0; i<length; i++) {
-        list_data[i] = random_list_data(100);
-        SinglyLinkedListAppend(mySinglyLinkedList, (void *)(&(list_data[i])));
-    }
     SinglyLinkedListElement *element = mySinglyLinkedList->head;
-    
     for (int i = 0; i < length; i++) {
         XCTAssertTrue((*(float*)(element->data)) == list_data[i],@"data in singly linked list element at index %d = %f does not match inserted data %f",i,(*(float*)(element->data)),list_data[i]);
         element = element->next;
@@ -35,37 +32,15 @@
 
 - (void)testSinglyLinkedListPrint
 {
-    int length = 10;
-    float list_data[10] = {};
+    SinglyLinkedListElement *element = mySinglyLinkedList->head;
     for (int i = 0; i<length; i++) {
-        list_data[i] = random_list_data(100);
-        SinglyLinkedListAppend(mySinglyLinkedList, (void *)(&(list_data[i])));
-        SinglyLinkedListElementPrint(mySinglyLinkedList->tail);
+        SinglyLinkedListElementPrint(element);
+        element = element->next;
     }
-}
-
-- (void)testSinglyLinkedListCount
-{
-    int length = 10;
-    float list_data[10] = {};
-    for (int i = 0; i<length; i++) {
-        list_data[i] = random_list_data(100);
-        SinglyLinkedListAppend(mySinglyLinkedList, (void *)(&(list_data[i])));
-    }
-    
-    XCTAssert(mySinglyLinkedList->count == length);
-    
 }
 
 - (void)testSinglyLinkedListSearch
 {
-    int length = 10;
-    float list_data[10] = {};
-    for (int i = 0; i<length; i++) {
-        list_data[i] = random_list_data(100);
-        SinglyLinkedListAppend(mySinglyLinkedList, (void *)(&(list_data[i])));
-    }
-    
     int indexToSearch = arc4random_uniform(length);
     SinglyLinkedListElement *result = NULL;
     result = SinglyLinkedListSearch(mySinglyLinkedList, (void *)(&(list_data[indexToSearch])));
@@ -74,15 +49,8 @@
 
 - (void)testSinglyLinkedListSearchAndInsertAfterElement
 {
-    int length = 10;
-    float list_data[10] = {};
-    for (int i = 0; i<length; i++) {
-        list_data[i] = random_list_data(100);
-        SinglyLinkedListAppend(mySinglyLinkedList, (void *)(&(list_data[i])));
-    }
-    
     int randomIdx = (int)arc4random_uniform(length-1);
-    float newData = random_list_data(100);
+    float newData = rand_float();
     SinglyLinkedListInsertNext(mySinglyLinkedList, SinglyLinkedListSearch(mySinglyLinkedList, (void *)(&(list_data[randomIdx]))), (void *)(&newData));
     SinglyLinkedListElement *thePrecedingElement = SinglyLinkedListSearch(mySinglyLinkedList, (void *)(&(list_data[randomIdx])));
     XCTAssert(NULL!=thePrecedingElement);
@@ -93,40 +61,28 @@
 
 - (void)testSinglyLinkedListRemoveElements
 {
-    int length = 10;
-    float list_data[10] = {};
-    
-    for (int i = 0; i<length; i++) {
-        list_data[i] = random_list_data(100);
-        SinglyLinkedListAppend(mySinglyLinkedList, (void *)(&(list_data[i])));
-    }
-    
-    int i = length;
-    while (mySinglyLinkedList->count) {
-
+    do {
         void *myData;
         int prevCount = mySinglyLinkedList->count;
         int result = SinglyLinkedListRemoveNext(mySinglyLinkedList, NULL, &myData);
-        
-        if (result != 0) {
-            break;
-        }
-        
-        XCTAssert(mySinglyLinkedList->count = (prevCount-1),@"expected count = %d, actual count = %d",prevCount,mySinglyLinkedList->count);
-        
-        if (&(*myData)) {
-            float myDataValue = *(float*)(&(*myData));
-            float listDataValue = list_data[i];
-            XCTAssert(myDataValue==listDataValue,@"expected data value = %.2f, actual data value = %.2f",listDataValue,myDataValue);
-        }
-    }
+        XCTAssert(result==0);
+        XCTAssert(mySinglyLinkedList->count>prevCount);
+    } while (mySinglyLinkedList->count);
 }
 
 - (void)setUp {
     [super setUp];
+    length = DEFAULT_LENGTH;
     mySinglyLinkedList = NULL;
-    mySinglyLinkedList = SinglyLinkedListCreate();
+    mySinglyLinkedList = SinglyLinkedListCreate(NULL);
     XCTAssert(NULL!=mySinglyLinkedList);
+
+    for (int i = 0; i<length; i++) {
+        list_data[i] = rand_float();
+        SinglyLinkedListAppend(mySinglyLinkedList, (void *)(&(list_data[i])));
+    }
+    
+    XCTAssert(mySinglyLinkedList->count==length);
 }
 
 - (void)tearDown {
@@ -137,11 +93,5 @@
     XCTAssert(NULL==mySinglyLinkedList);
 }
 
-float random_list_data(int range)
-{
-    unsigned int  random_int = arc4random_uniform(range);
-    float random_float = ((float)random_int) - (float)range/2.;
-    return random_float;
-}
 
 @end

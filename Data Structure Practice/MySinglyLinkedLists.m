@@ -8,6 +8,24 @@
 
 #import "MySinglyLinkedLists.h"
 
+
+float GetRandomFloatInRange(int loc, int length)
+{
+    unsigned int  random_int = arc4random_uniform(length);
+    float random_float = ((float)random_int) + ((float)loc - (float)length/2.);
+    return random_float;
+}
+
+float GetRandomFloat()
+{
+    return GetRandomFloatInRange(0, 100);
+}
+
+int MyFloatMatchFunction (const void * key1, const void * key2)
+{
+    return ( *(float*)key1 - *(float*)key2 );
+}
+
 @implementation MySinglyLinkedLists
 
 SinglyLinkedListElement*  SinglyLinkedListElementCreate(){
@@ -24,18 +42,13 @@ void SinglyLinkedListElementPrint(SinglyLinkedListElement *element){
     printf("\t");
 }
 
-void SinglyLinkedListElementDestroy(SinglyLinkedListElement *toDestroy){
-    toDestroy->next = NULL;
-    toDestroy->data = NULL;
-    free(toDestroy);
-}
+SinglyLinkedList* SinglyLinkedListCreate(int (*match)(const void *key1, const void *key2)){
 
-SinglyLinkedList* SinglyLinkedListCreate(){
-    
     SinglyLinkedList *list = (SinglyLinkedList *)malloc(sizeof(SinglyLinkedList));
     list->head = NULL;
     list->tail = NULL;
     list->count = 0;
+    list->match = ( match ) ? ( match ) : ( MyFloatMatchFunction );
     return list;
 }
 
@@ -58,7 +71,7 @@ SinglyLinkedListElement* SinglyLinkedListSearch(SinglyLinkedList *list, void *to
     SinglyLinkedListElement *element = list->head;
     
     while (element) {
-        if (*((float *)(element->data)) == *((float *)toFind)) {
+        if (list->match(element->data, toFind)) {
             result = element;
             break;
         }

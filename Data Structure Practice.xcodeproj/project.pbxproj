@@ -24,6 +24,7 @@
 		F220C0AA1CB5624600705F52 /* MyBinarySearchTrees.m in Sources */ = {isa = PBXBuildFile; fileRef = F220C0A91CB5624600705F52 /* MyBinarySearchTrees.m */; };
 		F220C0AD1CB5639A00705F52 /* MyDoublyLinkedLists.m in Sources */ = {isa = PBXBuildFile; fileRef = F220C0AC1CB5639A00705F52 /* MyDoublyLinkedLists.m */; };
 		F220C0B01CB563A600705F52 /* MyHeaps.m in Sources */ = {isa = PBXBuildFile; fileRef = F220C0AF1CB563A600705F52 /* MyHeaps.m */; };
+		F295E2A61CB5BEEE00A59E86 /* MyChainedHashTableTests.m in Sources */ = {isa = PBXBuildFile; fileRef = F295E2A51CB5BEEE00A59E86 /* MyChainedHashTableTests.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -67,6 +68,7 @@
 		F220C0AC1CB5639A00705F52 /* MyDoublyLinkedLists.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MyDoublyLinkedLists.m; sourceTree = "<group>"; };
 		F220C0AE1CB563A600705F52 /* MyHeaps.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyHeaps.h; sourceTree = "<group>"; };
 		F220C0AF1CB563A600705F52 /* MyHeaps.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MyHeaps.m; sourceTree = "<group>"; };
+		F295E2A51CB5BEEE00A59E86 /* MyChainedHashTableTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MyChainedHashTableTests.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -150,6 +152,7 @@
 			children = (
 				F203D4121CB451ED0067A092 /* Data_Structure_PracticeTests.m */,
 				F203D4231CB453430067A092 /* MySinglyLinkedListTests.m */,
+				F295E2A51CB5BEEE00A59E86 /* MyChainedHashTableTests.m */,
 				F203D4141CB451ED0067A092 /* Info.plist */,
 			);
 			path = "Data Structure PracticeTests";
@@ -274,6 +277,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				F203D4241CB453430067A092 /* MySinglyLinkedListTests.m in Sources */,
+				F295E2A61CB5BEEE00A59E86 /* MyChainedHashTableTests.m in Sources */,
 				F203D4261CB45E720067A092 /* MySinglyLinkedLists.m in Sources */,
 				F203D4131CB451ED0067A092 /* Data_Structure_PracticeTests.m in Sources */,
 			);

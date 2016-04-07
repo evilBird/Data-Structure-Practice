@@ -13,6 +13,12 @@
 #define sll_insert_next     SinglyLinkedListInsertNext
 #define sll_remove_next     SinglyLinkedListRemoveNext
 #define sll_destroy         SinglyLinkedListDestroy
+#define rand_float          GetRandomFloat
+#define rand_float_b        GetRandomFloatInRange
+#define match_float         MyFloatMatchFunction
+
+float GetRandomFloatInRange(int loc, int length);
+float GetRandomFloat();
 
 @interface MySinglyLinkedLists : NSObject
 
@@ -25,9 +31,8 @@ typedef struct MySinglyLinkedListElement{
 
 SinglyLinkedListElement* SinglyLinkedListElementCreate();
 
+int MyFloatMatchFunction(const void *key1, const void *key2);
 void SinglyLinkedListElementPrint(SinglyLinkedListElement *element);
-
-void SinglyLinkedListElementDestroy(SinglyLinkedListElement *toDestroy);
 
 typedef struct MySinglyLinkedList{
     
@@ -38,7 +43,7 @@ typedef struct MySinglyLinkedList{
     
 }SinglyLinkedList;
 
-SinglyLinkedList* SinglyLinkedListCreate();
+SinglyLinkedList* SinglyLinkedListCreate(int (*match)(const void *key1, const void *key2));
 
 int SinglyLinkedListCountElements(SinglyLinkedList *list);
 
