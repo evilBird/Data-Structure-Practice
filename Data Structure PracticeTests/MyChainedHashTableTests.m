@@ -11,11 +11,12 @@
 
 #define DEFAULT_BUCKETS 2000
 #define DEFAULT_DATA_COUNT 4000
+
 @interface MyChainedHashTableTests : XCTestCase {
     ChainedHashTable *myChainedHashTable;
     int              numBuckets;
     float            *myData;
-    int             myDataCount;
+    int              myDataCount;
 }
 
 @end
@@ -26,114 +27,51 @@
     [super setUp];
     numBuckets = DEFAULT_BUCKETS;
     myDataCount = DEFAULT_DATA_COUNT;
-    myChainedHashTable = cht_init(numBuckets, cht_hash_gen, match_float, NULL);
-    [self generateMyData];
-    
     // Put setup code here. This method is called before the invocation of each test method in the class.
 }
 
-- (void)generateMyData
+- (void)testInsert
 {
-    myData = (float *)malloc(sizeof(float) * myDataCount);
+    myData = (float *)malloc(sizeof(float) * myDataCount + 1);
+    myChainedHashTable = cht_init(numBuckets, hash_float, match_float, NULL);
+    
     for (int i = 0; i < myDataCount; i ++) {
-        float value = rand_float_b(0,16789);
-        myData[i] = value;
-        printf("\n%.2f",myData[i]);
+        myData[i] = rand_float_b(0,16789);
+        void* toInsert = (void *)&(myData[i]);
+        int result = cht_insert(myChainedHashTable,toInsert);
+        XCTAssert(result > -1);
     }
 }
 
-- (void)testInsertAndLookupData
+- (void)testLookup
 {
+    [self testInsert];
     for (int i = 0; i < myDataCount; i ++) {
-        float value = myData[i];
-        void* myInput = (void *)(&value);
-        int result = cht_insert(myChainedHashTable, myInput);
-        printf("\nkey %.f insert result = %d",value,result);
-        XCTAssert(result!=-1);
-        printf("\nhash table size: %d",myChainedHashTable->size);
-        result = cht_lookup(myChainedHashTable, &myInput);
-        printf("\nkey %.f lookup result = %d",value,result);
+        void* toLookup = (void*)&(myData[i]);
+        int result = cht_lookup(myChainedHashTable, &toLookup);
+        XCTAssert(result>-1, @"value %f not found",myData[i]);
+    }
+}
+
+- (void)testRemove
+{
+    [self testInsert];
+    for (int i = 0; i < myDataCount; i ++) {
+        void* toLookup = (void*)&(myData[i]);
+        int result = cht_remove(myChainedHashTable, &toLookup);
+        result = cht_lookup(myChainedHashTable, &toLookup);
+        XCTAssert(result==-1);
     }
 }
 
 - (void)tearDown {
     // Put teardown code here. This method is called after the invocation of each test method in the class.
     [super tearDown];
+    cht_destroy(myChainedHashTable);
+    myChainedHashTable = NULL;
+    free(myData);
+    myData = NULL;
 }
 
-- (void)testMyGeneralHashFunctionWithIntegers
-{
-    int output;
-    int prevOutput;
-    
-    void* input;
-    int integerInput = arc4random_uniform(1000);
-    input = (void *)&integerInput;
-    output = cht_hash_gen(input, numBuckets);
-    XCTAssert(output>0&&output<numBuckets);
-    printf("\ngeneral integer input %d hashes to %d\n\n\n",integerInput,output);
-    
-    prevOutput = output;
-    integerInput = arc4random_uniform(1000);
-    input = (void *)&integerInput;
-    output = cht_hash_gen(input, numBuckets);
-    XCTAssert(output>0&&output<numBuckets);
-    XCTAssert(output!=prevOutput);
-    printf("\ngeneral integer input %d hashes to %d\n\n\n",integerInput,output);
-    
-    prevOutput = output;
-    integerInput = arc4random_uniform(1000);
-    input = (void *)&integerInput;
-    output = cht_hash_gen(input, numBuckets);
-    XCTAssert(output>0&&output<numBuckets);
-    printf("\ngeneral integer input %d hashes to %d\n\n\n",integerInput,output);
-    
-    prevOutput = output;
-    integerInput = arc4random_uniform(1000);
-    input = (void *)&integerInput;
-    output = cht_hash_gen(input, numBuckets);
-    XCTAssert(output>0&&output<numBuckets);
-    XCTAssert(output!=prevOutput);
-    printf("\ngeneral integer input %d hashes to %d\n\n\n",integerInput,output);
-}
-
-
-- (void)testMyGeneralHashFunctionWithStrings
-{
-    int output;
-    int prevOutput;
-    
-    void* input;
-    char* stringInput = "this is a string";
-    input = (void *)stringInput;
-    output = cht_hash_gen(input, numBuckets);
-    XCTAssert(output>0&&output<numBuckets);
-    XCTAssert(output!=prevOutput);
-    printf("\ngeneral string input %s hashes to %d\n\n\n",stringInput,output);
-    
-    prevOutput = output;
-    stringInput = "this is another string";
-    input = (void *)stringInput;
-    output = cht_hash_gen(input, numBuckets);
-    XCTAssert(output>0&&output<numBuckets);
-    XCTAssert(output!=prevOutput);
-    printf("\ngeneral string input %s hashes to %d\n\n\n",stringInput,output);
-    
-    prevOutput = output;
-    stringInput = "this is still another string";
-    input = (void *)stringInput;
-    output = cht_hash_gen(input, numBuckets);
-    XCTAssert(output>0&&output<numBuckets);
-    XCTAssert(output!=prevOutput);
-    printf("\ngeneral string input %s hashes to %d\n\n\n",stringInput,output);
-    
-    prevOutput = output;
-    stringInput = "this is the final string...for now";
-    input = (void *)stringInput;
-    output = cht_hash_gen(input, numBuckets);
-    XCTAssert(output>0&&output<numBuckets);
-    XCTAssert(output!=prevOutput);
-    printf("\ngeneral string input %s hashes to %d\n\n\n",stringInput,output);
-}
 
 @end

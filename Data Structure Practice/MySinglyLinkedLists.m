@@ -65,10 +65,36 @@ int SinglyLinkedListCountElements(SinglyLinkedList *list)
     return count;
 }
 
+SinglyLinkedListElement* SinglyLinkedListSearchWithMatchFunction(SinglyLinkedList *list,
+                                                                 int (*match)(const void* key1, const void* key2),
+                                                                 void* toFind)
+{
+    SinglyLinkedListElement *result = NULL;
+    list->match = match;
+    if (!list->match) {
+        return result;
+    }
+    
+    SinglyLinkedListElement *element = list->head;
+    while (element) {
+        if (list->match(element->data, toFind)) {
+            result = element;
+            break;
+        }
+        
+        element = element->next;
+    }
+    
+    return result;
+}
+
 SinglyLinkedListElement* SinglyLinkedListSearch(SinglyLinkedList *list, void *toFind)
 {
     SinglyLinkedListElement *result = NULL;
     SinglyLinkedListElement *element = list->head;
+    if (!list->match) {
+        return result;
+    }
     
     while (element) {
         if (list->match(element->data, toFind)) {
@@ -192,7 +218,6 @@ void SinglyLinkedListDestroy(SinglyLinkedList *list)
     
     list->head = NULL;
     list->tail = NULL;
-    free(list);
 }
 
 @end

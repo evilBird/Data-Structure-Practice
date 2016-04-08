@@ -10,7 +10,7 @@
 
 @implementation MyChainedHashTables
 
-int MyStringHashFunction(const void *key, const int n)
+int MyStringHashFunction(const void *key)
 {
     const char *ptr;
     unsigned int val;
@@ -28,69 +28,54 @@ int MyStringHashFunction(const void *key, const int n)
         ptr++;
     }
     
-    return ( val % n );
+    return val;
 }
 
-int MyIntegerHashFunction(const void *key,const int n){
+int MyIntegerHashFunction(const void *key){
+    
+    int k = *(int *)key;
+    char keyString[100];
+    sprintf(keyString, "%d",k);
+    int val = MyStringHashFunction((void*)keyString);
+    return val;
+}
+
+int MyFloatHashFunction(const void *key){
+    
+    float k = *(float *)key;
+    char keyString[100];
+    sprintf(keyString, "%f",k);
+    int val = MyStringHashFunction((void*)keyString);
+    return val;
+}
+/*
+int MyMultiplicationMethodHashFunction(const void *key, int n){
     
     int k = *(int *)key;
     float A = 0.618;
     float fract;
     float remainder = modff((k*A), &fract);
     int val = (int)(n * remainder) % n;
-    
     return val;
 }
-
-int CoerceKeyToInteger(const void *key, const int n){
-    int *ptr = (int *)key;
-    int ct = 0;
-    float val = 0;
-    float B = 1699.;
-    
-    do {
-        int ptrVal = *ptr;
-        val += logf(n + ((float)ptrVal/(float)(ct + 1)))/logf(B/(float)ptrVal+0.00001);
-        ptr++;
-        ct ++;
-    } while (*ptr);
-    
-    int keyAsInteger = roundf(val);
-    keyAsInteger*=keyAsInteger;
-    
-    return keyAsInteger;
-}
-
-int MyGeneralHashFunction(const void *key, const int n){
-    int keyAsInteger = CoerceKeyToInteger(key, n);
-    return MyIntegerHashFunction((void *)&keyAsInteger, n);
-}
-
-int MyGeneralMatchFunction(const void *key1, const void *key2){
-    int n = 1699;
-    int hash1 = MyGeneralHashFunction(key1, n);
-    int hash2 = MyGeneralHashFunction(key2, n);
-    return (hash1 - hash2);
-}
-
+*/
 ChainedHashTable* ChainedHashTableCreate(int buckets,
-                                         int (*h)(const void *key, const int n),
+                                         int (*h)(const void *key),
                                          int (*match)(const void *key1, const void *key2),
                                          void (*destroy)(void *data)){
     
     ChainedHashTable *hashTable = NULL;
-    hashTable = (ChainedHashTable *)malloc(sizeof(ChainedHashTable));
+    hashTable = (ChainedHashTable *)malloc(sizeof(ChainedHashTable) + 1);
+    
     if (!hashTable) {
         return NULL;
     }
     
-    hashTable->table = malloc(sizeof(SinglyLinkedList)*buckets);
+    hashTable->table = malloc(sizeof(SinglyLinkedList)*buckets + 1);
     hashTable->buckets = buckets;
-    SinglyLinkedList *ptr = hashTable->table;
+    
     for (int i = 0; i < hashTable->buckets; i ++) {
-        SinglyLinkedList *sll = sll_init(NULL);
-        *ptr = *sll;
-        ptr += sizeof(SinglyLinkedList);
+        hashTable->table[i] = *sll_init(NULL);
     }
     
     hashTable->h = h;
@@ -102,27 +87,23 @@ ChainedHashTable* ChainedHashTableCreate(int buckets,
 }
 
 void ChainedHashTableDestroy(ChainedHashTable *hashTable){
-    for (int i = 0; i < hashTable->buckets; i ++) {
-        SinglyLinkedListDestroy(&(hashTable->table[i]));
-    }
     free(hashTable->table);
+    memset(hashTable->table, 0, sizeof(SinglyLinkedList));
     free(hashTable);
     memset(hashTable, 0, sizeof(ChainedHashTable));
 }
 
 int ChainedHashTableLookup(ChainedHashTable *hashTable, void **data){
-    SinglyLinkedListElement *element;
     int bucket;
-    bucket = hashTable->h(*data, hashTable->buckets);
-    SinglyLinkedList myList = (hashTable->table[bucket]);
-    
-    //for (element = *((&hashTable->table[bucket].head)); element != NULL; element = element->next) {
-    for (element = myList.head; element != NULL; element = element->next) {
+    bucket = hashTable->h(*data) % hashTable->buckets;
+    SinglyLinkedListElement *element;
+    for (element = cht_bucket_head(bucket); element != NULL; element = element->next) {
         if (hashTable->match(*data, element->data)) {
             *data = (void *)element->data;
             return 0;
         }
     }
+    
     return -1;
 }
 
@@ -132,12 +113,13 @@ int ChainedHashTableInsert(ChainedHashTable *hashTable, const void *data){
     int retval;
     temp = (void *)data;
     
-    if (ChainedHashTableLookup(hashTable, &temp) == 0) {
+    if (cht_lookup(hashTable, &temp) == 0) {
         return 1;
     }
     
-    bucket = hashTable->h(data, hashTable->buckets);
-    if ((retval = sll_insert_next(&hashTable->table[bucket],NULL, (void *)data)) == 0) {
+    bucket = hashTable->h(data) % hashTable->buckets;
+    
+    if ((retval = sll_insert_next(cht_bucket(bucket),NULL, (void *)temp)) == 0) {
         hashTable->size++;
     }
     return retval;
@@ -147,11 +129,12 @@ int ChainedHashTableRemove(ChainedHashTable *hashTable, void **data){
     
     SinglyLinkedListElement *element,*prev;
     int bucket;
-    bucket = hashTable->h(*data, hashTable->buckets);
+    bucket = hashTable->h(*data) % hashTable->buckets;
     prev = NULL;
-    for (element = *((&hashTable->table[bucket].head)); element != NULL; element = element->next) {
+    
+    for (element = cht_bucket_head(bucket); element != NULL; element = element->next) {
         if (hashTable->match(*data, element->data)) {
-            if (sll_remove_next(&hashTable->table[bucket],prev, data) == 0 ) {
+            if (sll_remove_next(cht_bucket(bucket),prev, data) == 0 ) {
                 hashTable->size--;
                 return 0;
             }else{

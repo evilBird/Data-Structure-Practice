@@ -7,9 +7,11 @@
 //
 
 #import <Foundation/Foundation.h>
-
+#define sll                 SinglyLinkedList
+#define sll_elem            SinglyLinkedListElement
 #define sll_init            SinglyLinkedListCreate
 #define sll_append          SinglyLinkedListAppend
+#define sll_search          SinglyLinkedListSearchWithMatchFunction
 #define sll_insert_next     SinglyLinkedListInsertNext
 #define sll_remove_next     SinglyLinkedListRemoveNext
 #define sll_destroy         SinglyLinkedListDestroy
@@ -46,6 +48,10 @@ typedef struct MySinglyLinkedList{
 SinglyLinkedList* SinglyLinkedListCreate(int (*match)(const void *key1, const void *key2));
 
 int SinglyLinkedListCountElements(SinglyLinkedList *list);
+
+SinglyLinkedListElement* SinglyLinkedListSearchWithMatchFunction(SinglyLinkedList *list,
+                                                                 int (*match)(const void* key1, const void* key2),
+                                                                 void* toFind);
 
 SinglyLinkedListElement* SinglyLinkedListSearch(SinglyLinkedList *list,
                                                     void *toFind);

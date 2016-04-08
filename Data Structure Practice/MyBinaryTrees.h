@@ -10,4 +10,15 @@
 
 @interface MyBinaryTrees : NSObject
 
+typedef struct MyBinaryTreeNode{
+    void *data;
+    struct MyBinaryTreeNode *left;
+    struct MyBinaryTreeNode *right;
+}BinaryTreeNode;
+
+typedef struct MyBinaryTree{
+    BinaryTreeNode  *root;
+}BinaryTree;
+
+
 @end
