@@ -18,6 +18,12 @@ BinaryTreeNode* BinaryTreeNodeCreate(){
     return node;
 }
 
+int BinaryTreeNodePrint(BinaryTreeNode *node, const void *info){
+    float *ptr = (float *)(node->data);
+    printf("\n%.3f",*ptr);
+    return 0;
+}
+
 BinaryTree* BinaryTreeCreate(){
     BinaryTree *tree = (BinaryTree *)malloc(sizeof(BinaryTree));
     tree->root = NULL;
@@ -25,6 +31,17 @@ BinaryTree* BinaryTreeCreate(){
     return tree;
 }
 
+int BinaryTreeNodeCompareFloatData(void *data1, void *data2){
+    float f1 = (*(float *)data1);
+    float f2 = (*(float *)data2);
+    return (f1-f2);
+}
+
+int BinaryTreePrintNode(BinaryTree *tree, BinaryTreeNode *node, const void *info){
+    float *ptr = (float *)(node->data);
+    printf("\n%.3f",*ptr);
+    return -1;
+}
 
 int BinaryTreeInsertLeft(BinaryTree *tree, BinaryTreeNode *node, const void *data){
     
@@ -83,6 +100,37 @@ int BinaryTreeInsertRight(BinaryTree *tree, BinaryTreeNode *node, const void *da
     return 0;
 }
 
+int BinaryTreeInsert(BinaryTree *tree, BinaryTreeNode *node, const void *data){
+    
+    if (!node){
+        if (tree->size == 0 && tree->root == NULL) {
+            BinaryTreeNode *root = BinaryTreeNodeCreate();
+            root->data = (void *)data;
+            tree->root = root;
+            tree->size++;
+            return 0;
+        }else{
+            return -1;
+        }
+    }
+    
+    int compare = BinaryTreeNodeCompareFloatData((void *)data, node->data);
+    
+    if (compare <= 0) {
+        if (node->left){
+            return BinaryTreeInsert(tree, node->left, data);
+        }else{
+            return BinaryTreeInsertLeft(tree, node, data);
+        }
+    }else{
+        if (node->right) {
+            return BinaryTreeInsert(tree, node->right, data);
+        }else{
+            return BinaryTreeInsertRight(tree, node, data);
+        }
+    }
+}
+
 void BinaryTreeRemoveLeft(BinaryTree *tree, BinaryTreeNode *node){
     
     BinaryTreeNode **position;
@@ -122,6 +170,35 @@ void BinaryTreeRemoveRight(BinaryTree *tree, BinaryTreeNode *node){
     tree->size--;
 }
 
+int BinaryTreeRemove(BinaryTree *tree, BinaryTreeNode *node, const void *data){
+    
+    if (BinaryTree_Size(tree) == 0) {
+        return -1;
+    }
+    
+    int compare = BinaryTreeNodeCompareFloatData(node, (void*)data);
+    
+    if (compare <= 0 && node->left) {
+        int compareL = BinaryTreeNodeCompareFloatData(node->left, (void*)data);
+        if (compareL == 0) {
+            BinaryTreeRemoveLeft(tree, node);
+            return 0;
+        }else {
+            return BinaryTreeRemove(tree, node->left, data);
+        }
+    }else if (compare > 0 && node->right){
+        int compareR = BinaryTreeNodeCompareFloatData(node->right, (void *)data);
+        if (compareR == 0) {
+            BinaryTreeRemoveRight(tree,node);
+            return 0;
+        }else{
+            return BinaryTreeRemove(tree, node->right, data);
+        }
+    }
+    
+    return -1;
+}
+
 void BinaryTreeDestroy(BinaryTree *tree){
     BinaryTreeRemoveLeft(tree, NULL);
     free(tree);
@@ -147,5 +224,116 @@ int BinaryTreeMerge(BinaryTree *merge, BinaryTree *left, BinaryTree *right, cons
     return 0;
 }
 
+int BinaryTreeTraverseInOrder(BinaryTree *tree,
+                              BinaryTreeNode *node,
+                              const void *data,
+                              int (*function)(BinaryTree *, BinaryTreeNode *, const void *))
+{
+    if (!node){
+        return function(tree, node, data);
+    }
+    
+    if (BinaryTree_Left(node)){
+        
+        if (BinaryTreeTraverseInOrder(tree, BinaryTree_Left(node),data, function) == 0) {
+            return 0;
+        }
+    }
+    
+    if (function(tree, node, data) == 0){
+        return 0;
+    };
+    
+    if (BinaryTree_Right(node)) {
+        if (BinaryTreeTraverseInOrder(tree, BinaryTree_Right(node),data, function) == 0) {
+            return 0;
+        }
+    }
+    
+    return -1;
+}
+
+int BinaryTreeTraversePreOrder(BinaryTree *tree,
+                               BinaryTreeNode *node,
+                               const void *data,
+                               int (*function)(BinaryTree *, BinaryTreeNode *, const void *)){
+    
+    if (!node){
+        return function(tree, node, data);
+    }
+    
+    if (BinaryTreeNode_isLeaf(node)){
+        return function(tree, node, data);
+    }
+    
+    if (function(tree,node,data) == 0){
+        return 0;
+    };
+    
+    if (BinaryTree_Left(node)) {
+        if (BinaryTreeTraversePreOrder(tree, BinaryTree_Left(node), data, function)==0){
+            return 0;
+        };
+    }
+    
+    if (BinaryTree_Right(node)) {
+        if (BinaryTreeTraversePreOrder(tree, BinaryTree_Right(node), data, function)==0){
+            return 0;
+        };
+    }
+    
+    return -1;
+}
+
+int BinaryTreeTraversePostOrder(BinaryTree *tree,
+                                BinaryTreeNode *node,
+                                const void *data,
+                                int (*function)(BinaryTree *, BinaryTreeNode *, const void *)){
+    
+    if (!node){
+        return function(tree, node, data);
+    }
+    
+    if (BinaryTreeNode_isLeaf(node)){
+        return function(tree, node, data);
+    }
+    
+    if (BinaryTree_Left(node)) {
+        if (BinaryTreeTraversePostOrder(tree, BinaryTree_Left(node), data,function)==0){
+            return 0;
+        };
+    }
+    
+    if (BinaryTree_Right(node)) {
+        if (BinaryTreeTraversePostOrder(tree, BinaryTree_Right(node), data,function)==0){
+            return 0;
+        };
+    }
+    
+    if (function(tree, node,data)==0){
+        return 0;
+    };
+    
+    return -1;
+}
+
+
+void BinaryTreePrintInOrder(BinaryTree *tree){
+    printf("\nprint tree in order");
+    BinaryTreeTraverseInOrder(tree, tree->root, NULL,BinaryTreePrintNode);
+    printf("\n");
+}
+
+void BinaryTreePrintPreOrder(BinaryTree *tree){
+    printf("\nprint tree pre order");
+    BinaryTreeTraversePreOrder(tree, tree->root, NULL,BinaryTreePrintNode);
+    printf("\n");
+}
+
+void BinaryTreePrintPostOrder(BinaryTree *tree){
+    printf("\nprint tree post order");
+    BinaryTreeTraversePostOrder(tree,tree->root, NULL,BinaryTreePrintNode);
+    printf("\n");
+}
 
 @end

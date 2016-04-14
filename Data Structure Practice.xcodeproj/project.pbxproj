@@ -26,6 +26,8 @@
 		F220C0AA1CB5624600705F52 /* MyBinarySearchTrees.m in Sources */ = {isa = PBXBuildFile; fileRef = F220C0A91CB5624600705F52 /* MyBinarySearchTrees.m */; };
 		F220C0AD1CB5639A00705F52 /* MyDoublyLinkedLists.m in Sources */ = {isa = PBXBuildFile; fileRef = F220C0AC1CB5639A00705F52 /* MyDoublyLinkedLists.m */; };
 		F220C0B01CB563A600705F52 /* MyHeaps.m in Sources */ = {isa = PBXBuildFile; fileRef = F220C0AF1CB563A600705F52 /* MyHeaps.m */; };
+		F22720A11CBC4F620018F104 /* MyBinaryTreeTests.m in Sources */ = {isa = PBXBuildFile; fileRef = F22720A01CBC4F620018F104 /* MyBinaryTreeTests.m */; };
+		F22720A51CBD7F260018F104 /* MyBinarySearchTreeTests.m in Sources */ = {isa = PBXBuildFile; fileRef = F22720A41CBD7F260018F104 /* MyBinarySearchTreeTests.m */; };
 		F295E2A61CB5BEEE00A59E86 /* MyChainedHashTableTests.m in Sources */ = {isa = PBXBuildFile; fileRef = F295E2A51CB5BEEE00A59E86 /* MyChainedHashTableTests.m */; };
 /* End PBXBuildFile section */
 
@@ -72,6 +74,8 @@
 		F220C0AC1CB5639A00705F52 /* MyDoublyLinkedLists.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MyDoublyLinkedLists.m; sourceTree = "<group>"; };
 		F220C0AE1CB563A600705F52 /* MyHeaps.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyHeaps.h; sourceTree = "<group>"; };
 		F220C0AF1CB563A600705F52 /* MyHeaps.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MyHeaps.m; sourceTree = "<group>"; };
+		F22720A01CBC4F620018F104 /* MyBinaryTreeTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MyBinaryTreeTests.m; sourceTree = "<group>"; };
+		F22720A41CBD7F260018F104 /* MyBinarySearchTreeTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MyBinarySearchTreeTests.m; sourceTree = "<group>"; };
 		F295E2A51CB5BEEE00A59E86 /* MyChainedHashTableTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MyChainedHashTableTests.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -125,8 +129,8 @@
 				F220C09C1CB561EE00705F52 /* MyStacks.h */,
 				F220C09D1CB561EE00705F52 /* MyStacks.m */,
 				F220C09F1CB5621100705F52 /* MyQueues.h */,
-				F220C0A01CB5621100705F52 /* MyQueues.m */,
 				F220C0A21CB5622500705F52 /* MyChainedHashTables.h */,
+				F220C0A01CB5621100705F52 /* MyQueues.m */,
 				F220C0A31CB5622500705F52 /* MyChainedHashTables.m */,
 				F220C0A51CB5623300705F52 /* MyBinaryTrees.h */,
 				F220C0A61CB5623300705F52 /* MyBinaryTrees.m */,
@@ -159,7 +163,9 @@
 				F295E2A51CB5BEEE00A59E86 /* MyChainedHashTableTests.m */,
 				F20154381CB84BDF00AB9955 /* MyQueueTests.m */,
 				F201543A1CB8518A00AB9955 /* MyStackTests.m */,
+				F22720A01CBC4F620018F104 /* MyBinaryTreeTests.m */,
 				F203D4141CB451ED0067A092 /* Info.plist */,
+				F22720A41CBD7F260018F104 /* MyBinarySearchTreeTests.m */,
 			);
 			path = "Data Structure PracticeTests";
 			sourceTree = "<group>";
@@ -282,11 +288,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F22720A51CBD7F260018F104 /* MyBinarySearchTreeTests.m in Sources */,
 				F20154391CB84BDF00AB9955 /* MyQueueTests.m in Sources */,
 				F203D4241CB453430067A092 /* MySinglyLinkedListTests.m in Sources */,
 				F295E2A61CB5BEEE00A59E86 /* MyChainedHashTableTests.m in Sources */,
 				F203D4261CB45E720067A092 /* MySinglyLinkedLists.m in Sources */,
 				F201543B1CB8518A00AB9955 /* MyStackTests.m in Sources */,
+				F22720A11CBC4F620018F104 /* MyBinaryTreeTests.m in Sources */,
 				F203D4131CB451ED0067A092 /* Data_Structure_PracticeTests.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

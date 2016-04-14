@@ -8,6 +8,14 @@
 
 #import "MySinglyLinkedLists.h"
 
+float RandomFloatInRange(float min, float max)
+{
+    float range = max-min;
+    int32_t r = (int32_t)roundf(range);
+    float rand = (float)arc4random_uniform(r);
+    float val = min+rand;
+    return val;
+}
 
 float GetRandomFloatInRange(int loc, int length)
 {

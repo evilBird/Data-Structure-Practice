@@ -21,6 +21,7 @@
 
 float GetRandomFloatInRange(int loc, int length);
 float GetRandomFloat();
+float RandomFloatInRange(float min, float max);
 
 @interface MySinglyLinkedLists : NSObject
 
