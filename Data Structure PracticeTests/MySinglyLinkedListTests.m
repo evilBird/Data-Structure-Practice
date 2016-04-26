@@ -8,6 +8,7 @@
 
 #import <XCTest/XCTest.h>
 #import "MySinglyLinkedLists.h"
+#import "MyDataStructureUtils.h"
 
 #define DEFAULT_LENGTH 10
 
@@ -28,15 +29,52 @@
         XCTAssertTrue((*(float*)(element->data)) == list_data[i],@"data in singly linked list element at index %d = %f does not match inserted data %f",i,(*(float*)(element->data)),list_data[i]);
         element = element->next;
     }
+    
+    SinglyLinkedListPrintVisual(mySinglyLinkedList, FormatFloatData);
+}
+
+- (void)testSinglyLinkedListPrintVisual
+{
+    SinglyLinkedList *list = SinglyLinkedListCreate(MatchIntegersFunction);
+    int n = DEFAULT_LENGTH;
+    
+    for (int i = 0; i < n; i ++) {
+        int *integerData = (int*)(malloc(sizeof(int)));
+        *integerData = arc4random_uniform(1000);
+        SinglyLinkedListAppend(list, (void*)integerData);
+    }
+    
+    SinglyLinkedListPrintVisual(list, FormatIntegerData);
 }
 
 - (void)testSinglyLinkedListPrint
 {
-    SinglyLinkedListElement *element = mySinglyLinkedList->head;
-    for (int i = 0; i<length; i++) {
-        SinglyLinkedListElementPrint(element);
-        element = element->next;
+    SinglyLinkedList *list = SinglyLinkedListCreate(MatchIntegersFunction);
+    int n = DEFAULT_LENGTH;
+    void* theData[DEFAULT_LENGTH];
+    
+    for (int i = 0; i < n; i ++) {
+        int *integerData = (int*)(malloc(sizeof(int)));
+        *integerData = arc4random_uniform(1000);
+        theData[i] = (void*)integerData;
+        SinglyLinkedListAppend(list, (void*)integerData);
     }
+    
+    SinglyLinkedListPrintVisual(list, FormatIntegerData);
+    SinglyLinkedListElement *e = NULL;
+    void *toFind;
+    int randomIndex = arc4random_uniform(DEFAULT_LENGTH);
+    toFind = theData[randomIndex];
+    printf("\nfind data = %d\n",(*(int*)toFind));
+    e = SinglyLinkedListSearch(list, toFind);
+    XCTAssert(e!=NULL);
+    printf("\nfound data = %d\n",(*(int*)(e->data)));
+    
+    int *toInsert = (int*)(malloc(sizeof(int)));
+    *toInsert = (*(int*)(e->data));
+    SinglyLinkedListInsertNext(list, e, toInsert);
+    SinglyLinkedListPrintVisual(list, FormatIntegerData);
+    
 }
 
 - (void)testSinglyLinkedListSearch

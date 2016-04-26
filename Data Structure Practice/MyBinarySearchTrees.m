@@ -14,6 +14,10 @@ int BinarySearchTreeNode_CompareFloats(const void *key1, const void *key2){
     return (*(float*)key1)-(*(float*)key2);
 }
 
+int BinarySearchTreeNode_CompareInts(const void *key1, const void *key2){
+    return (*(int*)key1)-(*(int*)key2);
+}
+
 void BinarySearchTreeNode_Print(BinarySearchTreeNode *node, const void *data){
     printf("node data = %f, balance = %d, hidden = %d\n",(*(float *)BinarySearchTreeNode_Data(node)),node->factor,node->hidden);
 }
@@ -396,6 +400,232 @@ int BinarySearchTreePrintInOrder(BinarySearchTree *tree, BinarySearchTreeNode *n
     return 0;
 }
 
+
+SinglyLinkedList* NodeLevelList(BinarySearchTree *tree, SinglyLinkedList *prevLevelList){
+    
+    SinglyLinkedList *nodeLevelList = SinglyLinkedListCreate(NULL);
+    
+    if (prevLevelList == NULL) {
+        
+        SinglyLinkedListAppend(nodeLevelList, (void *)(tree->root));
+        
+    }else{
+        
+        SinglyLinkedListElement *e = prevLevelList->head;
+        
+        while (1) {
+            
+            BinarySearchTreeNode *node = (BinarySearchTreeNode *)(e->data);
+            
+            if (node->left) {
+                SinglyLinkedListAppend(nodeLevelList, (void*)(node->left));
+            }
+            
+            if (node->right) {
+                SinglyLinkedListAppend(nodeLevelList, (void*)(node->right));
+            }
+            
+            if (e->next == NULL) {
+                break;
+            }
+            
+            e = e->next;
+            
+        }
+        
+    }
+    
+    return nodeLevelList;
+}
+
+int FindNodeHt(BinarySearchTreeNode *node){
+    
+    if (node == NULL) {
+        return -1;
+    }
+    
+    int leftHt = FindNodeHt(node->left);
+    int rightHt = FindNodeHt(node->right);
+    
+    if (leftHt > rightHt) {
+        return (leftHt + 1);
+    }else{
+        return (rightHt + 1);
+    }
+}
+
+void BinarySearchTreePrintVisual(BinarySearchTree *tree, void (*formatData)(char *, const void *)){
+    printf("\n\n");
+    
+    int ht = FindNodeHt(tree->root);
+    int maxNodesPerLevel = (int)powf(2.0, (float)ht);
+    int spacesPerNode = 4;
+    int minPadding = 2;
+    int totalWidth = (maxNodesPerLevel * spacesPerNode) + ((maxNodesPerLevel-1)*minPadding);
+    int currentLevel = 0;
+    SinglyLinkedList *prevList = NULL;
+    SinglyLinkedList *nodeList = NodeLevelList(tree, prevList);
+    int *nextLevelLayout = NULL;
+    
+    while (currentLevel < ht) {
+        
+        if (nextLevelLayout == NULL){
+            
+            int center = totalWidth/2;
+            int start = center-(spacesPerNode/2);
+            
+            printf("\n");
+            int i = 0;
+            
+            for (; i < start; i++) {
+                printf(".");
+            }
+            
+            SinglyLinkedListElement *e = nodeList->head;
+            BinarySearchTreeNode *node = (BinarySearchTreeNode *)e->data;
+            char fmt[10];
+            formatData(fmt,node->data);
+            printf("[%s]",fmt);
+            i+=spacesPerNode;
+            int maxNodesNextLevel = (int)powf(2.0, (float)(currentLevel+1));
+            int leftBranchCenter = start-1;
+            int leftCenter = leftBranchCenter - (spacesPerNode/2);
+            int rightBranchCenter = i;
+            int rightCenter = rightBranchCenter - (spacesPerNode/2);
+            
+            nextLevelLayout = (int*)malloc(sizeof(int) * (maxNodesNextLevel + 1));
+            i = 0;
+            
+            for (; i < leftBranchCenter; i++) {
+                printf(".");
+            }
+            
+            if (node->left) {
+                nextLevelLayout[0] = leftCenter;
+                printf("/");
+            }else{
+                nextLevelLayout[0] = -1;
+                printf(".");
+            }
+            
+            i++;
+            
+            for (; i < rightBranchCenter; i++) {
+                printf(".");
+            }
+            
+            if (node->right) {
+                nextLevelLayout[1] = rightCenter;
+                printf("\\");
+            }else{
+                nextLevelLayout[1] = -1;
+                printf(".");
+            }
+            
+            i++;
+            
+        }else{
+            
+            int maxNodesThisLevel = (int)powf(2.0, (float)(currentLevel));
+            int maxNodesNextLevel = ( currentLevel < ht ) ? ( maxNodesThisLevel * 2 ) : ( 0 );
+            int *temp = NULL;
+            temp = (maxNodesNextLevel > 0) ? ((int*)malloc(sizeof(int) * (maxNodesNextLevel + 1))) : ( NULL );
+            int i = 0;
+            printf("\n");
+            SinglyLinkedListElement *e = nodeList->head;
+            
+            for (int idx = 0; idx < maxNodesThisLevel; idx++) {
+                int thisCenter = nextLevelLayout[i];
+                int thisStart = thisCenter-(spacesPerNode/2);
+                int nextStart = -1;
+                int nextStop = -1;
+                
+                if (thisCenter > totalWidth) {
+                    break;
+                }
+                
+                if (thisCenter >= 0) {
+                    for (; i<thisStart; i++) {
+                        printf(".");
+                    }
+                    
+                    BinarySearchTreeNode *node = (BinarySearchTreeNode *)e->data;
+                    
+                    char fmt[10];
+                    formatData(fmt,node->data);
+                    printf("[%s]",fmt);
+                    i+=spacesPerNode;
+                    if (node->left) {
+                        nextStart = (thisStart-1);
+                    }
+                    
+                    if(node->right){
+                        nextStop = i+1;
+                    }
+                    
+                    
+                    if (e->next) {
+                        e = e->next;
+                    }
+                }
+                
+                if (temp != NULL){
+                    int tempIdx = idx*2;
+                    temp[tempIdx] = nextStart;
+                    tempIdx++;
+                    temp[tempIdx] = nextStop;
+                }
+                
+            }
+            
+            if (temp != NULL) {
+                printf("\n");
+                i = 0;
+                
+                for (int idx = 0; idx<maxNodesThisLevel; idx++) {
+                    
+                    int leftIdx = idx*2;
+                    int rightIdx = leftIdx+1;
+                    int left = temp[leftIdx];
+                    int right = temp[rightIdx];
+                    
+                    if (left > totalWidth || right > totalWidth){
+                        break;
+                    }
+                    
+                    if (left > 0) {
+                        for (; i<left; i++) {
+                            printf(".");
+                        }
+                        temp[leftIdx] = (left-(spacesPerNode/2));
+                        printf("/");
+                    }
+                    
+                    if (right>0) {
+                        for (; i<right; i++) {
+                            printf(".");
+                        }
+                        printf("\\");
+                        temp[rightIdx] = (rightIdx-(spacesPerNode/2));
+                    }
+                }
+                
+                nextLevelLayout = temp;
+            }
+            
+        }
+        
+        prevList = nodeList;
+        currentLevel ++;
+
+        if (currentLevel < ht) {
+            nodeList = NodeLevelList(tree, prevList);
+        }
+    }
+    
+    printf("\n\n");
+    
+}
 
 
 

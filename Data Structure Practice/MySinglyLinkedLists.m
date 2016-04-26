@@ -34,7 +34,12 @@ int MyFloatMatchFunction (const void * key1, const void * key2)
     return ( *(float*)key1 - *(float*)key2 );
 }
 
+
 @implementation MySinglyLinkedLists
+
+int MatchIntegersFunction(const void *key1, const void *key2){
+    return ( *(int*)key1 - *(int*)key2 );
+}
 
 SinglyLinkedListElement*  SinglyLinkedListElementCreate(){
     
@@ -56,7 +61,7 @@ SinglyLinkedList* SinglyLinkedListCreate(int (*match)(const void *key1, const vo
     list->head = NULL;
     list->tail = NULL;
     list->count = 0;
-    list->match = ( match ) ? ( match ) : ( MyFloatMatchFunction );
+    list->match = MatchIntegersFunction;
     return list;
 }
 
@@ -99,18 +104,22 @@ SinglyLinkedListElement* SinglyLinkedListSearchWithMatchFunction(SinglyLinkedLis
 SinglyLinkedListElement* SinglyLinkedListSearch(SinglyLinkedList *list, void *toFind)
 {
     SinglyLinkedListElement *result = NULL;
-    SinglyLinkedListElement *element = list->head;
-    if (!list->match) {
-        return result;
-    }
+    SinglyLinkedListElement *e = list->head;
     
-    while (element) {
-        if (list->match(element->data, toFind)) {
-            result = element;
+    while (1) {
+        
+        int cmp = list->match(toFind, e->data);
+        
+        if (cmp == 0) {
+            result = e;
             break;
         }
         
-        element = element->next;
+        if (e->next == NULL) {
+            break;
+        }
+        
+        e = e->next;
     }
     
     return result;
@@ -227,5 +236,33 @@ void SinglyLinkedListDestroy(SinglyLinkedList *list)
     list->head = NULL;
     list->tail = NULL;
 }
+
+void FormatFloatData(char *result, const void *data){
+    sprintf(result, "%f",*((float *)data));
+}
+
+void FormatIntegerData(char *result, const void *data){
+    sprintf(result, "%d",*((int *)data));
+}
+
+void SinglyLinkedListPrintVisual(SinglyLinkedList *list, void (*formatData)(char *, const void *)){
+    
+    printf("\n\n{head} ");
+    SinglyLinkedListElement *e = list->head;
+    while (1) {
+        char dataStr[50];
+        formatData(dataStr,e->data);
+        printf("[%s]",dataStr);
+        
+        if (e->next == NULL) {
+            break;
+        }
+        printf("->");
+        e = e->next;
+    }
+    
+    printf(" {tail}\n\n");
+}
+
 
 @end

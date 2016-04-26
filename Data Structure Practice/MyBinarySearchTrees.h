@@ -7,6 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "MySinglyLinkedLists.h"
 
 @interface MyBinarySearchTrees : NSObject
 
@@ -19,6 +20,7 @@ typedef struct BinarySearchTreeNode_{
 }BinarySearchTreeNode;
 
 int BinarySearchTreeNode_CompareFloats(const void *key1, const void *key2);
+int BinarySearchTreeNode_CompareInts(const void *key1, const void *key2);
 void BinarySearchTreeNode_Print(BinarySearchTreeNode *node, const void *data);
 BinarySearchTreeNode* BinarySearchTreeNodeCreate();
 
@@ -48,6 +50,8 @@ int BinarySearchTreeInsert(BinarySearchTree *tree, BinarySearchTreeNode **node, 
 int BinarySearchTreeRemove(BinarySearchTree *tree, const void *data);
 int BinarySearchTreeLookup(BinarySearchTree *tree, BinarySearchTreeNode *node, void **data);
 int BinarySearchTreePrintInOrder(BinarySearchTree *tree, BinarySearchTreeNode *node, const void *data);
+void BinarySearchTreePrintVisual(BinarySearchTree *tree, void (*formatData)(char *, const void *));
+
 #define BinarySearchTree_Size(tree)     ((tree)->size)
 #define BinarySearchTree_Root(tree)     ((tree)->root)
 

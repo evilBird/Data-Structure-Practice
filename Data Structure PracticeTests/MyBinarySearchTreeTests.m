@@ -34,6 +34,7 @@
     // Put setup code here. This method is called before the invocation of each test method in the class.
 }
 
+
 - (void)testInsertData{
     myData[0] = RandomFloatInRange(kMinData, kMaxData);
     BinarySearchTreeNode *node = NULL;
@@ -55,13 +56,26 @@
 - (void)tearDown {
     // Put teardown code here. This method is called after the invocation of each test method in the class.
     [super tearDown];
-    BinarySearchTreeDestroy(myBinarySearchTree);
-    free(myData);
+    //BinarySearchTreeDestroy(myBinarySearchTree);
+    //free(myData);
 }
 
 - (void)testExample {
-    // This is an example of a functional test case.
-    // Use XCTAssert and related functions to verify your tests produce the correct results.
+
+    BinarySearchTree *tree = BinarySearchTreeCreate(BinarySearchTreeNode_CompareInts);
+    int kTreeDataCount = 12;
+    void* treeData[12];
+    for (int i = 0; i < kTreeDataCount; i++) {
+        int* randomInt = (int*)malloc(sizeof(int));
+        *randomInt = arc4random_uniform(30);
+        treeData[i] = (void*)randomInt;
+        int balanced;
+        BinarySearchTreeNode *node = tree->root;
+        BinarySearchTreeInsert(tree, &node, (void *)randomInt, &balanced);
+        
+    }
+    
+    BinarySearchTreePrintVisual(tree, FormatIntegerData);
 }
 
 - (void)testPerformanceExample {

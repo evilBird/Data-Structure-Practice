@@ -7,7 +7,6 @@
 //
 
 #import "MyChainedHashTables.h"
-
 @implementation MyChainedHashTables
 
 int MyStringHashFunction(const void *key)
@@ -48,7 +47,7 @@ int MyFloatHashFunction(const void *key){
     int val = MyStringHashFunction((void*)keyString);
     return val;
 }
-/*
+
 int MyMultiplicationMethodHashFunction(const void *key, int n){
     
     int k = *(int *)key;
@@ -58,7 +57,7 @@ int MyMultiplicationMethodHashFunction(const void *key, int n){
     int val = (int)(n * remainder) % n;
     return val;
 }
-*/
+
 ChainedHashTable* ChainedHashTableCreate(int buckets,
                                          int (*h)(const void *key),
                                          int (*match)(const void *key1, const void *key2),

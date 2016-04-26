@@ -7,6 +7,8 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "MyDataStructureUtils.h"
+
 #define sll                 SinglyLinkedList
 #define sll_elem            SinglyLinkedListElement
 #define sll_init            SinglyLinkedListCreate
@@ -35,6 +37,7 @@ typedef struct MySinglyLinkedListElement{
 SinglyLinkedListElement* SinglyLinkedListElementCreate();
 
 int MyFloatMatchFunction(const void *key1, const void *key2);
+int MatchIntegersFunction(const void *key1, const void *key2);
 void SinglyLinkedListElementPrint(SinglyLinkedListElement *element);
 
 typedef struct MySinglyLinkedList{
@@ -71,5 +74,11 @@ int SinglyLinkedListRemoveNext(SinglyLinkedList *list,
 void SinglyLinkedListPrint(SinglyLinkedList *list);
 
 void SinglyLinkedListDestroy(SinglyLinkedList *list);
+
+void FormatFloatData(char *result, const void *data);
+
+void FormatIntegerData(char *result, const void *data);
+
+void SinglyLinkedListPrintVisual(SinglyLinkedList *list, void (*formatData)(char *, const void *));
 
 @end
