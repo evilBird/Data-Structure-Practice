@@ -13,7 +13,6 @@
 #include <stdlib.h>
 
 #define HUGE_VALUE 100000000
-//#define BSG_DEBUG
 
 void PrintCharCounts(int *counts, char *alphabet){
     int len = (int)strlen(alphabet);
@@ -82,105 +81,102 @@ int BSG_RunTestCase(char *input) {
     int j = 0;  //stop index
     int flag = 0;
     int minLength = HUGE_VALUE;
-    int changes[256];
-    
+    int steady = 0;
+    int lastSwap = -1;
+    int maxIndex = len-1;
     for (; i < len-1; i++){
-        j = i+1;
-        memset(changes,0,sizeof(int)*256);
+        
 #ifdef BSG_DEBUG
         printf("\nexecuting outer loop i = %d, j = %d, minLength = %d, flag = %d\n",
                i,j,minLength,flag);
         printf("counts:\n");
         PrintCharCounts(counts,alphabet);
-        
 #endif
-        if ( counts[(int)string[i]] > n ){
-            
-            stringCopy[i] = NextReplacementChar(string[i], n, alphabet, counts, &flag);
-            if (flag) break;
-            counts[(int)string[i]]--;
-            counts[(int)stringCopy[i]]++;
-            changes[(int)string[i]]--;
-            changes[(int)stringCopy[i]]++;
-            
-            int curLength = HUGE_VALUE;
+        
+        int curLength = HUGE_VALUE;
 #ifdef BSG_DEBUG
-            printf("replaced char %c with %c...starting inner loop\n",
-                   string[i],stringCopy[i]);
-            printf("inner loop starting counts:\n");
+        printf("inner loop starting:\n");
+#endif
+        
+        for (; j < len; j++){
+            curLength = (j - i) + 1;
+#ifdef BSG_DEBUG
+            printf("executing inner loop i = %d j = %d curLength %d minLength %d flag %d\n",
+                   i,j,curLength,minLength,flag);
+#endif
+
+            if (curLength >= minLength){
+#ifdef BSG_DEBUG
+                printf("PREV MIN LENGTH EXCEEDED @ %d\n",curLength);
+#endif
+                break;
+            }
+            
+            if ( counts[(int)stringCopy[j]] > n ){
+                
+                char tmp = stringCopy[j];
+                stringCopy[j] = NextReplacementChar(tmp, n, alphabet, counts, &flag);
+                
+                if (flag) {
+#ifdef BSG_DEBUG
+                    printf("FLAG!!!\n");
+#endif
+                    PrintCharCounts(counts, alphabet);
+                    break;
+                }else{
+#ifdef BSG_DEBUG
+                    printf("replaced %c with %c\n",tmp,stringCopy[i]);
+#endif
+                }
+                
+                counts[(int)tmp]--;
+                counts[(int)stringCopy[j]]++;
+                lastSwap = j;
+            }
+            
+            steady = CountsAreSteady(n, counts, alphabet);
+            
+#ifdef BSG_DEBUG
+            printf("counts:\n");
             PrintCharCounts(counts,alphabet);
 #endif
-            for (j = i+1; j < len; j++){
-                
-                curLength = (j - i) + 1;
+            minLength = ( steady && curLength < minLength ) ? curLength : minLength;
+            
+            if (steady){
 #ifdef BSG_DEBUG
-                printf("executing inner loop i = %d j = %d curLength %d minLength %d flag %d\n",
-                       i,j,curLength,minLength,flag);
+                printf("STEADY @ %d\n",curLength);
 #endif
-                if ( counts[(int)string[j]] > n ){
-                    
-                    stringCopy[j] = NextReplacementChar(string[j], n, alphabet, counts, &flag);
-                    counts[(int)string[j]]--;
-                    counts[(int)stringCopy[j]]++;
-                    changes[(int)string[j]]--;
-                    changes[(int)stringCopy[j]]++;
-#ifdef BSG_DEBUG
-                    printf("replaced char %c with char %c\n",string[j],stringCopy[j]);
-                    
-#endif
-                }
-                
-#ifdef BSG_DEBUG
-                printf("counts:\n");
-                PrintCharCounts(counts,alphabet);
-#endif
-                if (CountsAreSteady(n, counts, alphabet)){
-                    minLength = ( curLength < minLength ) ? curLength : minLength;
-#ifdef BSG_DEBUG
-                    printf("counts are steady with minLength %d...WILL BREAK INNER LOOP\n",minLength);
-#endif
-                    break;
-                }
-                
-                if ( curLength > minLength ){
-#ifdef BSG_DEBUG
-                    printf("curLength %d > minLength %d...WILL BREAK INNER LOOP\n",curLength, minLength);
-#endif
-                    break;
-                }
-                
-                if (flag) break;
+                break;
             }
+            
         }
         
         if (flag) break;
 #ifdef BSG_DEBUG
         printf("finished inner loop i = %d j = %d\n",i,j);
         PrintCharCounts(counts,alphabet);
-        printf("undo changes:\n");
-        PrintCharCounts(changes,alphabet);
 #endif
-        UndoCountChanges(counts, changes, alphabet);
-        /*
-         while ( j >= i ){
-         
-         if ( stringCopy[j] != string[j] ){
-         counts[(int)stringCopy[j]]--;
-         counts[(int)string[j]]++;
-         #ifdef BSG_DEBUG
-         printf("undo replace char %c with %c\n",string[j],stringCopy[j]);
-         #endif
-         }
-         stringCopy[j] = string[j];
-         j--;
-         }
-         */
+
+        if ( stringCopy[i] != string[i]){
+            
+            counts[(int)stringCopy[i]]--;
+            counts[(int)string[i]]++;
+            
+        }
+        
+        
 #ifdef BSG_DEBUG
-        printf("updated counts:\n");
-        PrintCharCounts(counts,alphabet);
-        printf("min length: %d\n\n",minLength);
+        printf("min length: %d\n",minLength);
+        printf("cur length: %d\n\n",curLength);
 #endif
+        j = lastSwap;
+        if ( j < i){
+            j = i;
+        }
+        
     }
+    
+
     
     minLength = ( minLength == HUGE_VALUE ) ? 0 : minLength;
     

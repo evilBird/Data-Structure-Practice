@@ -49,6 +49,12 @@
     XCTAssert(result==BSG_case3Output);
 }
 
+- (void)testCase8
+{
+    int result = BSG_RunTestCase(BSG_case8Input);
+    XCTAssert(result==BSG_case8Output);
+}
+
 - (void)testCase9
 {
     int result = BSG_RunTestCase(BSG_case9Input);
