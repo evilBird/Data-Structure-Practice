@@ -29,11 +29,18 @@
 		F22720A51CBD7F260018F104 /* MyBinarySearchTreeTests.m in Sources */ = {isa = PBXBuildFile; fileRef = F22720A41CBD7F260018F104 /* MyBinarySearchTreeTests.m */; };
 		F24D67501CD02BB400B25E3C /* BearAndSteadyGene.c in Sources */ = {isa = PBXBuildFile; fileRef = F24D674E1CD02BB400B25E3C /* BearAndSteadyGene.c */; };
 		F24D67521CD02DCF00B25E3C /* BearAndSteadyGeneTests.m in Sources */ = {isa = PBXBuildFile; fileRef = F24D67511CD02DCF00B25E3C /* BearAndSteadyGeneTests.m */; };
+		F24D67571CD3F22900B25E3C /* MedianUpdates.c in Sources */ = {isa = PBXBuildFile; fileRef = F24D67551CD3F22900B25E3C /* MedianUpdates.c */; };
+		F24D67591CD3F28600B25E3C /* MedianUpdatesTests.m in Sources */ = {isa = PBXBuildFile; fileRef = F24D67581CD3F28600B25E3C /* MedianUpdatesTests.m */; };
 		F25124C81CC0310D0013D167 /* MyDataStructureUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = F25124C71CC0310D0013D167 /* MyDataStructureUtils.m */; };
 		F25124CB1CC057380013D167 /* PracticeQuestions.m in Sources */ = {isa = PBXBuildFile; fileRef = F25124CA1CC057380013D167 /* PracticeQuestions.m */; };
 		F2827FAC1CCACF4D00726A38 /* StringPermutations.m in Sources */ = {isa = PBXBuildFile; fileRef = F2827FAB1CCACF4D00726A38 /* StringPermutations.m */; };
 		F2827FAF1CCAD03100726A38 /* StringPermutationsTests.m in Sources */ = {isa = PBXBuildFile; fileRef = F2827FAE1CCAD03100726A38 /* StringPermutationsTests.m */; };
 		F295E2A61CB5BEEE00A59E86 /* MyChainedHashTableTests.m in Sources */ = {isa = PBXBuildFile; fileRef = F295E2A51CB5BEEE00A59E86 /* MyChainedHashTableTests.m */; };
+		F2FE7C7A1CDAB45C00C95101 /* SnakesAndLaddersTests.m in Sources */ = {isa = PBXBuildFile; fileRef = F2FE7C791CDAB45C00C95101 /* SnakesAndLaddersTests.m */; };
+		F2FE7C7E1CDAB49000C95101 /* TestCaseIOUtils.c in Sources */ = {isa = PBXBuildFile; fileRef = F2FE7C7C1CDAB49000C95101 /* TestCaseIOUtils.c */; };
+		F2FE7C801CDAB87000C95101 /* SnakesAndLaddersTestCase0Input.txt in Resources */ = {isa = PBXBuildFile; fileRef = F2FE7C7F1CDAB87000C95101 /* SnakesAndLaddersTestCase0Input.txt */; };
+		F2FE7C831CDABFE600C95101 /* SnakesAndLadders.c in Sources */ = {isa = PBXBuildFile; fileRef = F2FE7C811CDABFE600C95101 /* SnakesAndLadders.c */; };
+		F2FE7C851CDACAE300C95101 /* SnakesAndLaddersTestCase1Input.txt in Resources */ = {isa = PBXBuildFile; fileRef = F2FE7C841CDACAE300C95101 /* SnakesAndLaddersTestCase1Input.txt */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -84,6 +91,9 @@
 		F24D674E1CD02BB400B25E3C /* BearAndSteadyGene.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = BearAndSteadyGene.c; sourceTree = "<group>"; };
 		F24D674F1CD02BB400B25E3C /* BearAndSteadyGene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BearAndSteadyGene.h; sourceTree = "<group>"; };
 		F24D67511CD02DCF00B25E3C /* BearAndSteadyGeneTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BearAndSteadyGeneTests.m; sourceTree = "<group>"; };
+		F24D67551CD3F22900B25E3C /* MedianUpdates.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = MedianUpdates.c; sourceTree = "<group>"; };
+		F24D67561CD3F22900B25E3C /* MedianUpdates.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MedianUpdates.h; sourceTree = "<group>"; };
+		F24D67581CD3F28600B25E3C /* MedianUpdatesTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MedianUpdatesTests.m; sourceTree = "<group>"; };
 		F25124C61CC0310D0013D167 /* MyDataStructureUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyDataStructureUtils.h; sourceTree = "<group>"; };
 		F25124C71CC0310D0013D167 /* MyDataStructureUtils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MyDataStructureUtils.m; sourceTree = "<group>"; };
 		F25124C91CC034370013D167 /* MyDataStructures.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = MyDataStructures.h; path = "Data Structure PracticeTests/MyDataStructures.h"; sourceTree = SOURCE_ROOT; };
@@ -92,6 +102,13 @@
 		F2827FAD1CCACF6900726A38 /* StringPermutations.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = StringPermutations.h; sourceTree = "<group>"; };
 		F2827FAE1CCAD03100726A38 /* StringPermutationsTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StringPermutationsTests.m; sourceTree = "<group>"; };
 		F295E2A51CB5BEEE00A59E86 /* MyChainedHashTableTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MyChainedHashTableTests.m; sourceTree = "<group>"; };
+		F2FE7C791CDAB45C00C95101 /* SnakesAndLaddersTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SnakesAndLaddersTests.m; sourceTree = "<group>"; };
+		F2FE7C7C1CDAB49000C95101 /* TestCaseIOUtils.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = TestCaseIOUtils.c; sourceTree = "<group>"; };
+		F2FE7C7D1CDAB49000C95101 /* TestCaseIOUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TestCaseIOUtils.h; sourceTree = "<group>"; };
+		F2FE7C7F1CDAB87000C95101 /* SnakesAndLaddersTestCase0Input.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = SnakesAndLaddersTestCase0Input.txt; sourceTree = "<group>"; };
+		F2FE7C811CDABFE600C95101 /* SnakesAndLadders.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = SnakesAndLadders.c; sourceTree = "<group>"; };
+		F2FE7C821CDABFE600C95101 /* SnakesAndLadders.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SnakesAndLadders.h; sourceTree = "<group>"; };
+		F2FE7C841CDACAE300C95101 /* SnakesAndLaddersTestCase1Input.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = SnakesAndLaddersTestCase1Input.txt; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -137,6 +154,8 @@
 				F203D3FC1CB451ED0067A092 /* AppDelegate.m */,
 				F203D3FE1CB451ED0067A092 /* ViewController.h */,
 				F203D3FF1CB451ED0067A092 /* ViewController.m */,
+				F2FE7C7C1CDAB49000C95101 /* TestCaseIOUtils.c */,
+				F2FE7C7D1CDAB49000C95101 /* TestCaseIOUtils.h */,
 				F24D674E1CD02BB400B25E3C /* BearAndSteadyGene.c */,
 				F24D674F1CD02BB400B25E3C /* BearAndSteadyGene.h */,
 				F2827FAD1CCACF6900726A38 /* StringPermutations.h */,
@@ -165,6 +184,10 @@
 				F203D4061CB451ED0067A092 /* LaunchScreen.storyboard */,
 				F203D4091CB451ED0067A092 /* Info.plist */,
 				F203D3F81CB451ED0067A092 /* Supporting Files */,
+				F24D67551CD3F22900B25E3C /* MedianUpdates.c */,
+				F24D67561CD3F22900B25E3C /* MedianUpdates.h */,
+				F2FE7C811CDABFE600C95101 /* SnakesAndLadders.c */,
+				F2FE7C821CDABFE600C95101 /* SnakesAndLadders.h */,
 			);
 			path = "Data Structure Practice";
 			sourceTree = "<group>";
@@ -191,6 +214,10 @@
 				F25124CA1CC057380013D167 /* PracticeQuestions.m */,
 				F2827FAE1CCAD03100726A38 /* StringPermutationsTests.m */,
 				F24D67511CD02DCF00B25E3C /* BearAndSteadyGeneTests.m */,
+				F24D67581CD3F28600B25E3C /* MedianUpdatesTests.m */,
+				F2FE7C7F1CDAB87000C95101 /* SnakesAndLaddersTestCase0Input.txt */,
+				F2FE7C841CDACAE300C95101 /* SnakesAndLaddersTestCase1Input.txt */,
+				F2FE7C791CDAB45C00C95101 /* SnakesAndLaddersTests.m */,
 			);
 			path = "Data Structure PracticeTests";
 			sourceTree = "<group>";
@@ -285,6 +312,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F2FE7C851CDACAE300C95101 /* SnakesAndLaddersTestCase1Input.txt in Resources */,
+				F2FE7C801CDAB87000C95101 /* SnakesAndLaddersTestCase0Input.txt in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -302,6 +331,9 @@
 				F220C0AD1CB5639A00705F52 /* MyDoublyLinkedLists.m in Sources */,
 				F2827FAC1CCACF4D00726A38 /* StringPermutations.m in Sources */,
 				F220C0B01CB563A600705F52 /* MyHeaps.m in Sources */,
+				F2FE7C7E1CDAB49000C95101 /* TestCaseIOUtils.c in Sources */,
+				F2FE7C831CDABFE600C95101 /* SnakesAndLadders.c in Sources */,
+				F24D67571CD3F22900B25E3C /* MedianUpdates.c in Sources */,
 				F220C0A11CB5621100705F52 /* MyQueues.m in Sources */,
 				F203D4221CB452AE0067A092 /* MySinglyLinkedLists.m in Sources */,
 				F203D3FD1CB451ED0067A092 /* AppDelegate.m in Sources */,
@@ -316,6 +348,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F2FE7C7A1CDAB45C00C95101 /* SnakesAndLaddersTests.m in Sources */,
 				F22720A51CBD7F260018F104 /* MyBinarySearchTreeTests.m in Sources */,
 				F2827FAF1CCAD03100726A38 /* StringPermutationsTests.m in Sources */,
 				F20154391CB84BDF00AB9955 /* MyQueueTests.m in Sources */,
@@ -325,6 +358,7 @@
 				F25124CB1CC057380013D167 /* PracticeQuestions.m in Sources */,
 				F201543B1CB8518A00AB9955 /* MyStackTests.m in Sources */,
 				F22720A11CBC4F620018F104 /* MyBinaryTreeTests.m in Sources */,
+				F24D67591CD3F28600B25E3C /* MedianUpdatesTests.m in Sources */,
 				F203D4131CB451ED0067A092 /* Data_Structure_PracticeTests.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
