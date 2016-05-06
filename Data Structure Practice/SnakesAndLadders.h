@@ -9,8 +9,14 @@
 #ifndef SnakesAndLadders_h
 #define SnakesAndLadders_h
 
-#include <stdio.h>
+#ifndef XCODE_TEST_RUN
+#define XCODE_TEST_RUN
+#endif
 
-int SnakesAndLaddersRunTestCase(char *results);
+#ifndef XCODE_TEST_DEBUG
+#define XCODE_TEST_DEBUG
+#endif
+
+int SnakesAndLaddersRunTestCase(char *output, const char *input);
 
 #endif /* SnakesAndLadders_h */

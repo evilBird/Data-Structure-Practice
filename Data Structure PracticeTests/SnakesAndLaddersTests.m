@@ -7,11 +7,11 @@
 //
 
 #import <XCTest/XCTest.h>
-#import "TestCaseIOUtils.h"
+#import "TestingIOUtilities.h"
 #import "SnakesAndLadders.h"
 
-#include <unistd.h>
-#include <sys/shm.h>
+static NSString *kInputFileFormat   = @"SnakesAndLaddersTestCase%dInput";
+static NSString *kOutputFileFormat  = @"SnakesAndLaddersTestCase%dOutput";
 
 @interface SnakesAndLaddersTests : XCTestCase
 
@@ -29,57 +29,49 @@
     [super tearDown];
 }
 
-- (const char *)inputPathForTestCase:(int)caseNumber
-{
+- (NSString *)pathForFileWithFormat:(NSString *)format caseNum:(int)caseNum{
     NSBundle *bundle = [NSBundle bundleForClass:[self class]];
-    NSString *caseName = [NSString stringWithFormat:@"SnakesAndLaddersTestCase%dInput",caseNumber];
+    NSString *caseName = [NSString stringWithFormat:format,caseNum];
     NSString *path = [bundle pathForResource:caseName ofType:@"txt"];
-    XCTAssertNotNil(path);
-    return path.UTF8String;
+    XCTAssert(path!=nil);
+    return path;
 }
 
-- (const char *)outputPathForTestCase:(int)caseNumber
+- (const char *)inputForTestCaseNum:(int)caseNum{
+    NSError *err = nil;
+    NSString *path = [self pathForFileWithFormat:kInputFileFormat caseNum:caseNum];
+    return [TestingIOUtilities getContentsOfFile:path error:&err];
+}
+
+- (const char *)outputForTestCaseNum:(int)caseNum outputBuffer:(char **)outputBuffer{
+    NSError *err = nil;
+    NSString *path = [self pathForFileWithFormat:kOutputFileFormat caseNum:caseNum];
+    size_t size = [TestingIOUtilities getSizeOfFile:path];
+    *outputBuffer = (char *)malloc(size + 1);
+    return [TestingIOUtilities getContentsOfFile:path error:&err];
+}
+
+- (void)runCaseNum:(int)caseNum
 {
-    NSBundle *bundle = [NSBundle bundleForClass:[self class]];
-    NSString *caseName = [NSString stringWithFormat:@"SnakesAndLaddersTestCase%dOutput",caseNumber];
-    NSString *path = [bundle pathForResource:caseName ofType:@"txt"];
-    XCTAssertNotNil(path);
-    return path.UTF8String;
+    const char *input = [self inputForTestCaseNum:caseNum];
+    char *output = NULL;
+    const char *expected = [self outputForTestCaseNum:caseNum outputBuffer:&output];
+    SnakesAndLaddersRunTestCase(output, input);
+    int result = [TestingIOUtilities output:output matchesExpected:(char *)expected];
+    XCTAssert(result==1,"\nFAILED CASE %d\nOUTPUT:\n%s\nEXPECTED:\n%s\n",caseNum,output,expected);
 }
 
 - (void)testCase0{
-    const char *path = [self inputPathForTestCase:0];
-    FILE *fp;
-    OpenTestCaseInputFile(fp, path);
-    char output[1000];
-    SnakesAndLaddersRunTestCase(output);
-    printf("output: %s\n",output);
-    CloseTestCaseInputFile(fp);
+    
+    int caseNum = 0;
+    [self runCaseNum:caseNum];
 }
 
 - (void)testCase1{
-    const char *path = [self inputPathForTestCase:1];
-    FILE *fp;
-    char output[1000];
-    OpenTestCaseInputFile(fp, path);
-    SnakesAndLaddersRunTestCase(output);
-    CloseTestCaseInputFile(fp);
+    int caseNum = 1;
+    [self runCaseNum:caseNum];
 }
 
-- (void)testReadFromStdOut
-{
-    char *mycapture = CaptureStdOut(100);    // capture first 100 bytes
-    printf("Hello World");           // sample test string
-    sleep(1);
-    fprintf(stderr, "\nCaptured: %s\n", mycapture);
-    
-}
 
-- (void)testPerformanceExample {
-    // This is an example of a performance test case.
-    [self measureBlock:^{
-        // Put the code you want to measure the time of here.
-    }];
-}
 
 @end

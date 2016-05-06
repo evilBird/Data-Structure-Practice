@@ -33,6 +33,11 @@
 		F24D67591CD3F28600B25E3C /* MedianUpdatesTests.m in Sources */ = {isa = PBXBuildFile; fileRef = F24D67581CD3F28600B25E3C /* MedianUpdatesTests.m */; };
 		F25124C81CC0310D0013D167 /* MyDataStructureUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = F25124C71CC0310D0013D167 /* MyDataStructureUtils.m */; };
 		F25124CB1CC057380013D167 /* PracticeQuestions.m in Sources */ = {isa = PBXBuildFile; fileRef = F25124CA1CC057380013D167 /* PracticeQuestions.m */; };
+		F2574DEA1CDBFE0D00A9054E /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F2574DE81CDBFE0D00A9054E /* CoreFoundation.framework */; };
+		F2574DEB1CDBFE0D00A9054E /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F2574DE91CDBFE0D00A9054E /* Foundation.framework */; };
+		F2574DEE1CDBFE3D00A9054E /* TestingIOUtilities.m in Sources */ = {isa = PBXBuildFile; fileRef = F2574DED1CDBFE3D00A9054E /* TestingIOUtilities.m */; };
+		F2574DF01CDC009200A9054E /* SnakesAndLaddersTestCase0Output.txt in Resources */ = {isa = PBXBuildFile; fileRef = F2574DEF1CDC009200A9054E /* SnakesAndLaddersTestCase0Output.txt */; };
+		F2574DF21CDC00E300A9054E /* SnakesAndLaddersTestCase1Output.txt in Resources */ = {isa = PBXBuildFile; fileRef = F2574DF11CDC00E300A9054E /* SnakesAndLaddersTestCase1Output.txt */; };
 		F2827FAC1CCACF4D00726A38 /* StringPermutations.m in Sources */ = {isa = PBXBuildFile; fileRef = F2827FAB1CCACF4D00726A38 /* StringPermutations.m */; };
 		F2827FAF1CCAD03100726A38 /* StringPermutationsTests.m in Sources */ = {isa = PBXBuildFile; fileRef = F2827FAE1CCAD03100726A38 /* StringPermutationsTests.m */; };
 		F295E2A61CB5BEEE00A59E86 /* MyChainedHashTableTests.m in Sources */ = {isa = PBXBuildFile; fileRef = F295E2A51CB5BEEE00A59E86 /* MyChainedHashTableTests.m */; };
@@ -98,6 +103,12 @@
 		F25124C71CC0310D0013D167 /* MyDataStructureUtils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MyDataStructureUtils.m; sourceTree = "<group>"; };
 		F25124C91CC034370013D167 /* MyDataStructures.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = MyDataStructures.h; path = "Data Structure PracticeTests/MyDataStructures.h"; sourceTree = SOURCE_ROOT; };
 		F25124CA1CC057380013D167 /* PracticeQuestions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PracticeQuestions.m; sourceTree = "<group>"; };
+		F2574DE81CDBFE0D00A9054E /* CoreFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreFoundation.framework; path = System/Library/Frameworks/CoreFoundation.framework; sourceTree = SDKROOT; };
+		F2574DE91CDBFE0D00A9054E /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		F2574DEC1CDBFE3D00A9054E /* TestingIOUtilities.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TestingIOUtilities.h; sourceTree = "<group>"; };
+		F2574DED1CDBFE3D00A9054E /* TestingIOUtilities.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TestingIOUtilities.m; sourceTree = "<group>"; };
+		F2574DEF1CDC009200A9054E /* SnakesAndLaddersTestCase0Output.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = SnakesAndLaddersTestCase0Output.txt; path = ../../Desktop/SnakesAndLaddersTestCase0Output.txt; sourceTree = "<group>"; };
+		F2574DF11CDC00E300A9054E /* SnakesAndLaddersTestCase1Output.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = SnakesAndLaddersTestCase1Output.txt; sourceTree = "<group>"; };
 		F2827FAB1CCACF4D00726A38 /* StringPermutations.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StringPermutations.m; sourceTree = "<group>"; };
 		F2827FAD1CCACF6900726A38 /* StringPermutations.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = StringPermutations.h; sourceTree = "<group>"; };
 		F2827FAE1CCAD03100726A38 /* StringPermutationsTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StringPermutationsTests.m; sourceTree = "<group>"; };
@@ -116,6 +127,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F2574DEA1CDBFE0D00A9054E /* CoreFoundation.framework in Frameworks */,
+				F2574DEB1CDBFE0D00A9054E /* Foundation.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -132,6 +145,8 @@
 		F203D3EC1CB451ED0067A092 = {
 			isa = PBXGroup;
 			children = (
+				F2574DE81CDBFE0D00A9054E /* CoreFoundation.framework */,
+				F2574DE91CDBFE0D00A9054E /* Foundation.framework */,
 				F203D3F71CB451ED0067A092 /* Data Structure Practice */,
 				F203D4111CB451ED0067A092 /* Data Structure PracticeTests */,
 				F203D3F61CB451ED0067A092 /* Products */,
@@ -154,6 +169,8 @@
 				F203D3FC1CB451ED0067A092 /* AppDelegate.m */,
 				F203D3FE1CB451ED0067A092 /* ViewController.h */,
 				F203D3FF1CB451ED0067A092 /* ViewController.m */,
+				F2574DEC1CDBFE3D00A9054E /* TestingIOUtilities.h */,
+				F2574DED1CDBFE3D00A9054E /* TestingIOUtilities.m */,
 				F2FE7C7C1CDAB49000C95101 /* TestCaseIOUtils.c */,
 				F2FE7C7D1CDAB49000C95101 /* TestCaseIOUtils.h */,
 				F24D674E1CD02BB400B25E3C /* BearAndSteadyGene.c */,
@@ -216,7 +233,9 @@
 				F24D67511CD02DCF00B25E3C /* BearAndSteadyGeneTests.m */,
 				F24D67581CD3F28600B25E3C /* MedianUpdatesTests.m */,
 				F2FE7C7F1CDAB87000C95101 /* SnakesAndLaddersTestCase0Input.txt */,
+				F2574DEF1CDC009200A9054E /* SnakesAndLaddersTestCase0Output.txt */,
 				F2FE7C841CDACAE300C95101 /* SnakesAndLaddersTestCase1Input.txt */,
+				F2574DF11CDC00E300A9054E /* SnakesAndLaddersTestCase1Output.txt */,
 				F2FE7C791CDAB45C00C95101 /* SnakesAndLaddersTests.m */,
 			);
 			path = "Data Structure PracticeTests";
@@ -313,6 +332,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				F2FE7C851CDACAE300C95101 /* SnakesAndLaddersTestCase1Input.txt in Resources */,
+				F2574DF01CDC009200A9054E /* SnakesAndLaddersTestCase0Output.txt in Resources */,
+				F2574DF21CDC00E300A9054E /* SnakesAndLaddersTestCase1Output.txt in Resources */,
 				F2FE7C801CDAB87000C95101 /* SnakesAndLaddersTestCase0Input.txt in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -341,6 +362,7 @@
 				F220C0A41CB5622500705F52 /* MyChainedHashTables.m in Sources */,
 				F203D3FA1CB451ED0067A092 /* main.m in Sources */,
 				F25124C81CC0310D0013D167 /* MyDataStructureUtils.m in Sources */,
+				F2574DEE1CDBFE3D00A9054E /* TestingIOUtilities.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
