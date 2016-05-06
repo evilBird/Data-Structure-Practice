@@ -63,86 +63,189 @@ void ListAppendItem(List *l, Item *i){
     }
 }
 
-int ListRemoveLast(List *l){
-    if (l->n == 0 || l->head == NULL){
-        return EMPTY;
-    }
+void ListAppend(List *l, void *data){
+    Item *item = ItemCreate(data);
+    ListAppendItem(l, item);
+}
+
+int ListRemoveLast(List *l, void **data){
     
-    if (l->tail == NULL){
-        l->head = NULL;
-        l->n--;
-        return 0;
+    if (l->n == 0 || l->head == NULL){
+        if (data) *data = NULL;
+        return EMPTY;
     }
     
     Item *this = l->head;
+    Item **newTail = &l->tail;
+    Item **newHead = &l->head;
     
-    while (this->next->next) {
-        this = this->next;
+    if (l->tail == NULL){
+        *newHead = NULL;
+        l->n = 0;
+        if (data) *data = this->data;
+        return 0;
     }
     
+    Item *that = NULL;
+    
+    while (this->next) {
+        that = this->next;
+        if (that->next == NULL) break;
+        this = that;
+    }
+    
+    if (data) *data = that->data;
     this->next = NULL;
-    l->tail = this;
+    *newTail = this;
     l->n--;
     return 0;
 }
 
-int ListRemoveFirst(List *l){
+int ListRemoveFirst(List *l, void **data){
+    
     if (l->n == 0 || l->head == NULL){
+        if (data) *data = NULL;
         return EMPTY;
     }
-    if (l->n == 1){
-        l->head = NULL;
-        l->n--;
-        return 0;
+    
+    Item *this = l->head;
+    Item **newHead = &l->head;
+    if (data) {
+        *data = this->data;
     }
-    if (l->n == 2){
-        Item *h = l->head;
-        Item *t = h->next;
-        Item **pos = &l->head;
-        *pos = t;
-        l->tail = NULL;
-        l->n--;
+    
+    if (!this->next){
+        *newHead = NULL;
+        l->n = 0;
         return 0;
     }
     
-    Item **pos = &l->head;
-    Item *h = l->head;
-    Item *nh = h->next;
-    h->next = NULL;
-    *pos = nh;
-    l->n--;
+    
+    Item *that = this->next;
+    *newHead = that;
+    Item **newTail = &l->tail;
+    
+    if (!that->next){
+        *newTail = NULL;
+        l->n = 1;
+        return 0;
+    }else{
+        Item *next = that->next;
+        *newTail = next;
+        l->n--;
+        return 0;
+    }
+}
+
+int ListFirstData(List *l, void **data){
+    Item *first;
+    if (l->n == 0 || l->head == NULL){
+        if (data) *data = NULL;
+        return EMPTY;
+    }
+    
+    first = l->head;
+    if (data) *data = first->data;
     return 0;
 }
 
-Item * ListLast(List *l){
-    if (l->tail) return l->tail;
-    if (l->head) return l->head;
-    return NULL;
+int ListLastData(List *l, void **data){
+    Item *last;
+    if (l->n == 0){
+        if (data) *data = NULL;
+        return EMPTY;
+    }
+    
+    if (l->tail) last = l->tail;
+    else last = l->head;
+    
+    if (data) *data = last->data;
+    
+    return 0;
 }
 
 #define Stack List
 
 #define StackCreate()       ListCreate()
-#define StackPush(s,i)      ListAppendItem(s,i)
-#define StackPop(s)         ListRemoveLast(s)
-#define StackPeek(s)        ListLast(s)
-#define StackIsEmpty(s)     ((s)->n <= 0) ? 1 : 0
-
+#define StackPush(s,d)      ListAppend(s,d)
+#define StackPop(s,d)       ListRemoveLast(s,d)
+#define StackPeek(s,d)      ListLastData(s,d)
+#define StackIsEmpty(s)     (((s)->n == 0) ? 1 : 0)
 
 #define Queue List
 
 #define QueueCreate()       ListCreate()
-#define QueueEnqueue(q,i)   ListAppendItem(q,i)
-#define QueueDequeue(q)     ListRemoveFirst(q)
-#define QueuePeek(q)        ((q)->n > 0) ? ((q)->head) : NULL
-#define QueueIsEmpty        ((q)->n <= 0) ? 1 : 0
+#define QueueEnqueue(q,d)   ListAppend(q,d)
+#define QueueDequeue(q,d)   ListRemoveFirst(q,d)
+#define QueuePeek(q,d)      ListFirstData(q,d)
+#define QueueIsEmpty(q)     (((q)->n == 0) ? 1 : 0)
+
+
+void PrintList(List *list){
+    printf("List n = %d\n",list->n);
+    if (list->head == NULL || list->n == 0) return;
+    Item *item = list->head;
+    printf("%d ",(*(int*)item->data));
+    for (int i = 1; i < list->n; i ++) {
+        item = item->next;
+        printf("%d ",(*(int*)item->data));
+    }
+    printf("\n");
+}
+
+#define PrintStack(s)   PrintList(s)
+
+static void TestList(){
+    printf("TEST LIST\n");
+    List *list = ListCreate();
+    int arr[11];
+    printf("TEST LIST APPEND\n");
+    for (int i = 0; i < 10; i ++) {
+        arr[i] = i;
+        ListAppend(list, &arr[i]);
+        PrintList(list);
+    }
+    printf("TEST LIST REMOVE LAST\n");
+    for (int i = 0; i < 5; i++) {
+        ListRemoveLast(list,NULL);
+        PrintList(list);
+    }
+    printf("TEST LIST REMOVE FIRST\n");
+    for (int i = 0; i < 5; i++) {
+        ListRemoveFirst(list,NULL);
+        PrintList(list);
+    }
+}
+
+static void TestStack(){
+    printf("TEST STACK\n");
+    Stack *stack = StackCreate();
+    int arr[11];
+    printf("TEST STACK PUSH\n");
+    for (int i = 0; i < 10; i ++) {
+        arr[i] = i;
+        StackPush(stack, &arr[i]);
+        PrintStack(stack);
+    }
+    printf("TEST STACK POP\n");
+    for (int i = 0; i < 10; i++) {
+        StackPop(stack,NULL);
+        PrintStack(stack);
+    }
+}
+
+void TestStructs(){
+    TestList();
+    TestStack();
+}
 
 typedef struct Vertex_{
     int pos;
     int distance;
     int discovered;
     int processed;
-    struct Vertex_ *next;
+    List *adjacent;
+    struct Vertex_ *parent;
 }Vertex;
 
 Vertex* VertexCreate(){
@@ -150,9 +253,10 @@ Vertex* VertexCreate(){
     Vertex *v = (Vertex *)malloc(sizeof(Vertex));
     v->pos = 0;
     v->distance = 0;
-    v->next = NULL;
+    v->adjacent = ListCreate();
     v->discovered = 0;
     v->processed = 0;
+    v->parent = NULL;
     return v;
 }
 
@@ -162,48 +266,204 @@ int VertexCompare(Vertex *a, Vertex *b){
     return (a->pos)-(b->pos);
 }
 
-void VertexSetNext(Vertex *v, Vertex *n){
-    Vertex **pos = &v->next;
-    *pos = n;
-}
-
 typedef struct Graph_{
     int size;
-    Vertex *start;
-    Vertex *end;
+    Vertex *vertices[101];
+    Queue  *toProcess;
 }Graph;
 
 Graph* GraphCreate(){
     Graph *g = (Graph *)malloc(sizeof(Graph));
     g->size = 0;
-    g->start = NULL;
-    g->end = NULL;
+    g->toProcess = QueueCreate();
+    memset(g->vertices, 0, sizeof(Vertex*)*100);
     return g;
 }
 
-void GraphSetStart(Graph *g, Vertex *v){
-    Vertex **pos = &g->start;
-    *pos = v;
-    g->size++;
+void GraphPrint(Graph *g){
+    int n = g->size;
+    printf("GRAPH SIZE %d\n",n);
+    for (int i = 0; i < n; i++) {
+        Vertex *v = g->vertices[i];
+        if (v){
+            printf("%d) vertex pos %d discovered %d processed %d neighbors %d\n",i,v->pos,v->discovered,v->processed,v->adjacent->n);
+        }
+    }
+    printf("\n");
 }
 
-void GraphSetEnd(Graph *g, Vertex *v){
-    Vertex **pos = &g->end;
-    *pos = v;
-    g->size++;
+void GetPathInfo(Graph *graph, Vertex *vertex, int *rolls, int *steps){
+    
+    if ( vertex->parent ){
+        
+        int mpos = vertex->pos;
+        int ppos = vertex->parent->pos;
+        
+        if (abs(mpos-ppos) > 1){
+            *steps = 0;
+            *rolls += 1;
+        }else{
+            *steps += 1;
+            if (*steps == 6){
+                *rolls += 1;
+                *steps = 0;
+            }
+        }
+        
+        GetPathInfo(graph, vertex->parent, rolls, steps);
+        
+    }else{
+        
+        if (*steps > 0){
+            *rolls += 1;
+        }
+        
+    }
+    
 }
 
-Graph* GraphCreateDefault(){
+void ProcessVertex(Graph *graph, Vertex *vertex, void *toFind, int *numRolls){
+    
+    if (vertex == NULL) return;
+    if (vertex->processed == 1) return;
+    vertex->processed = 1;
+#ifdef XCODE_TEST_DEBUG
+    printf("processing vertex at pos %d\n",vertex->pos);
+#endif
+    if (vertex->pos == (*(int*)toFind)) {
+        
+#ifdef XCODE_TEST_DEBUG
+        printf("found search target vertex at pos %d\n",vertex->pos);
+#endif
+        
+        int curMin = *numRolls;
+        int thisMin = 0;
+        int steps = 0;
+        //GetPathInfo(graph, vertex, &thisMin, &steps);
+        
+        if (thisMin > 0){
+            if (curMin == 0){
+                curMin = thisMin;
+            }else if (thisMin < curMin){
+                curMin = thisMin;
+            }
+            *numRolls = curMin;
+        }
+    }
+}
+
+void ProcessQueue(Graph *graph, void *toFind, int *numRolls){
+    
+    while (QueueIsEmpty(graph->toProcess) == 0) {
+        Vertex **toProcess;
+        QueueDequeue(graph->toProcess, (void**)toProcess);
+        ProcessVertex(graph, *toProcess, toFind, numRolls);
+    }
+}
+
+void GraphBFS(Graph *graph, Vertex *vertex, void *toFind, int *numRolls){
+    
+    if (vertex == NULL){
+        return;
+    }
+    
+    if (vertex->discovered == 0){
+        vertex->discovered = 1;
+#ifdef XCODE_TEST_DEBUG
+        printf("discovered vertex at pos %d\n",vertex->pos);
+#endif
+        if (vertex->processed == 0) {
+            QueueEnqueue(graph->toProcess, vertex);
+        }
+        
+        while (QueueIsEmpty(graph->toProcess) == 0) {
+            Vertex **toProcess;
+            QueueDequeue(graph->toProcess, (void**)toProcess);
+            ProcessVertex(graph, *toProcess, toFind, numRolls);
+        }
+    }
+
+    
+    if (vertex->adjacent->n == 0) return;
+    
+    Item *item = vertex->adjacent->head;
+    
+    printf("Vertex pos %d will search %d neighbors\n",vertex->pos,vertex->adjacent->n);
+    int numSearched = 0;
+    
+    while (numSearched < vertex->adjacent->n) {
+        
+        Vertex *adjacent = (Vertex*)item->data;
+        printf("Vertex pos %d, searching neighbor at pos %d (%d of %d)\n",vertex->pos,adjacent->pos,(numSearched+1),vertex->adjacent->n);
+        
+        if (adjacent->discovered == 0){
+            GraphBFS(graph, adjacent, toFind,numRolls);
+        }
+        
+        if (!(item->next)){
+            break;
+        }
+        
+        numSearched++;
+        item = item->next;
+    }
+}
+
+Graph * GraphCreateWithLaddersAndSnakes(int *ladders, int *snakes, int n){
     Graph *g = GraphCreate();
-    Vertex *sv = VertexCreate();
-    sv->pos = 1;
-    GraphSetStart(g, sv);
-    Vertex *ev = VertexCreate();
-    ev->pos = 100;
-    GraphSetEnd(g, ev);
+    
+    for (int i = 0; i<n; i++) {
+        
+        int pos = (i+1);
+        Vertex **vertex = &g->vertices[i];
+        
+        if (*vertex == NULL){
+            *vertex = VertexCreate();
+            (*vertex)->pos = pos;
+            (*vertex)->distance = 1;
+            g->size++;
+        }
+        
+        if (i){
+            Vertex *prev = g->vertices[i-1];
+            ListAppend(prev->adjacent, (*vertex));
+            Vertex **parent = &(*vertex)->parent;
+            if (!*parent) *parent = prev;
+        }
+
+        int npos = -1;
+        
+        if (ladders[i] != 0){
+            npos = ladders[i];
+        }else if (snakes[i] != 0){
+            npos = snakes[i];
+        }
+        
+        if (npos >= 0 && npos < 100){
+            
+            Vertex **nvert = &g->vertices[npos];
+            
+            if (*nvert == NULL){
+                *nvert = VertexCreate();
+                (*nvert)->pos = (npos+1);
+                (*nvert)->distance = 1;
+                g->size++;
+            }
+            
+            Vertex **npar = &(*nvert)->parent;
+            
+            if (*npar == NULL){
+                *npar = *vertex;
+            }
+            
+            ListAppend((*vertex)->adjacent, *nvert);
+            
+        }
+        
+    }
+    
     return g;
 }
-
 
 #ifdef XCODE_TEST_RUN
 int SnakesAndLaddersRunTestCase(char *output, const char *input)
@@ -242,9 +502,12 @@ int main()
 #else
             sscanf(input+in_bytes_consumed,"%d %d%n",&start,&end,&in_bytes_now);
             in_bytes_consumed+=in_bytes_now;
+#ifdef XCODE_TEST_DEBUG
             printf("LADDER %d - %d\n",start,end);
 #endif
-            ladders[end-1] = start-1;
+            
+#endif
+            ladders[start-1] = end-1;
         }
         
         int M;
@@ -264,49 +527,35 @@ int main()
 #else
             sscanf(input+in_bytes_consumed,"%d %d%n",&start,&end,&in_bytes_now);
             in_bytes_consumed+=in_bytes_now;
+#ifdef XCODE_TEST_DEBUG
             printf("SNAKE %d - %d\n",start,end);
+#endif
+            
 #endif
             snakes[start-1] = end-1;
         }
         
-        Graph *g = GraphCreateDefault();
-        
-        int spos = 0;
-        int epos = 99;
-        int pos = epos;
-        int steps = 0;
+
         int rolls = 0;
-        while (pos > spos) {
-            
-            if (ladders[pos] && ladders[pos] != pos){
-                int ppos = pos;
-                pos = ladders[ppos];
-                int psteps = steps;
-                if (psteps) {
-                    rolls++;
-                    steps = 0;
-                }
-                printf("after %d steps (%d rolls), took ladder from %d to %d\n",psteps,rolls,ppos+1,pos+1);
-            }else{
-                int ppos = pos;
-                pos--;
-                steps++;
-                int psteps = steps;
-                if (steps/6 == 1) {
-                    rolls++;
-                    steps = 0;
-                }
-                printf("walked from %d to %d. %d steps, %d rolls\n",ppos+1,pos+1,psteps,rolls);
-            }
-            
-        }
+        int steps = 0;
+        Graph *myGraph = GraphCreateWithLaddersAndSnakes(ladders, snakes, 100);
+#ifdef XCODE_TEST_DEBUG
+        GraphPrint(myGraph);
+#endif
+        int endPos = 100;
+        GraphBFS(myGraph, myGraph->vertices[0], (void*)&endPos, &rolls);
         
-        if (steps) rolls++;
+        
+        
+#ifdef XCODE_TEST_DEBUG
+        GraphPrint(myGraph);
+#endif
         
 #ifndef XCODE_TEST_RUN
         printf("%d\n",rolls);
 #else
         printf("%d\n",rolls);
+        
         if (t){
             out_bytes_now = sprintf(output+out_bytes_consumed,"\n");
             out_bytes_consumed+=out_bytes_now;

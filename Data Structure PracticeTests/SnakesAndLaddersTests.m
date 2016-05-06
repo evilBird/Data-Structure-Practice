@@ -61,6 +61,10 @@ static NSString *kOutputFileFormat  = @"SnakesAndLaddersTestCase%dOutput";
     XCTAssert(result==1,"\nFAILED CASE %d\nOUTPUT:\n%s\nEXPECTED:\n%s\n",caseNum,output,expected);
 }
 
+- (void)testDataStructures{
+    TestStructs();
+}
+
 - (void)testCase0{
     
     int caseNum = 0;
