@@ -295,7 +295,7 @@ typedef struct Graph_{
     int nvertices;
     int nedges;
     int directed;
-
+    
 }Graph;
 
 
@@ -328,8 +328,6 @@ Graph* GraphCreate(){
     
     Graph *g = (Graph *)malloc(sizeof(Graph));
     g->nvertices = MAXV;
-    g->nedges = 0;
-    g->directed = 0;
     memset(g->degrees, 0, sizeof(int)*MAXV);
     for (int i = 0; i < MAXV; i++) g->edges[i] = NULL;
     return g;
@@ -359,6 +357,25 @@ void GraphPrint(Graph *g){
     printf("\n");
 }
 
+int GraphConnectSnakesAndLadders(Graph *g, int x){
+    if (x >= g->nvertices) return 0;
+    int y = x+1;
+    while (y < g->nvertices) {
+        y++;
+        if (g->degrees[y-1] > 0) break;
+    }
+    int d = y-x;
+    GraphInsertEdge(g, x, y, d);
+    GraphInsertEdge(g, y, x, d);
+    x = y + 2;
+    return GraphConnectSnakesAndLadders(g, x);
+}
+
+int RollsForDistance(int distance){
+    float ceiling = ceilf((float)distance/6.0);
+    return ((int)ceiling);
+}
+
 void GraphFindEdgeNode(Graph *g, int x, int *next){
     
     int n = x+1;
@@ -385,90 +402,108 @@ void GraphFindEdgeNode(Graph *g, int x, int *next){
 }
 
 #define HUGE_VALUE 100000000
-#define DICE_NSIDES 6
-
-void IncrementDice(int *dist, int *flag){
-    *dist += 1;
-    if (*dist > DICE_NSIDES) *flag = 1;
-    else *flag = 0;
-}
-
-void RollDice(int *dist, int *rolls){
-    
-    *rolls += 1;
-    *dist = 1;
-}
 
 int GraphTraverseDF(Graph *g, int x, int *visits, int dist, int rolls, int *curmin){
     
-    if (visits[x-1] > 0 || (*curmin > 0 && rolls > *curmin)){
+    if (visits[x-1] > 0 || (*curmin != -1 && rolls > *curmin)){
+#ifdef XCODE_TEST_DEBUG
+        printf("-FAIL- @ x = %d deg = %d visits = %d dist = %d rolls = %d\n",x,g->degrees[x-1],visits[x-1],dist,rolls);
+#endif
         free(visits);
         return -1;
     }
     
-    if (x == g->nvertices){
+    if (x == 100){
         
-        //if (dist) rolls++;
+        if (dist) rolls++;
+        
         if (*curmin == -1 || rolls < *curmin){
             *curmin = rolls;
-            //printf("\n\t*SUCCESS* @ x = 100 dist = %d rolls = %d\n\n",dist,rolls);
+#ifdef XCODE_TEST_DEBUG
+            printf("\n\t*SUCCESS* @ x = 100 dist = %d rolls = %d\n\n",dist,rolls);
+#endif
         }
-        printf("\n\t*SUCCESS* @ x = 100 dist = %d rolls = %d min = %d\n\n",dist,rolls,*curmin);
-
+        
         free(visits);
         return rolls;
     }
     
     visits[x-1] += 1;
-    
+#ifdef XCODE_TEST_DEBUG
     printf("SEARCH @ x = %d deg = %d visits = %d dist = %d rolls = %d\n",x,g->degrees[x-1],visits[x-1],dist,rolls);
+#endif
+    int min = HUGE_VALUE;
     
-    int min,retval;
-    EdgeNode *e;
+    int retval = -1;
     
-    min = HUGE_VALUE;
-    retval = -1;
-    
-    e = ( g->degrees[x-1] > 0) ? ( g->edges[x-1] ) : NULL;
-    
-    if (!e || visits[x] > 0) {
-        int flag;
-        IncrementDice(&dist, &flag);
-        if (flag) RollDice(&dist, &rolls);
-        return GraphTraverseDF(g, x+1, visits, dist, rolls, curmin);
+    if (g->degrees[x-1] == 0){
+        
+        int next = -1;
+        GraphFindEdgeNode(g, x, &next);
+        
+        if (next != -1){
+            
+            int nd = next-x;
+            int d = dist + nd;
+            int r = rolls;
+            
+            while (d >= 6){
+                r++;
+                d = d-6;
+            }
+            
+            int *v = (int*)malloc(sizeof(int) * g->nvertices+1);
+            memcpy(v, visits, sizeof(int) * g->nvertices+1);
+            retval = GraphTraverseDF(g, next, v, d, r, curmin);
+            
+            if (retval != -1 && retval < min){
+                min = retval;
+            }
+        }
         
     }else{
-        visits[x] = 1;
         
-        for (int i = 0; i < g->degrees[x-1]; i++) {
+        EdgeNode *e = g->edges[x-1];
+        
+        while (1) {
             
-            int myDist = dist;
-            int myRolls = rolls;
+            int d = dist + e->d;
+            int r = rolls;
             
-            for (int j = 0; j < e->d; j++){
-                int flag;
-                IncrementDice(&myDist, &flag);
-                if (flag) RollDice(&myDist, &myRolls);
+            while (d >= 6){
+                r++;
+                d = d-6;
             }
             
-            int *myVisits = (int*)malloc(sizeof(int) * g->nvertices + 1);
-            memcpy(myVisits, visits, sizeof(int) * g->nvertices + 1);
-            retval = GraphTraverseDF(g, e->y, myVisits, myDist, myRolls, curmin);
-            if ( retval != -1 && retval < min) min = retval;
-            
-            e = (e->next) ? (e->next) : NULL;
-            
-            if (min == HUGE_VALUE){
-                min = -1;
+            if (e->d == 1 && d > 0){
+                d = 0;
+                r++;
             }
             
+            int *v = (int*)malloc(sizeof(int) * g->nvertices+1);
+            memcpy(v, visits, sizeof(int) * g->nvertices+1);
+            int next = e->y;
+            retval = GraphTraverseDF(g, next, v, d,r,curmin);
+            
+            if (retval != -1 && retval < min){
+                min = retval;
+            }
+            
+            if (e->next){
+                e = e->next;
+            }else{
+                break;
+            }
         }
-
     }
-    if (min == HUGE_VALUE) min = -1;
+    
+    if (min == HUGE_VALUE){
+        min = -1;
+    }
+    
     return min;
-
 }
+
 
 int GraphSearch(Graph *g, int x, int steps, int rolls){
     
@@ -491,7 +526,7 @@ int main()
     in_bytes_consumed+=in_bytes_now;
     
 #endif
-
+    
     for (int t = 0; t < T; t++){
         int N;
         
@@ -527,7 +562,7 @@ int main()
             }
         }
         
-
+        
         
         int M;
 #ifndef XCODE_TEST_RUN
@@ -559,29 +594,28 @@ int main()
             }
         }
         
-
+        
+        //GraphConnectSnakesAndLadders(graph, 1);
 #ifdef XCODE_TEST_DEBUG
         GraphPrint(graph);
 #endif
         int *visits = (int*)(malloc(sizeof(int) * graph->nvertices+1));
         memset(visits, 0, sizeof(int) * graph->nvertices+1);
         int min = -1;
-        int rolls = 1;
-        int dist = 1;
-        GraphTraverseDF(graph, 1, visits, dist, rolls, &min);
+        int rolls = GraphTraverseDF(graph, 1, visits, 0, 0, &min);
         
         
 #ifndef XCODE_TEST_RUN
-        printf("%d\n",min);
+        printf("%d\n",rolls);
 #else
-        printf("%d\n",min);
+        printf("%d\n",rolls);
         
         if (t){
             out_bytes_now = sprintf(output+out_bytes_consumed,"\n");
             out_bytes_consumed+=out_bytes_now;
         }
         
-        out_bytes_now = sprintf(output+out_bytes_consumed, "%d",min);
+        out_bytes_now = sprintf(output+out_bytes_consumed, "%d",rolls);
         out_bytes_consumed+=out_bytes_now;
         
 #endif
