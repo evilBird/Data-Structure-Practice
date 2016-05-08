@@ -41,6 +41,12 @@
 		F2827FAC1CCACF4D00726A38 /* StringPermutations.m in Sources */ = {isa = PBXBuildFile; fileRef = F2827FAB1CCACF4D00726A38 /* StringPermutations.m */; };
 		F2827FAF1CCAD03100726A38 /* StringPermutationsTests.m in Sources */ = {isa = PBXBuildFile; fileRef = F2827FAE1CCAD03100726A38 /* StringPermutationsTests.m */; };
 		F295E2A61CB5BEEE00A59E86 /* MyChainedHashTableTests.m in Sources */ = {isa = PBXBuildFile; fileRef = F295E2A51CB5BEEE00A59E86 /* MyChainedHashTableTests.m */; };
+		F2ABD9941CDF172B003EFC8A /* SnakesAndLaddersTestCase2Input.txt in Resources */ = {isa = PBXBuildFile; fileRef = F2ABD9931CDF172B003EFC8A /* SnakesAndLaddersTestCase2Input.txt */; };
+		F2ABD9961CDF1745003EFC8A /* SnakesAndLaddersTestCase2Output.txt in Resources */ = {isa = PBXBuildFile; fileRef = F2ABD9951CDF1745003EFC8A /* SnakesAndLaddersTestCase2Output.txt */; };
+		F2ABD9981CDF185A003EFC8A /* SnakesAndLaddersTestCase6Input.txt in Resources */ = {isa = PBXBuildFile; fileRef = F2ABD9971CDF185A003EFC8A /* SnakesAndLaddersTestCase6Input.txt */; };
+		F2ABD99A1CDF187F003EFC8A /* SnakesAndLaddersTestCase6Output.txt in Resources */ = {isa = PBXBuildFile; fileRef = F2ABD9991CDF187F003EFC8A /* SnakesAndLaddersTestCase6Output.txt */; };
+		F2ABD99C1CDF18AB003EFC8A /* SnakesAndLaddersTestCase3Input.txt in Resources */ = {isa = PBXBuildFile; fileRef = F2ABD99B1CDF18AB003EFC8A /* SnakesAndLaddersTestCase3Input.txt */; };
+		F2ABD99E1CDF18C1003EFC8A /* SnakesAndLaddersTestCase3Output.txt in Resources */ = {isa = PBXBuildFile; fileRef = F2ABD99D1CDF18C1003EFC8A /* SnakesAndLaddersTestCase3Output.txt */; };
 		F2FE7C7A1CDAB45C00C95101 /* SnakesAndLaddersTests.m in Sources */ = {isa = PBXBuildFile; fileRef = F2FE7C791CDAB45C00C95101 /* SnakesAndLaddersTests.m */; };
 		F2FE7C7E1CDAB49000C95101 /* TestCaseIOUtils.c in Sources */ = {isa = PBXBuildFile; fileRef = F2FE7C7C1CDAB49000C95101 /* TestCaseIOUtils.c */; };
 		F2FE7C801CDAB87000C95101 /* SnakesAndLaddersTestCase0Input.txt in Resources */ = {isa = PBXBuildFile; fileRef = F2FE7C7F1CDAB87000C95101 /* SnakesAndLaddersTestCase0Input.txt */; };
@@ -113,6 +119,12 @@
 		F2827FAD1CCACF6900726A38 /* StringPermutations.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = StringPermutations.h; sourceTree = "<group>"; };
 		F2827FAE1CCAD03100726A38 /* StringPermutationsTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StringPermutationsTests.m; sourceTree = "<group>"; };
 		F295E2A51CB5BEEE00A59E86 /* MyChainedHashTableTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MyChainedHashTableTests.m; sourceTree = "<group>"; };
+		F2ABD9931CDF172B003EFC8A /* SnakesAndLaddersTestCase2Input.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = SnakesAndLaddersTestCase2Input.txt; sourceTree = "<group>"; };
+		F2ABD9951CDF1745003EFC8A /* SnakesAndLaddersTestCase2Output.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = SnakesAndLaddersTestCase2Output.txt; sourceTree = "<group>"; };
+		F2ABD9971CDF185A003EFC8A /* SnakesAndLaddersTestCase6Input.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = SnakesAndLaddersTestCase6Input.txt; sourceTree = "<group>"; };
+		F2ABD9991CDF187F003EFC8A /* SnakesAndLaddersTestCase6Output.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = SnakesAndLaddersTestCase6Output.txt; sourceTree = "<group>"; };
+		F2ABD99B1CDF18AB003EFC8A /* SnakesAndLaddersTestCase3Input.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = SnakesAndLaddersTestCase3Input.txt; sourceTree = "<group>"; };
+		F2ABD99D1CDF18C1003EFC8A /* SnakesAndLaddersTestCase3Output.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = SnakesAndLaddersTestCase3Output.txt; sourceTree = "<group>"; };
 		F2FE7C791CDAB45C00C95101 /* SnakesAndLaddersTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SnakesAndLaddersTests.m; sourceTree = "<group>"; };
 		F2FE7C7C1CDAB49000C95101 /* TestCaseIOUtils.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = TestCaseIOUtils.c; sourceTree = "<group>"; };
 		F2FE7C7D1CDAB49000C95101 /* TestCaseIOUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TestCaseIOUtils.h; sourceTree = "<group>"; };
@@ -232,13 +244,27 @@
 				F2827FAE1CCAD03100726A38 /* StringPermutationsTests.m */,
 				F24D67511CD02DCF00B25E3C /* BearAndSteadyGeneTests.m */,
 				F24D67581CD3F28600B25E3C /* MedianUpdatesTests.m */,
+				F2ABD9921CDF1700003EFC8A /* SnakesAndLadders */,
+			);
+			path = "Data Structure PracticeTests";
+			sourceTree = "<group>";
+		};
+		F2ABD9921CDF1700003EFC8A /* SnakesAndLadders */ = {
+			isa = PBXGroup;
+			children = (
 				F2FE7C7F1CDAB87000C95101 /* SnakesAndLaddersTestCase0Input.txt */,
 				F2574DEF1CDC009200A9054E /* SnakesAndLaddersTestCase0Output.txt */,
 				F2FE7C841CDACAE300C95101 /* SnakesAndLaddersTestCase1Input.txt */,
 				F2574DF11CDC00E300A9054E /* SnakesAndLaddersTestCase1Output.txt */,
 				F2FE7C791CDAB45C00C95101 /* SnakesAndLaddersTests.m */,
+				F2ABD9931CDF172B003EFC8A /* SnakesAndLaddersTestCase2Input.txt */,
+				F2ABD9951CDF1745003EFC8A /* SnakesAndLaddersTestCase2Output.txt */,
+				F2ABD9971CDF185A003EFC8A /* SnakesAndLaddersTestCase6Input.txt */,
+				F2ABD9991CDF187F003EFC8A /* SnakesAndLaddersTestCase6Output.txt */,
+				F2ABD99B1CDF18AB003EFC8A /* SnakesAndLaddersTestCase3Input.txt */,
+				F2ABD99D1CDF18C1003EFC8A /* SnakesAndLaddersTestCase3Output.txt */,
 			);
-			path = "Data Structure PracticeTests";
+			name = SnakesAndLadders;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -331,9 +357,15 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F2ABD99E1CDF18C1003EFC8A /* SnakesAndLaddersTestCase3Output.txt in Resources */,
 				F2FE7C851CDACAE300C95101 /* SnakesAndLaddersTestCase1Input.txt in Resources */,
 				F2574DF01CDC009200A9054E /* SnakesAndLaddersTestCase0Output.txt in Resources */,
 				F2574DF21CDC00E300A9054E /* SnakesAndLaddersTestCase1Output.txt in Resources */,
+				F2ABD99A1CDF187F003EFC8A /* SnakesAndLaddersTestCase6Output.txt in Resources */,
+				F2ABD99C1CDF18AB003EFC8A /* SnakesAndLaddersTestCase3Input.txt in Resources */,
+				F2ABD9961CDF1745003EFC8A /* SnakesAndLaddersTestCase2Output.txt in Resources */,
+				F2ABD9981CDF185A003EFC8A /* SnakesAndLaddersTestCase6Input.txt in Resources */,
+				F2ABD9941CDF172B003EFC8A /* SnakesAndLaddersTestCase2Input.txt in Resources */,
 				F2FE7C801CDAB87000C95101 /* SnakesAndLaddersTestCase0Input.txt in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

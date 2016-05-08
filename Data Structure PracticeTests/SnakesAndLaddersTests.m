@@ -76,6 +76,15 @@ static NSString *kOutputFileFormat  = @"SnakesAndLaddersTestCase%dOutput";
     [self runCaseNum:caseNum];
 }
 
+- (void)testCase2{
+    int caseNum = 2;
+    [self runCaseNum:caseNum];
+}
 
+
+- (void)testCase3{
+    int caseNum = 3;
+    [self runCaseNum:caseNum];
+}
 
 @end

@@ -266,203 +266,213 @@ int VertexCompare(Vertex *a, Vertex *b){
     return (a->pos)-(b->pos);
 }
 
+#define MAXV 100
+
+typedef struct EdgeNode_{
+    int d;
+    int w;
+    int x;
+    int y;
+    int visits;
+    struct EdgeNode_ *next;
+}EdgeNode;
+
+EdgeNode * EdgeNodeCreate(int x, int y){
+    EdgeNode *e = (EdgeNode *)malloc(sizeof(EdgeNode));
+    e->x = x;
+    e->y = y;
+    e->w = y-x;
+    e->visits = 0;
+    e->next = NULL;
+    e->d = 0;
+    return e;
+}
+
 typedef struct Graph_{
-    int size;
-    Vertex *vertices[101];
-    Queue  *toProcess;
+    
+    EdgeNode *edges[MAXV+1];
+    int degrees[MAXV+1];
+    int nvertices;
+    int nedges;
+    int directed;
+
 }Graph;
 
+
+int GraphInsertEdge(Graph *g, int x, int y, int d){
+    
+    if ( x < 1 || x > MAXV || y < 1 || y > MAXV ) return -1;
+    int i = (x-1);
+    EdgeNode *newNode, **pos;
+    newNode = EdgeNodeCreate(x, y);
+    newNode->d = d;
+    if (g->edges[i] == NULL){
+        pos = &g->edges[i];
+    }else{
+        EdgeNode *oldNode = g->edges[i];
+        while (oldNode->next) {
+            oldNode = oldNode->next;
+        }
+        pos = &oldNode->next;
+    }
+    
+    *pos = newNode;
+    
+    g->degrees[i]++;
+    g->nedges++;
+    
+    return 0;
+}
+
 Graph* GraphCreate(){
+    
     Graph *g = (Graph *)malloc(sizeof(Graph));
-    g->size = 0;
-    g->toProcess = QueueCreate();
-    memset(g->vertices, 0, sizeof(Vertex*)*100);
+    g->nvertices = MAXV;
+    g->nedges = 0;
+    g->directed = 0;
+    memset(g->degrees, 0, sizeof(int)*MAXV);
+    for (int i = 0; i < MAXV; i++) g->edges[i] = NULL;
     return g;
 }
 
+void EdgeNodePrint(EdgeNode *e){
+    printf("\tEdge %d - %d (d = %d, w = %d)\n",e->x,e->y,e->d,e->w);
+}
+
 void GraphPrint(Graph *g){
-    int n = g->size;
-    printf("GRAPH SIZE %d\n",n);
-    for (int i = 0; i < n; i++) {
-        Vertex *v = g->vertices[i];
-        if (v){
-            printf("%d) vertex pos %d discovered %d processed %d neighbors %d\n",i,v->pos,v->discovered,v->processed,v->adjacent->n);
+    printf("GRAPH WITH %d VERTICES AND %d EDGES\n",g->nvertices,g->nedges);
+    for (int i = 0; i < g->nvertices; i++) {
+        if (g->degrees[i]){
+            printf("vert %d (deg=%d):\n",i+1,g->degrees[i]);
+            EdgeNode *edge = NULL;
+            for (int j = 0; j < g->degrees[i]; j++){
+                if (!edge){
+                    edge = g->edges[i];
+                }else{
+                    edge = edge->next;
+                }
+                
+                EdgeNodePrint(edge);
+            }
         }
     }
     printf("\n");
 }
 
-void GetPathInfo(Graph *graph, Vertex *vertex, int *rolls, int *steps){
+void GraphFindEdgeNode(Graph *g, int x, int *next){
     
-    if ( vertex->parent ){
+    int n = x+1;
+    *next = -1;
+    
+    while (n <= g->nvertices) {
         
-        int mpos = vertex->pos;
-        int ppos = vertex->parent->pos;
-        
-        if (abs(mpos-ppos) > 1){
-            *steps = 0;
-            *rolls += 1;
+        if (g->degrees[n-1] == 0){
+            
+            n++;
+            
         }else{
-            *steps += 1;
-            if (*steps == 6){
-                *rolls += 1;
-                *steps = 0;
-            }
-        }
-        
-        GetPathInfo(graph, vertex->parent, rolls, steps);
-        
-    }else{
-        
-        if (*steps > 0){
-            *rolls += 1;
-        }
-        
-    }
-    
-}
-
-void ProcessVertex(Graph *graph, Vertex *vertex, void *toFind, int *numRolls){
-    
-    if (vertex == NULL) return;
-    if (vertex->processed == 1) return;
-    vertex->processed = 1;
-#ifdef XCODE_TEST_DEBUG
-    printf("processing vertex at pos %d\n",vertex->pos);
-#endif
-    if (vertex->pos == (*(int*)toFind)) {
-        
-#ifdef XCODE_TEST_DEBUG
-        printf("found search target vertex at pos %d\n",vertex->pos);
-#endif
-        
-        int curMin = *numRolls;
-        int thisMin = 0;
-        int steps = 0;
-        //GetPathInfo(graph, vertex, &thisMin, &steps);
-        
-        if (thisMin > 0){
-            if (curMin == 0){
-                curMin = thisMin;
-            }else if (thisMin < curMin){
-                curMin = thisMin;
-            }
-            *numRolls = curMin;
-        }
-    }
-}
-
-void ProcessQueue(Graph *graph, void *toFind, int *numRolls){
-    
-    while (QueueIsEmpty(graph->toProcess) == 0) {
-        Vertex **toProcess;
-        QueueDequeue(graph->toProcess, (void**)toProcess);
-        ProcessVertex(graph, *toProcess, toFind, numRolls);
-    }
-}
-
-void GraphBFS(Graph *graph, Vertex *vertex, void *toFind, int *numRolls){
-    
-    if (vertex == NULL){
-        return;
-    }
-    
-    if (vertex->discovered == 0){
-        vertex->discovered = 1;
-#ifdef XCODE_TEST_DEBUG
-        printf("discovered vertex at pos %d\n",vertex->pos);
-#endif
-        if (vertex->processed == 0) {
-            QueueEnqueue(graph->toProcess, vertex);
-        }
-        
-        while (QueueIsEmpty(graph->toProcess) == 0) {
-            Vertex **toProcess;
-            QueueDequeue(graph->toProcess, (void**)toProcess);
-            ProcessVertex(graph, *toProcess, toFind, numRolls);
-        }
-    }
-
-    
-    if (vertex->adjacent->n == 0) return;
-    
-    Item *item = vertex->adjacent->head;
-    
-    printf("Vertex pos %d will search %d neighbors\n",vertex->pos,vertex->adjacent->n);
-    int numSearched = 0;
-    
-    while (numSearched < vertex->adjacent->n) {
-        
-        Vertex *adjacent = (Vertex*)item->data;
-        printf("Vertex pos %d, searching neighbor at pos %d (%d of %d)\n",vertex->pos,adjacent->pos,(numSearched+1),vertex->adjacent->n);
-        
-        if (adjacent->discovered == 0){
-            GraphBFS(graph, adjacent, toFind,numRolls);
-        }
-        
-        if (!(item->next)){
+            
+            *next = n;
             break;
         }
+    }
+    
+    if (n >= g->nvertices){
         
-        numSearched++;
-        item = item->next;
+        *next = 100;
+        
     }
 }
 
-Graph * GraphCreateWithLaddersAndSnakes(int *ladders, int *snakes, int n){
-    Graph *g = GraphCreate();
-    
-    for (int i = 0; i<n; i++) {
-        
-        int pos = (i+1);
-        Vertex **vertex = &g->vertices[i];
-        
-        if (*vertex == NULL){
-            *vertex = VertexCreate();
-            (*vertex)->pos = pos;
-            (*vertex)->distance = 1;
-            g->size++;
-        }
-        
-        if (i){
-            Vertex *prev = g->vertices[i-1];
-            ListAppend(prev->adjacent, (*vertex));
-            Vertex **parent = &(*vertex)->parent;
-            if (!*parent) *parent = prev;
-        }
+#define HUGE_VALUE 100000000
+#define DICE_NSIDES 6
 
-        int npos = -1;
-        
-        if (ladders[i] != 0){
-            npos = ladders[i];
-        }else if (snakes[i] != 0){
-            npos = snakes[i];
-        }
-        
-        if (npos >= 0 && npos < 100){
-            
-            Vertex **nvert = &g->vertices[npos];
-            
-            if (*nvert == NULL){
-                *nvert = VertexCreate();
-                (*nvert)->pos = (npos+1);
-                (*nvert)->distance = 1;
-                g->size++;
-            }
-            
-            Vertex **npar = &(*nvert)->parent;
-            
-            if (*npar == NULL){
-                *npar = *vertex;
-            }
-            
-            ListAppend((*vertex)->adjacent, *nvert);
-            
-        }
-        
+void IncrementDice(int *dist, int *flag){
+    *dist += 1;
+    if (*dist > DICE_NSIDES) *flag = 1;
+    else *flag = 0;
+}
+
+void RollDice(int *dist, int *rolls){
+    
+    *rolls += 1;
+    *dist = 1;
+}
+
+int GraphTraverseDF(Graph *g, int x, int *visits, int dist, int rolls, int *curmin){
+    
+    if (visits[x-1] > 0 || (*curmin > 0 && rolls > *curmin)){
+        free(visits);
+        return -1;
     }
     
-    return g;
+    if (x == g->nvertices){
+        
+        //if (dist) rolls++;
+        if (*curmin == -1 || rolls < *curmin){
+            *curmin = rolls;
+            //printf("\n\t*SUCCESS* @ x = 100 dist = %d rolls = %d\n\n",dist,rolls);
+        }
+        printf("\n\t*SUCCESS* @ x = 100 dist = %d rolls = %d min = %d\n\n",dist,rolls,*curmin);
+
+        free(visits);
+        return rolls;
+    }
+    
+    visits[x-1] += 1;
+    
+    printf("SEARCH @ x = %d deg = %d visits = %d dist = %d rolls = %d\n",x,g->degrees[x-1],visits[x-1],dist,rolls);
+    
+    int min,retval;
+    EdgeNode *e;
+    
+    min = HUGE_VALUE;
+    retval = -1;
+    
+    e = ( g->degrees[x-1] > 0) ? ( g->edges[x-1] ) : NULL;
+    
+    if (!e || visits[x] > 0) {
+        int flag;
+        IncrementDice(&dist, &flag);
+        if (flag) RollDice(&dist, &rolls);
+        return GraphTraverseDF(g, x+1, visits, dist, rolls, curmin);
+        
+    }else{
+        visits[x] = 1;
+        
+        for (int i = 0; i < g->degrees[x-1]; i++) {
+            
+            int myDist = dist;
+            int myRolls = rolls;
+            
+            for (int j = 0; j < e->d; j++){
+                int flag;
+                IncrementDice(&myDist, &flag);
+                if (flag) RollDice(&myDist, &myRolls);
+            }
+            
+            int *myVisits = (int*)malloc(sizeof(int) * g->nvertices + 1);
+            memcpy(myVisits, visits, sizeof(int) * g->nvertices + 1);
+            retval = GraphTraverseDF(g, e->y, myVisits, myDist, myRolls, curmin);
+            if ( retval != -1 && retval < min) min = retval;
+            
+            e = (e->next) ? (e->next) : NULL;
+            
+            if (min == HUGE_VALUE){
+                min = -1;
+            }
+            
+        }
+
+    }
+    if (min == HUGE_VALUE) min = -1;
+    return min;
+
+}
+
+int GraphSearch(Graph *g, int x, int steps, int rolls){
+    
+    return 0;
 }
 
 #ifdef XCODE_TEST_RUN
@@ -492,8 +502,8 @@ int main()
         sscanf(input+in_bytes_consumed,"%d%n",&N,&in_bytes_now);
         in_bytes_consumed+=in_bytes_now;
 #endif
-        int ladders[101];
-        memset(ladders,0,sizeof(int)*100);
+        
+        Graph *graph = GraphCreate();
         
         for (int n = 0; n < N; n++){
             int start,end;
@@ -507,8 +517,17 @@ int main()
 #endif
             
 #endif
-            ladders[start-1] = end-1;
+            if (start > 0){
+                
+                GraphInsertEdge(graph, start-1, end, 1);
+                
+                if (start < (graph->nvertices)){
+                    GraphInsertEdge(graph, start-1, start+1, 2);
+                }
+            }
         }
+        
+
         
         int M;
 #ifndef XCODE_TEST_RUN
@@ -517,8 +536,6 @@ int main()
         sscanf(input+in_bytes_consumed, "%d%n",&M,&in_bytes_now);
         in_bytes_consumed+=in_bytes_now;
 #endif
-        int snakes[101];
-        memset(snakes, 0, sizeof(int)*100);
         
         for (int m = 0; m < M; m++){
             int start,end;
@@ -532,36 +549,39 @@ int main()
 #endif
             
 #endif
-            snakes[start-1] = end-1;
+            if (start > 0){
+                
+                GraphInsertEdge(graph, start-1, end, 1);
+                
+                if (start < (graph->nvertices)){
+                    GraphInsertEdge(graph, start-1, start+1, 2);
+                }
+            }
         }
         
 
-        int rolls = 0;
-        int steps = 0;
-        Graph *myGraph = GraphCreateWithLaddersAndSnakes(ladders, snakes, 100);
 #ifdef XCODE_TEST_DEBUG
-        GraphPrint(myGraph);
+        GraphPrint(graph);
 #endif
-        int endPos = 100;
-        GraphBFS(myGraph, myGraph->vertices[0], (void*)&endPos, &rolls);
+        int *visits = (int*)(malloc(sizeof(int) * graph->nvertices+1));
+        memset(visits, 0, sizeof(int) * graph->nvertices+1);
+        int min = -1;
+        int rolls = 1;
+        int dist = 1;
+        GraphTraverseDF(graph, 1, visits, dist, rolls, &min);
         
-        
-        
-#ifdef XCODE_TEST_DEBUG
-        GraphPrint(myGraph);
-#endif
         
 #ifndef XCODE_TEST_RUN
-        printf("%d\n",rolls);
+        printf("%d\n",min);
 #else
-        printf("%d\n",rolls);
+        printf("%d\n",min);
         
         if (t){
             out_bytes_now = sprintf(output+out_bytes_consumed,"\n");
             out_bytes_consumed+=out_bytes_now;
         }
         
-        out_bytes_now = sprintf(output+out_bytes_consumed, "%d",rolls);
+        out_bytes_now = sprintf(output+out_bytes_consumed, "%d",min);
         out_bytes_consumed+=out_bytes_now;
         
 #endif
