@@ -9,6 +9,7 @@
 #import <XCTest/XCTest.h>
 #import "TestingIOUtilities.h"
 #import "SnakesAndLadders.h"
+#import "GraphPractice.h"
 
 static NSString *kInputFileFormat   = @"SnakesAndLaddersTestCase%dInput";
 static NSString *kOutputFileFormat  = @"SnakesAndLaddersTestCase%dOutput";
@@ -62,7 +63,7 @@ static NSString *kOutputFileFormat  = @"SnakesAndLaddersTestCase%dOutput";
 }
 
 - (void)testDataStructures{
-    TestStructs();
+    TestGraphPractice();
 }
 
 - (void)testCase0{
@@ -81,9 +82,18 @@ static NSString *kOutputFileFormat  = @"SnakesAndLaddersTestCase%dOutput";
     [self runCaseNum:caseNum];
 }
 
-
 - (void)testCase3{
     int caseNum = 3;
+    [self runCaseNum:caseNum];
+}
+
+- (void)testCase4{
+    int caseNum = 4;
+    [self runCaseNum:caseNum];
+}
+
+- (void)testCase6{
+    int caseNum = 6;
     [self runCaseNum:caseNum];
 }
 
