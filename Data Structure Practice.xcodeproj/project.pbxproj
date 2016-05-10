@@ -18,7 +18,10 @@
 		F203D4131CB451ED0067A092 /* Data_Structure_PracticeTests.m in Sources */ = {isa = PBXBuildFile; fileRef = F203D4121CB451ED0067A092 /* Data_Structure_PracticeTests.m */; };
 		F203D4221CB452AE0067A092 /* MySinglyLinkedLists.m in Sources */ = {isa = PBXBuildFile; fileRef = F203D4211CB452AE0067A092 /* MySinglyLinkedLists.m */; };
 		F203D4241CB453430067A092 /* MySinglyLinkedListTests.m in Sources */ = {isa = PBXBuildFile; fileRef = F203D4231CB453430067A092 /* MySinglyLinkedListTests.m */; };
-		F21D03A61CE12BF2000D2EF9 /* GraphPractice.c in Sources */ = {isa = PBXBuildFile; fileRef = F21D03A41CE12BF2000D2EF9 /* GraphPractice.c */; };
+		F21D03B31CE258F9000D2EF9 /* SelfBalancingTree.c in Sources */ = {isa = PBXBuildFile; fileRef = F21D03B11CE258F9000D2EF9 /* SelfBalancingTree.c */; };
+		F21D03B61CE25AFE000D2EF9 /* SelfBalancingTreeTests.m in Sources */ = {isa = PBXBuildFile; fileRef = F21D03B51CE25AFE000D2EF9 /* SelfBalancingTreeTests.m */; };
+		F21D03B81CE25BBB000D2EF9 /* SelfBalancingTreeTestCase0Input.txt in Resources */ = {isa = PBXBuildFile; fileRef = F21D03B71CE25BBB000D2EF9 /* SelfBalancingTreeTestCase0Input.txt */; };
+		F21D03BA1CE25BD0000D2EF9 /* SelfBalancingTreeTestCase0Output.txt in Resources */ = {isa = PBXBuildFile; fileRef = F21D03B91CE25BD0000D2EF9 /* SelfBalancingTreeTestCase0Output.txt */; };
 		F220C09E1CB561EE00705F52 /* MyStacks.m in Sources */ = {isa = PBXBuildFile; fileRef = F220C09D1CB561EE00705F52 /* MyStacks.m */; };
 		F220C0A11CB5621100705F52 /* MyQueues.m in Sources */ = {isa = PBXBuildFile; fileRef = F220C0A01CB5621100705F52 /* MyQueues.m */; };
 		F220C0A41CB5622500705F52 /* MyChainedHashTables.m in Sources */ = {isa = PBXBuildFile; fileRef = F220C0A31CB5622500705F52 /* MyChainedHashTables.m */; };
@@ -30,8 +33,6 @@
 		F22720A51CBD7F260018F104 /* MyBinarySearchTreeTests.m in Sources */ = {isa = PBXBuildFile; fileRef = F22720A41CBD7F260018F104 /* MyBinarySearchTreeTests.m */; };
 		F24D67501CD02BB400B25E3C /* BearAndSteadyGene.c in Sources */ = {isa = PBXBuildFile; fileRef = F24D674E1CD02BB400B25E3C /* BearAndSteadyGene.c */; };
 		F24D67521CD02DCF00B25E3C /* BearAndSteadyGeneTests.m in Sources */ = {isa = PBXBuildFile; fileRef = F24D67511CD02DCF00B25E3C /* BearAndSteadyGeneTests.m */; };
-		F24D67571CD3F22900B25E3C /* MedianUpdates.c in Sources */ = {isa = PBXBuildFile; fileRef = F24D67551CD3F22900B25E3C /* MedianUpdates.c */; };
-		F24D67591CD3F28600B25E3C /* MedianUpdatesTests.m in Sources */ = {isa = PBXBuildFile; fileRef = F24D67581CD3F28600B25E3C /* MedianUpdatesTests.m */; };
 		F25124C81CC0310D0013D167 /* MyDataStructureUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = F25124C71CC0310D0013D167 /* MyDataStructureUtils.m */; };
 		F25124CB1CC057380013D167 /* PracticeQuestions.m in Sources */ = {isa = PBXBuildFile; fileRef = F25124CA1CC057380013D167 /* PracticeQuestions.m */; };
 		F2574DEA1CDBFE0D00A9054E /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F2574DE81CDBFE0D00A9054E /* CoreFoundation.framework */; };
@@ -88,8 +89,11 @@
 		F203D4201CB452AE0067A092 /* MySinglyLinkedLists.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MySinglyLinkedLists.h; sourceTree = "<group>"; };
 		F203D4211CB452AE0067A092 /* MySinglyLinkedLists.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MySinglyLinkedLists.m; sourceTree = "<group>"; };
 		F203D4231CB453430067A092 /* MySinglyLinkedListTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MySinglyLinkedListTests.m; sourceTree = "<group>"; };
-		F21D03A41CE12BF2000D2EF9 /* GraphPractice.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = GraphPractice.c; sourceTree = "<group>"; };
-		F21D03A51CE12BF2000D2EF9 /* GraphPractice.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GraphPractice.h; sourceTree = "<group>"; };
+		F21D03B11CE258F9000D2EF9 /* SelfBalancingTree.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = SelfBalancingTree.c; sourceTree = "<group>"; };
+		F21D03B21CE258F9000D2EF9 /* SelfBalancingTree.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SelfBalancingTree.h; sourceTree = "<group>"; };
+		F21D03B51CE25AFE000D2EF9 /* SelfBalancingTreeTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SelfBalancingTreeTests.m; sourceTree = "<group>"; };
+		F21D03B71CE25BBB000D2EF9 /* SelfBalancingTreeTestCase0Input.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = SelfBalancingTreeTestCase0Input.txt; sourceTree = "<group>"; };
+		F21D03B91CE25BD0000D2EF9 /* SelfBalancingTreeTestCase0Output.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = SelfBalancingTreeTestCase0Output.txt; sourceTree = "<group>"; };
 		F220C09C1CB561EE00705F52 /* MyStacks.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyStacks.h; sourceTree = "<group>"; };
 		F220C09D1CB561EE00705F52 /* MyStacks.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MyStacks.m; sourceTree = "<group>"; };
 		F220C09F1CB5621100705F52 /* MyQueues.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyQueues.h; sourceTree = "<group>"; };
@@ -109,9 +113,6 @@
 		F24D674E1CD02BB400B25E3C /* BearAndSteadyGene.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = BearAndSteadyGene.c; sourceTree = "<group>"; };
 		F24D674F1CD02BB400B25E3C /* BearAndSteadyGene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BearAndSteadyGene.h; sourceTree = "<group>"; };
 		F24D67511CD02DCF00B25E3C /* BearAndSteadyGeneTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BearAndSteadyGeneTests.m; sourceTree = "<group>"; };
-		F24D67551CD3F22900B25E3C /* MedianUpdates.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = MedianUpdates.c; sourceTree = "<group>"; };
-		F24D67561CD3F22900B25E3C /* MedianUpdates.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MedianUpdates.h; sourceTree = "<group>"; };
-		F24D67581CD3F28600B25E3C /* MedianUpdatesTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MedianUpdatesTests.m; sourceTree = "<group>"; };
 		F25124C61CC0310D0013D167 /* MyDataStructureUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyDataStructureUtils.h; sourceTree = "<group>"; };
 		F25124C71CC0310D0013D167 /* MyDataStructureUtils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MyDataStructureUtils.m; sourceTree = "<group>"; };
 		F25124C91CC034370013D167 /* MyDataStructures.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = MyDataStructures.h; path = "Data Structure PracticeTests/MyDataStructures.h"; sourceTree = SOURCE_ROOT; };
@@ -224,12 +225,10 @@
 				F203D4061CB451ED0067A092 /* LaunchScreen.storyboard */,
 				F203D4091CB451ED0067A092 /* Info.plist */,
 				F203D3F81CB451ED0067A092 /* Supporting Files */,
-				F24D67551CD3F22900B25E3C /* MedianUpdates.c */,
-				F24D67561CD3F22900B25E3C /* MedianUpdates.h */,
 				F2FE7C811CDABFE600C95101 /* SnakesAndLadders.c */,
 				F2FE7C821CDABFE600C95101 /* SnakesAndLadders.h */,
-				F21D03A41CE12BF2000D2EF9 /* GraphPractice.c */,
-				F21D03A51CE12BF2000D2EF9 /* GraphPractice.h */,
+				F21D03B11CE258F9000D2EF9 /* SelfBalancingTree.c */,
+				F21D03B21CE258F9000D2EF9 /* SelfBalancingTree.h */,
 			);
 			path = "Data Structure Practice";
 			sourceTree = "<group>";
@@ -245,6 +244,7 @@
 		F203D4111CB451ED0067A092 /* Data Structure PracticeTests */ = {
 			isa = PBXGroup;
 			children = (
+				F21D03B41CE25AE6000D2EF9 /* SelfBalancingTree */,
 				F203D4121CB451ED0067A092 /* Data_Structure_PracticeTests.m */,
 				F203D4231CB453430067A092 /* MySinglyLinkedListTests.m */,
 				F295E2A51CB5BEEE00A59E86 /* MyChainedHashTableTests.m */,
@@ -256,10 +256,19 @@
 				F25124CA1CC057380013D167 /* PracticeQuestions.m */,
 				F2827FAE1CCAD03100726A38 /* StringPermutationsTests.m */,
 				F24D67511CD02DCF00B25E3C /* BearAndSteadyGeneTests.m */,
-				F24D67581CD3F28600B25E3C /* MedianUpdatesTests.m */,
 				F2ABD9921CDF1700003EFC8A /* SnakesAndLadders */,
 			);
 			path = "Data Structure PracticeTests";
+			sourceTree = "<group>";
+		};
+		F21D03B41CE25AE6000D2EF9 /* SelfBalancingTree */ = {
+			isa = PBXGroup;
+			children = (
+				F21D03B51CE25AFE000D2EF9 /* SelfBalancingTreeTests.m */,
+				F21D03B71CE25BBB000D2EF9 /* SelfBalancingTreeTestCase0Input.txt */,
+				F21D03B91CE25BD0000D2EF9 /* SelfBalancingTreeTestCase0Output.txt */,
+			);
+			name = SelfBalancingTree;
 			sourceTree = "<group>";
 		};
 		F2ABD9921CDF1700003EFC8A /* SnakesAndLadders */ = {
@@ -380,7 +389,9 @@
 				F2574DF21CDC00E300A9054E /* SnakesAndLaddersTestCase1Output.txt in Resources */,
 				F2ABD9A31CDFE937003EFC8A /* SnakesAndLaddersTestCase4Input.txt in Resources */,
 				F2ABD9A51CDFE965003EFC8A /* SnakesAndLaddersTestCase4Output.txt in Resources */,
+				F21D03B81CE25BBB000D2EF9 /* SelfBalancingTreeTestCase0Input.txt in Resources */,
 				F2ABD99A1CDF187F003EFC8A /* SnakesAndLaddersTestCase6Output.txt in Resources */,
+				F21D03BA1CE25BD0000D2EF9 /* SelfBalancingTreeTestCase0Output.txt in Resources */,
 				F2ABD9A71CDFEA3B003EFC8A /* SnakesAndLaddersTestCase5Input.txt in Resources */,
 				F2ABD99C1CDF18AB003EFC8A /* SnakesAndLaddersTestCase3Input.txt in Resources */,
 				F2ABD9961CDF1745003EFC8A /* SnakesAndLaddersTestCase2Output.txt in Resources */,
@@ -406,13 +417,12 @@
 				F2827FAC1CCACF4D00726A38 /* StringPermutations.m in Sources */,
 				F220C0B01CB563A600705F52 /* MyHeaps.m in Sources */,
 				F2FE7C7E1CDAB49000C95101 /* TestCaseIOUtils.c in Sources */,
+				F21D03B31CE258F9000D2EF9 /* SelfBalancingTree.c in Sources */,
 				F2FE7C831CDABFE600C95101 /* SnakesAndLadders.c in Sources */,
-				F24D67571CD3F22900B25E3C /* MedianUpdates.c in Sources */,
 				F220C0A11CB5621100705F52 /* MyQueues.m in Sources */,
 				F203D4221CB452AE0067A092 /* MySinglyLinkedLists.m in Sources */,
 				F203D3FD1CB451ED0067A092 /* AppDelegate.m in Sources */,
 				F220C09E1CB561EE00705F52 /* MyStacks.m in Sources */,
-				F21D03A61CE12BF2000D2EF9 /* GraphPractice.c in Sources */,
 				F220C0A41CB5622500705F52 /* MyChainedHashTables.m in Sources */,
 				F203D3FA1CB451ED0067A092 /* main.m in Sources */,
 				F25124C81CC0310D0013D167 /* MyDataStructureUtils.m in Sources */,
@@ -424,6 +434,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F21D03B61CE25AFE000D2EF9 /* SelfBalancingTreeTests.m in Sources */,
 				F2FE7C7A1CDAB45C00C95101 /* SnakesAndLaddersTests.m in Sources */,
 				F22720A51CBD7F260018F104 /* MyBinarySearchTreeTests.m in Sources */,
 				F2827FAF1CCAD03100726A38 /* StringPermutationsTests.m in Sources */,
@@ -434,7 +445,6 @@
 				F25124CB1CC057380013D167 /* PracticeQuestions.m in Sources */,
 				F201543B1CB8518A00AB9955 /* MyStackTests.m in Sources */,
 				F22720A11CBC4F620018F104 /* MyBinaryTreeTests.m in Sources */,
-				F24D67591CD3F28600B25E3C /* MedianUpdatesTests.m in Sources */,
 				F203D4131CB451ED0067A092 /* Data_Structure_PracticeTests.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

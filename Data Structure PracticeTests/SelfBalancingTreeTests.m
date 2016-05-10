@@ -1,33 +1,23 @@
 //
-//  SnakesAndLaddersTests.m
+//  SelfBalancingTreeTests.m
 //  Data Structure Practice
 //
-//  Created by Travis Henspeter on 5/4/16.
+//  Created by Travis Henspeter on 5/10/16.
 //  Copyright © 2016 birdSound. All rights reserved.
 //
 
 #import <XCTest/XCTest.h>
+#import "SelfBalancingTree.h"
 #import "TestingIOUtilities.h"
-#import "SnakesAndLadders.h"
 
-static NSString *kInputFileFormat   = @"SnakesAndLaddersTestCase%dInput";
-static NSString *kOutputFileFormat  = @"SnakesAndLaddersTestCase%dOutput";
+static NSString *kInputFileFormat   = @"SelfBalancingTreeTestCase%dInput";
+static NSString *kOutputFileFormat  = @"SelfBalancingTreeTestCase%dOutput";
 
-@interface SnakesAndLaddersTests : XCTestCase
+@interface SelfBalancingTreeTests : XCTestCase
 
 @end
 
-@implementation SnakesAndLaddersTests
-
-- (void)setUp {
-    [super setUp];
-    // Put setup code here. This method is called before the invocation of each test method in the class.
-}
-
-- (void)tearDown {
-    // Put teardown code here. This method is called after the invocation of each test method in the class.
-    [super tearDown];
-}
+@implementation SelfBalancingTreeTests
 
 - (NSString *)pathForFileWithFormat:(NSString *)format caseNum:(int)caseNum{
     NSBundle *bundle = [NSBundle bundleForClass:[self class]];
@@ -47,7 +37,10 @@ static NSString *kOutputFileFormat  = @"SnakesAndLaddersTestCase%dOutput";
     NSError *err = nil;
     NSString *path = [self pathForFileWithFormat:kOutputFileFormat caseNum:caseNum];
     size_t size = [TestingIOUtilities getSizeOfFile:path];
-    *outputBuffer = (char *)malloc(size + 1);
+    if (outputBuffer){
+        *outputBuffer = (char *)malloc(size + 1);
+    }
+    
     return [TestingIOUtilities getContentsOfFile:path error:&err];
 }
 
@@ -56,7 +49,7 @@ static NSString *kOutputFileFormat  = @"SnakesAndLaddersTestCase%dOutput";
     const char *input = [self inputForTestCaseNum:caseNum];
     char *output = NULL;
     const char *expected = [self outputForTestCaseNum:caseNum outputBuffer:&output];
-    SnakesAndLaddersRunTestCase(output, input);
+    SelfBalancingTreeRunTestCase(output, input);
     int result = [TestingIOUtilities output:output matchesExpected:(char *)expected];
     XCTAssert(result==1,"\nFAILED CASE %d\nOUTPUT:\n%s\nEXPECTED:\n%s\n",caseNum,output,expected);
 }
@@ -64,31 +57,6 @@ static NSString *kOutputFileFormat  = @"SnakesAndLaddersTestCase%dOutput";
 - (void)testCase0{
     
     int caseNum = 0;
-    [self runCaseNum:caseNum];
-}
-
-- (void)testCase1{
-    int caseNum = 1;
-    [self runCaseNum:caseNum];
-}
-
-- (void)testCase2{
-    int caseNum = 2;
-    [self runCaseNum:caseNum];
-}
-
-- (void)testCase3{
-    int caseNum = 3;
-    [self runCaseNum:caseNum];
-}
-
-- (void)testCase4{
-    int caseNum = 4;
-    [self runCaseNum:caseNum];
-}
-
-- (void)testCase6{
-    int caseNum = 6;
     [self runCaseNum:caseNum];
 }
 

@@ -7,486 +7,367 @@
 //
 
 #include "SnakesAndLadders.h"
+
 #include <stdio.h>
+#include <stdlib.h>
 #include <string.h>
 #include <math.h>
-#include <stdlib.h>
 
-#define EMPTY -1
-
-typedef struct Item_{
-    void *data;
-    struct Item_ *next;
-}Item;
-
-Item * ItemCreate(void *data){
-    Item *item = (Item*)malloc(sizeof(Item));
-    item->data = NULL;
-    item->next = NULL;
-    void **ptr = &item->data;
-    *ptr = data;
-    return item;
-}
-
-
-typedef struct List_{
-    int n;
-    Item *head;
-    Item *tail;
-}List;
-
-
-List * ListCreate(){
-    List *list = (List *)malloc(sizeof(List));
-    list->n = 0;
-    list->head = NULL;
-    list->tail = NULL;
-    return list;
-}
-
-void ListAppendItem(List *l, Item *i){
-    Item **pos;
-    if (l->head == NULL){
-        pos = &l->head;
-        *pos = i;
-        l->n++;
-    }else if (l->tail == NULL){
-        pos = &l->head->next;
-        *pos = i;
-        l->tail = i;
-        l->n++;
-    }else{
-        pos = &l->tail->next;
-        *pos = i;
-        l->tail = i;
-        l->n++;
-    }
-}
-
-void ListAppend(List *l, void *data){
-    Item *item = ItemCreate(data);
-    ListAppendItem(l, item);
-}
-
-int ListRemoveLast(List *l, void **data){
-    
-    if (l->n == 0 || l->head == NULL){
-        if (data) *data = NULL;
-        return EMPTY;
-    }
-    
-    Item *this = l->head;
-    Item **newTail = &l->tail;
-    Item **newHead = &l->head;
-    
-    if (l->tail == NULL){
-        *newHead = NULL;
-        l->n = 0;
-        if (data) *data = this->data;
-        return 0;
-    }
-    
-    Item *that = NULL;
-    
-    while (this->next) {
-        that = this->next;
-        if (that->next == NULL) break;
-        this = that;
-    }
-    
-    if (data) *data = that->data;
-    this->next = NULL;
-    *newTail = this;
-    l->n--;
-    return 0;
-}
-
-int ListRemoveFirst(List *l, void **data){
-    
-    if (l->n == 0 || l->head == NULL){
-        if (data) *data = NULL;
-        return EMPTY;
-    }
-    
-    Item *this = l->head;
-    Item **newHead = &l->head;
-    if (data) {
-        *data = this->data;
-    }
-    
-    if (!this->next){
-        *newHead = NULL;
-        l->n = 0;
-        return 0;
-    }
-    
-    
-    Item *that = this->next;
-    *newHead = that;
-    Item **newTail = &l->tail;
-    
-    if (!that->next){
-        *newTail = NULL;
-        l->n = 1;
-        return 0;
-    }else{
-        Item *next = that->next;
-        *newTail = next;
-        l->n--;
-        return 0;
-    }
-}
-
-int ListFirstData(List *l, void **data){
-    Item *first;
-    if (l->n == 0 || l->head == NULL){
-        if (data) *data = NULL;
-        return EMPTY;
-    }
-    
-    first = l->head;
-    if (data) *data = first->data;
-    return 0;
-}
-
-int ListLastData(List *l, void **data){
-    Item *last;
-    if (l->n == 0){
-        if (data) *data = NULL;
-        return EMPTY;
-    }
-    
-    if (l->tail) last = l->tail;
-    else last = l->head;
-    
-    if (data) *data = last->data;
-    
-    return 0;
-}
-
-#define Stack List
-
-#define StackCreate()       ListCreate()
-#define StackPush(s,d)      ListAppend(s,d)
-#define StackPop(s,d)       ListRemoveLast(s,d)
-#define StackPeek(s,d)      ListLastData(s,d)
-#define StackIsEmpty(s)     (((s)->n == 0) ? 1 : 0)
-
-#define Queue List
-
-#define QueueCreate()       ListCreate()
-#define QueueEnqueue(q,d)   ListAppend(q,d)
-#define QueueDequeue(q,d)   ListRemoveFirst(q,d)
-#define QueuePeek(q,d)      ListFirstData(q,d)
-#define QueueIsEmpty(q)     (((q)->n == 0) ? 1 : 0)
-
-
-void PrintList(List *list){
-    printf("List n = %d\n",list->n);
-    if (list->head == NULL || list->n == 0) return;
-    Item *item = list->head;
-    printf("%d ",(*(int*)item->data));
-    for (int i = 1; i < list->n; i ++) {
-        item = item->next;
-        printf("%d ",(*(int*)item->data));
-    }
-    printf("\n");
-}
-
-#define PrintStack(s)   PrintList(s)
-
-static void TestList(){
-    printf("TEST LIST\n");
-    List *list = ListCreate();
-    int arr[11];
-    printf("TEST LIST APPEND\n");
-    for (int i = 0; i < 10; i ++) {
-        arr[i] = i;
-        ListAppend(list, &arr[i]);
-        PrintList(list);
-    }
-    printf("TEST LIST REMOVE LAST\n");
-    for (int i = 0; i < 5; i++) {
-        ListRemoveLast(list,NULL);
-        PrintList(list);
-    }
-    printf("TEST LIST REMOVE FIRST\n");
-    for (int i = 0; i < 5; i++) {
-        ListRemoveFirst(list,NULL);
-        PrintList(list);
-    }
-}
-
-static void TestStack(){
-    printf("TEST STACK\n");
-    Stack *stack = StackCreate();
-    int arr[11];
-    printf("TEST STACK PUSH\n");
-    for (int i = 0; i < 10; i ++) {
-        arr[i] = i;
-        StackPush(stack, &arr[i]);
-        PrintStack(stack);
-    }
-    printf("TEST STACK POP\n");
-    for (int i = 0; i < 10; i++) {
-        StackPop(stack,NULL);
-        PrintStack(stack);
-    }
-}
-
-void TestStructs(){
-    TestList();
-    TestStack();
-}
-
-typedef struct Vertex_{
-    int pos;
-    int distance;
-    int discovered;
-    int processed;
-    List *adjacent;
-    struct Vertex_ *parent;
-}Vertex;
-
-Vertex* VertexCreate(){
-    
-    Vertex *v = (Vertex *)malloc(sizeof(Vertex));
-    v->pos = 0;
-    v->distance = 0;
-    v->adjacent = ListCreate();
-    v->discovered = 0;
-    v->processed = 0;
-    v->parent = NULL;
-    return v;
-}
-
-#define ItemData(i)   (Vertex*)(i->data)
-
-int VertexCompare(Vertex *a, Vertex *b){
-    return (a->pos)-(b->pos);
-}
 
 #define MAXV 100
+#define ERR -1
+#define MAXINT 100000000
+#define NSIDES 6
 
-typedef struct EdgeNode_{
-    int d;
-    int w;
+#define ALLOCATE(name)      ((name*)(malloc(sizeof(name))))
+#define VertIndex(v)        (((v)->x) - 1)
+#define EdgeIndex(e)        (((e)->x) - 1)
+#define EdgeIsLadder(e)     ((((e)->y - (e)->x) > 1 ) ? 1 : 0)
+#define EdgeIsSnake(e)      ((((e)->x - (e)->y) > 1 ) ? 1 : 0)
+#define ResetDice(e)        ((( EdgeIsLadder(e) || EdgeIsSnake (e) ) == 1) ? 1 : 0)
+
+typedef struct Edge_{
     int x;
     int y;
-    int visits;
-    struct EdgeNode_ *next;
-}EdgeNode;
+    int w;
+    struct Edge_ *next;
+}Edge;
 
-EdgeNode * EdgeNodeCreate(int x, int y){
-    EdgeNode *e = (EdgeNode *)malloc(sizeof(EdgeNode));
-    e->x = x;
-    e->y = y;
-    e->w = y-x;
-    e->visits = 0;
+void InitializeEdge(Edge *e){
+    e->x = 0;
+    e->y = 0;
+    e->w = 0;
     e->next = NULL;
-    e->d = 0;
+}
+
+Edge * NewEdge(){
+    Edge *e = ALLOCATE(Edge);
+    InitializeEdge(e);
     return e;
 }
 
-typedef struct Graph_{
+Edge * CreateNewEdge(int x, int y, int w){
+    Edge *e = NewEdge();
+    e->x = x;
+    e->y = y;
+    e->w = w;
+    return e;
+}
+
+void PrintEdge(Edge *e){
     
-    EdgeNode *edges[MAXV+1];
-    int degrees[MAXV+1];
+    printf("\tEdge %d - %d (w = %d)\n",e->x,e->y,e->w);
+}
+
+typedef struct Vertex_{
+    int x;
+    int discovered;
+    int processed;
+    int parent;
+}Vertex;
+
+
+void InitializeVertex(Vertex *v){
+    v->x = 0;
+    v->discovered = 0;
+    v->processed = 0;
+    v->parent = 0;
+}
+
+Vertex * NewVertex(){
+    Vertex *v = ALLOCATE(Vertex);
+    InitializeVertex(v);
+    return v;
+}
+
+typedef struct VertexQueue_{
+    int n;
+    Vertex *vertices[MAXV+1];
+}VertexQueue;
+
+void InitializeVertexQueue(VertexQueue *vq){
+    vq->n = 0;
+    for (int i = 0; i < MAXV + 1; i ++) vq->vertices[i] = NULL;
+}
+
+VertexQueue * NewVertexQueue(){
+    VertexQueue *vq = ALLOCATE(VertexQueue);
+    InitializeVertexQueue(vq);
+    return vq;
+}
+
+int VertexQueueIsEmpty(VertexQueue *vq){
+    return ((vq->n > 0) ? 0 : 1);
+}
+
+void PrintVertex(Vertex *v){
+    printf("Vertex x = %d discovered = %d processed = %d parent = %d\n",v->x,v->discovered,v->processed,v->parent);
+}
+
+void EnqueueVertex(VertexQueue *vq, Vertex *v){
+    vq->vertices[vq->n] = v;
+    vq->n++;
+}
+
+Vertex *DequeueVertex(VertexQueue *vq){
+    
+    if (vq->n == 0){
+        return NULL;
+    }
+    
+    Vertex *result = vq->vertices[0];
+    for (int i = 1; i < vq->n; i++) vq->vertices[i-1] = vq->vertices[i];
+    vq->n--;
+    return result;
+}
+
+#define VertexStack         VertexQueue
+#define NewVertexStack      NewVertexStack
+
+void PushVertex(VertexStack *vs, Vertex *v){
+    vs->vertices[vs->n] = v;
+    vs->n++;
+}
+
+Vertex * PopVertex(VertexStack *vs){
+    if (vs->n == 0){
+        return NULL;
+    }
+    Vertex *result = vs->vertices[vs->n - 1];
+    vs->n--;
+    return result;
+}
+
+typedef struct Graph_{
     int nvertices;
     int nedges;
     int directed;
-    
+    int degrees[MAXV+1];
+    Vertex *vertices[MAXV+1];
+    Edge *edges[MAXV+1];
 }Graph;
 
 
-int GraphInsertEdge(Graph *g, int x, int y, int d){
+void InitializeGraph(Graph *g){
     
-    if ( x < 1 || x > MAXV || y < 1 || y > MAXV ) return -1;
-    int i = (x-1);
-    EdgeNode *newNode, **pos;
-    newNode = EdgeNodeCreate(x, y);
-    newNode->d = d;
-    if (g->edges[i] == NULL){
-        pos = &g->edges[i];
-    }else{
-        EdgeNode *oldNode = g->edges[i];
-        while (oldNode->next) {
-            oldNode = oldNode->next;
-        }
-        pos = &oldNode->next;
+    g->nvertices = 0;
+    g->nedges = 0;
+    g->directed = 0;
+    
+    for (int i = 0; i < MAXV; i ++) g->degrees[i] = 0;
+    for (int i = 0; i < MAXV; i ++) g->edges[i] = NULL;
+    
+    for (int i = 0; i < MAXV; i ++) {
+        Vertex *v = NewVertex();
+        v->x = (i + 1);
+        Vertex **pos = &g->vertices[i];
+        *pos = v;
+        g->nvertices++;
     }
-    
-    *pos = newNode;
-    
-    g->degrees[i]++;
-    g->nedges++;
-    
-    return 0;
 }
 
-Graph* GraphCreate(){
-    
-    Graph *g = (Graph *)malloc(sizeof(Graph));
-    g->nvertices = MAXV;
-    memset(g->degrees, 0, sizeof(int)*MAXV);
-    for (int i = 0; i < MAXV; i++) g->edges[i] = NULL;
+Graph * NewGraph(int directed){
+    Graph *g = ALLOCATE(Graph);
+    InitializeGraph(g);
+    g->directed = directed;
     return g;
 }
 
-void EdgeNodePrint(EdgeNode *e){
-    printf("\tEdge %d - %d (d = %d, w = %d)\n",e->x,e->y,e->d,e->w);
+void InsertEdge(Graph *g, Edge *e){
+    Edge *existing = ( g->degrees[EdgeIndex(e)] > 0 ) ? g->edges[EdgeIndex(e)] : NULL;
+    
+    if (!existing){
+        g->edges[EdgeIndex(e)] = e;
+    }else{
+        while (existing) {
+            
+            if (existing->next){
+                existing = existing->next;
+            }else{
+                break;
+            }
+        }
+        
+        existing->next = e;
+    }
+    g->degrees[EdgeIndex(e)] += 1;
+    g->nedges++;
 }
 
-void GraphPrint(Graph *g){
-    printf("GRAPH WITH %d VERTICES AND %d EDGES\n",g->nvertices,g->nedges);
-    for (int i = 0; i < g->nvertices; i++) {
+void PrintGraph(Graph *g){
+    
+    printf("\nGRAPH WITH %d VERTICES AND %d EDGES\n",g->nvertices,g->nedges);
+    for (int i = 0; i < g->nvertices; i ++){
+        
+        PrintVertex(g->vertices[i]);
+        
         if (g->degrees[i]){
-            printf("vert %d (deg=%d):\n",i+1,g->degrees[i]);
-            EdgeNode *edge = NULL;
-            for (int j = 0; j < g->degrees[i]; j++){
-                if (!edge){
-                    edge = g->edges[i];
+            Edge *e = g->edges[i];
+            while (e) {
+                PrintEdge(e);
+                if (e->next){
+                    e = e->next;
                 }else{
-                    edge = edge->next;
+                    break;
                 }
-                
-                EdgeNodePrint(edge);
             }
         }
     }
+    
     printf("\n");
 }
 
-int GraphConnectSnakesAndLadders(Graph *g, int x){
-    if (x >= g->nvertices) return 0;
-    int y = x+1;
-    while (y < g->nvertices) {
-        y++;
-        if (g->degrees[y-1] > 0) break;
-    }
-    int d = y-x;
-    GraphInsertEdge(g, x, y, d);
-    GraphInsertEdge(g, y, x, d);
-    x = y + 2;
-    return GraphConnectSnakesAndLadders(g, x);
-}
-
-int RollsForDistance(int distance){
-    float ceiling = ceilf((float)distance/6.0);
-    return ((int)ceiling);
-}
-
-void GraphFindEdgeNode(Graph *g, int x, int *next){
+void InsertSnakesAndLadders(Graph *g, int *ladders, int *snakes){
     
-    int n = x+1;
-    *next = -1;
+    int lastEmpty = 1;
     
-    while (n <= g->nvertices) {
+    for (int x = 1; x < g->nvertices; x ++){
         
-        if (g->degrees[n-1] == 0){
+        if (ladders[x]){
             
-            n++;
+            int y = ladders[x];
+            Edge *ladder = CreateNewEdge(x, y, 0);
+            InsertEdge(g, ladder);
+            Edge *e = CreateNewEdge(lastEmpty, x, x-lastEmpty);
+            InsertEdge(g, e);
+            
+        }else if (snakes[x]){
+            
+            int y = snakes[x];
+            Edge *snake = CreateNewEdge(x, y, 0);
+            InsertEdge(g, snake);
+            Edge *e = CreateNewEdge(lastEmpty, x, x-lastEmpty);
+            InsertEdge(g, e);
             
         }else{
             
-            *next = n;
-            break;
+            if (x > lastEmpty){
+                Edge *e = CreateNewEdge(lastEmpty, x, x-lastEmpty);
+                InsertEdge(g, e);
+            }
+            
+            lastEmpty = x;
         }
     }
     
-    if (n >= g->nvertices){
-        
-        *next = 100;
-        
+    Edge *e = CreateNewEdge(lastEmpty, g->nvertices, g->nvertices-lastEmpty);
+    InsertEdge(g, e);
+}
+
+void InitializeSearch(Graph *g){
+    for (int i = 0; i < g->nvertices; i++) {
+        (g->vertices[i])->discovered = 0;
+        (g->vertices[i])->processed = 0;
+        (g->vertices[i])->parent = 0;
     }
 }
 
-#define HUGE_VALUE 100000000
+void PrintPath(Graph *g, Vertex *v){
+    int len = 0;
+    int bw[MAXV+1];
+    memset(bw,0,sizeof(int)*MAXV+1);
+    bw[len] = v->x;
+    len++;
+    while (v->parent > 0) {
+        Vertex *p = g->vertices[v->parent - 1];
+        bw[len] = p->x;
+        v = p;
+        len++;
+    }
+    printf("\nPRINT PATH:\n");
+    for (int i = 0; i < len; i++) {
+        printf("%d ",bw[i]);
+    }
+    
+    printf("\n");
+}
 
-int GraphTraverseDF(Graph *g, int x, int *visits, int dist, int rolls, int *curmin){
+void Swap(int *a, int *b){
+    int tmp = *a;
+    *a = *b;
+    *b = tmp;
+}
+
+void ReversePath(int *path, int n){
+    int i = 0;
+    int j = n-1;
+    while (i < j) {
+        Swap(&path[i], &path[j]);
+        i++;
+        j--;
+    }
+}
+
+int GetPath(Graph *g, Vertex *v, int *path){
     
-    if (visits[x-1] > 0 || (*curmin != -1 && rolls > *curmin)){
-#ifdef XCODE_TEST_DEBUG
-        printf("-FAIL- @ x = %d deg = %d visits = %d dist = %d rolls = %d\n",x,g->degrees[x-1],visits[x-1],dist,rolls);
-#endif
-        free(visits);
-        return -1;
+    int n = 0;
+    path[n] = v->x;
+    n++;
+    
+    while (v->parent > 0) {
+        Vertex *p = g->vertices[v->parent - 1];
+        path[n] = p->x;
+        v = p;
+        n++;
     }
     
-    if (x == 100){
-        
-        if (dist) rolls++;
-        
-        if (*curmin == -1 || rolls < *curmin){
-            *curmin = rolls;
+    ReversePath(path, n);
+    return n;
+}
+
+void ProcessVertexEarly(Graph *g, Vertex *v){
 #ifdef XCODE_TEST_DEBUG
-            printf("\n\t*SUCCESS* @ x = 100 dist = %d rolls = %d\n\n",dist,rolls);
+    printf("Early Process Vertex %d\n",v->x);
+    PrintVertex(v);
 #endif
-        }
-        
-        free(visits);
-        return rolls;
+}
+
+void ProcessVertexLate(Graph *g, Vertex *v){
+#ifdef XCODE_TEST_DEBUG
+    printf("Late Process Vertex %d\n",v->x);
+    PrintVertex(v);
+    if (v->x == 100){
+        PrintPath(g, v);
     }
-    
-    visits[x-1] += 1;
-#ifdef XCODE_TEST_DEBUG
-    printf("SEARCH @ x = %d deg = %d visits = %d dist = %d rolls = %d\n",x,g->degrees[x-1],visits[x-1],dist,rolls);
 #endif
-    int min = HUGE_VALUE;
+}
+
+void ProcessEdge(Graph *g, Edge *e, Vertex *v){
+#ifdef XCODE_TEST_DEBUG
+    PrintEdge(e);
+#endif
+}
+
+void GraphBFS(Graph *g, int start){
     
-    int retval = -1;
+    VertexQueue *vq;
+    Vertex *v;
+    Edge *e;
+    vq = NewVertexQueue();
+    v = g->vertices[start-1];
+    v->discovered = 1;
+    EnqueueVertex(vq, v);
     
-    if (g->degrees[x-1] == 0){
+    while (VertexQueueIsEmpty(vq) == 0) {
         
-        int next = -1;
-        GraphFindEdgeNode(g, x, &next);
+        v = DequeueVertex(vq);
+        ProcessVertexEarly(g,v);
+        v->processed = 1;
+        e = g->edges[VertIndex(v)];
         
-        if (next != -1){
+        while (e != NULL) {
             
-            int nd = next-x;
-            int d = dist + nd;
-            int r = rolls;
+            int si = e->y - 1;
+            Vertex *s = g->vertices[si];
             
-            while (d >= 6){
-                r++;
-                d = d-6;
+            if (s->processed == 0){
+                ProcessEdge(g,e,v);
             }
             
-            int *v = (int*)malloc(sizeof(int) * g->nvertices+1);
-            memcpy(v, visits, sizeof(int) * g->nvertices+1);
-            retval = GraphTraverseDF(g, next, v, d, r, curmin);
-            
-            if (retval != -1 && retval < min){
-                min = retval;
-            }
-        }
-        
-    }else{
-        
-        EdgeNode *e = g->edges[x-1];
-        
-        while (1) {
-            
-            int d = dist + e->d;
-            int r = rolls;
-            
-            while (d >= 6){
-                r++;
-                d = d-6;
-            }
-            
-            if (e->d == 1 && d > 0){
-                d = 0;
-                r++;
-            }
-            
-            int *v = (int*)malloc(sizeof(int) * g->nvertices+1);
-            memcpy(v, visits, sizeof(int) * g->nvertices+1);
-            int next = e->y;
-            retval = GraphTraverseDF(g, next, v, d,r,curmin);
-            
-            if (retval != -1 && retval < min){
-                min = retval;
+            if (s->discovered == 0){
+                EnqueueVertex(vq, s);
+                s->discovered = 1;
+                s->parent = v->x;
             }
             
             if (e->next){
@@ -495,19 +376,150 @@ int GraphTraverseDF(Graph *g, int x, int *visits, int dist, int rolls, int *curm
                 break;
             }
         }
+        
+        ProcessVertexLate(g,v);
+    }
+}
+
+int DijkstraShortestPathWithDice(Graph *g, int start, int end){
+    
+    int i;
+    Edge *e;
+    int inTree[MAXV+1];
+    int rolls[MAXV+1];
+    int dice[MAXV+1];
+    Vertex *v;
+    Vertex *c;
+    int weight;
+    int mrolls = -1;
+    int mdice = -1;
+    for (i = 1; i <= g->nvertices; i ++){
+        inTree[i] = 0;
+        rolls[i] = MAXINT;
+        dice[i] = 0;
+        (g->vertices[i-1])->discovered = 0;
+        (g->vertices[i-1])->processed = 0;
+        (g->vertices[i-1])->parent = 0;
     }
     
-    if (min == HUGE_VALUE){
-        min = -1;
+    rolls[start] = 1;
+    dice[start] = 0;
+    
+    v = g->vertices[start-1];
+    
+    while (inTree[v->x] == 0) {
+        inTree[v->x] = 1;
+        
+        e = g->edges[VertIndex(v)];
+        
+        while (e) {
+            
+            c = g->vertices[e->y - 1];
+            weight = e->w;
+            
+            int diceVal = dice[v->x];
+            int newVal = diceVal+weight;
+            int addRoll = (newVal>=NSIDES) ? 1 : 0;
+            
+            if (newVal <= NSIDES && rolls[c->x] > rolls[v->x] + addRoll){
+                
+                newVal = ( addRoll || ResetDice(e)) ? 0 : newVal;
+                dice[c->x] = newVal;
+                rolls[c->x] = rolls[v->x] + addRoll;
+                c->parent = v->x;
+                
+            }
+            
+            e = e->next;
+        }
+        
+        v = g->vertices[0];
+        mrolls = MAXINT;
+        
+        for (i = 1; i <= g->nvertices; i++){
+            
+            if ((inTree[i] == 0) && mrolls > rolls[i] && mdice > dice[i]){
+                mrolls = rolls[i];
+                v = g->vertices[i-1];
+            }
+            
+        }
     }
     
-    return min;
+    int path[MAXV+1];
+    memset(path, 0, sizeof(int)*(MAXV+1));
+    v = g->vertices[end-1];
+    int len = GetPath(g, v, path);
+    
+    int retval = rolls[end];
+#ifdef XCODE_TEST_DEBUG
+    printf("Path:\n");
+    for (i = 0; i< len; i++){
+        printf("%d) %d (rolls = %d, dice val = %d)\n",i+1,path[i],rolls[path[i]],dice[path[i]]);
+    }
+    printf("\n");
+#endif
+    
+    if (retval == MAXINT) retval = ERR;
+    
+    return retval;
 }
 
 
-int GraphSearch(Graph *g, int x, int steps, int rolls){
+int DijkstraShortestPath(Graph *g, int start, int end){
     
-    return 0;
+    int i;
+    Edge *e;
+    int inTree[MAXV+1];
+    int distance[MAXV+1];
+    Vertex *v;
+    Vertex *c;
+    int weight;
+    int dist = -1;
+    
+    for (i = 1; i <= g->nvertices; i ++){
+        inTree[i] = 0;
+        distance[i] = MAXINT;
+        (g->vertices[i-1])->discovered = 0;
+        (g->vertices[i-1])->processed = 0;
+        (g->vertices[i-1])->parent = 0;
+    }
+    
+    distance[start] = 0;
+    
+    v = g->vertices[start-1];
+    
+    while (inTree[v->x] == 0) {
+        inTree[v->x] = 1;
+        
+        e = g->edges[VertIndex(v)];
+        
+        while (e) {
+            
+            c = g->vertices[e->y - 1];
+            weight = e->w;
+            
+            if (distance[c->x] > (distance[v->x] + weight)){
+                distance[c->x] = distance[v->x]+ weight;
+                c->parent = v->x;
+            }
+        
+            e = e->next;
+        }
+        
+        v = g->vertices[0];
+        dist = MAXINT;
+        
+        for (i = 1; i <= g->nvertices; i++){
+
+            if ((inTree[i] == 0) && dist > distance[i]){
+                dist = distance[i];
+                v = g->vertices[i-1];
+            }
+        }
+    }
+    
+    return distance[end];
 }
 
 #ifdef XCODE_TEST_RUN
@@ -538,7 +550,8 @@ int main()
         in_bytes_consumed+=in_bytes_now;
 #endif
         
-        Graph *graph = GraphCreate();
+        int ladders[MAXV+2];
+        memset(ladders, 0, sizeof(int)*(MAXV+2));
         
         for (int n = 0; n < N; n++){
             int start,end;
@@ -552,14 +565,9 @@ int main()
 #endif
             
 #endif
-            if (start > 0){
-                
-                GraphInsertEdge(graph, start-1, end, 1);
-                
-                if (start < (graph->nvertices)){
-                    GraphInsertEdge(graph, start-1, start+1, 2);
-                }
-            }
+
+            ladders[start] = end;
+            
         }
         
         
@@ -571,6 +579,8 @@ int main()
         sscanf(input+in_bytes_consumed, "%d%n",&M,&in_bytes_now);
         in_bytes_consumed+=in_bytes_now;
 #endif
+        int snakes[MAXV+2];
+        memset(snakes, 0, sizeof(int)*(MAXV+2));
         
         for (int m = 0; m < M; m++){
             int start,end;
@@ -584,26 +594,19 @@ int main()
 #endif
             
 #endif
-            if (start > 0){
-                
-                GraphInsertEdge(graph, start-1, end, 1);
-                
-                if (start < (graph->nvertices)){
-                    GraphInsertEdge(graph, start-1, start+1, 2);
-                }
-            }
+            snakes[start] = end;
+            
         }
         
         
-        //GraphConnectSnakesAndLadders(graph, 1);
+        Graph *g = NewGraph(1);
+        InsertSnakesAndLadders(g, ladders, snakes);
 #ifdef XCODE_TEST_DEBUG
-        GraphPrint(graph);
+        //PrintGraph(g);
 #endif
-        int *visits = (int*)(malloc(sizeof(int) * graph->nvertices+1));
-        memset(visits, 0, sizeof(int) * graph->nvertices+1);
-        int min = -1;
-        int rolls = GraphTraverseDF(graph, 1, visits, 0, 0, &min);
         
+        
+        int rolls = DijkstraShortestPathWithDice(g,1,100);
         
 #ifndef XCODE_TEST_RUN
         printf("%d\n",rolls);

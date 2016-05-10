@@ -16,7 +16,7 @@
 #ifndef XCODE_TEST_DEBUG
 #define XCODE_TEST_DEBUG
 #endif
-void TestStructs();
+
 int SnakesAndLaddersRunTestCase(char *output, const char *input);
 
 #endif /* SnakesAndLadders_h */
