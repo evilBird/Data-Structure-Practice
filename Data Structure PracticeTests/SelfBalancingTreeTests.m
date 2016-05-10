@@ -54,10 +54,17 @@ static NSString *kOutputFileFormat  = @"SelfBalancingTreeTestCase%dOutput";
     XCTAssert(result==1,"\nFAILED CASE %d\nOUTPUT:\n%s\nEXPECTED:\n%s\n",caseNum,output,expected);
 }
 
-- (void)testCase0{
+- (void)testCase_0{
     
     int caseNum = 0;
     [self runCaseNum:caseNum];
 }
+
+- (void)testCase_1{
+    
+    int caseNum = 1;
+    [self runCaseNum:caseNum];
+}
+
 
 @end

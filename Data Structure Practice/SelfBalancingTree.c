@@ -180,7 +180,7 @@ int PrintResult(node *root, char *buf){
 
 void DoRR(node **n){
     
-    //printf("RR on %d (f = %d)\n",(*n)->val,GetNodeFactor(*n));
+    printf("RR on %d\n",(*n)->val);
     node *newLeft = *n;
     node *newRoot = (*n)->right;
     newLeft->right = newRoot->left;
@@ -190,7 +190,7 @@ void DoRR(node **n){
 
 void DoRL(node **n){
     
-    //printf("RL on %d\n",(*n)->val);
+    printf("RL on %d\n",(*n)->val);
     node **right = &((*n)->right);
     node *newRight = (*right)->left;
     (*right)->left = newRight->right;
@@ -209,7 +209,7 @@ void BalanceR(node **n){
 
 void DoLL(node **n){
     
-    //printf("LL on %d\n",(*n)->val);
+    printf("LL on %d\n",(*n)->val);
     node *newRight = *n;
     node *newRoot = newRight->left;
     newRight->left = newRoot->right;
@@ -220,7 +220,7 @@ void DoLL(node **n){
 
 void DoLR(node **n){
     
-    //printf("LR on %d\n",(*n)->val);
+    printf("LR on %d\n",(*n)->val);
     node **left = &((*n)->left);
     node *newLeft = (*left)->right;
     (*left)->right = newLeft->left;
@@ -295,9 +295,7 @@ int SelfBalancingTreeRunTestCase(char *output, const char *input){
         int val;
         sscanf(input+in_bytes_consumed,"%d%n",&val,&in_bytes_now);
         in_bytes_consumed+=in_bytes_now;
-        node *newNode = NULL;
-        newNode = InsertNode(root, &root,val, &f);
-        if (!root) root = newNode;
+        InsertNode(root, &root,val, &f);
     }
     
     int val;

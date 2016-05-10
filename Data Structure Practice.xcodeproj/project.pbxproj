@@ -22,6 +22,8 @@
 		F21D03B61CE25AFE000D2EF9 /* SelfBalancingTreeTests.m in Sources */ = {isa = PBXBuildFile; fileRef = F21D03B51CE25AFE000D2EF9 /* SelfBalancingTreeTests.m */; };
 		F21D03B81CE25BBB000D2EF9 /* SelfBalancingTreeTestCase0Input.txt in Resources */ = {isa = PBXBuildFile; fileRef = F21D03B71CE25BBB000D2EF9 /* SelfBalancingTreeTestCase0Input.txt */; };
 		F21D03BA1CE25BD0000D2EF9 /* SelfBalancingTreeTestCase0Output.txt in Resources */ = {isa = PBXBuildFile; fileRef = F21D03B91CE25BD0000D2EF9 /* SelfBalancingTreeTestCase0Output.txt */; };
+		F21D03BC1CE26B79000D2EF9 /* SelfBalancingTreeTestCase1Input.txt in Resources */ = {isa = PBXBuildFile; fileRef = F21D03BB1CE26B79000D2EF9 /* SelfBalancingTreeTestCase1Input.txt */; };
+		F21D03BE1CE26B92000D2EF9 /* SelfBalancingTreeTestCase1Output.txt in Resources */ = {isa = PBXBuildFile; fileRef = F21D03BD1CE26B92000D2EF9 /* SelfBalancingTreeTestCase1Output.txt */; };
 		F220C09E1CB561EE00705F52 /* MyStacks.m in Sources */ = {isa = PBXBuildFile; fileRef = F220C09D1CB561EE00705F52 /* MyStacks.m */; };
 		F220C0A11CB5621100705F52 /* MyQueues.m in Sources */ = {isa = PBXBuildFile; fileRef = F220C0A01CB5621100705F52 /* MyQueues.m */; };
 		F220C0A41CB5622500705F52 /* MyChainedHashTables.m in Sources */ = {isa = PBXBuildFile; fileRef = F220C0A31CB5622500705F52 /* MyChainedHashTables.m */; };
@@ -94,6 +96,8 @@
 		F21D03B51CE25AFE000D2EF9 /* SelfBalancingTreeTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SelfBalancingTreeTests.m; sourceTree = "<group>"; };
 		F21D03B71CE25BBB000D2EF9 /* SelfBalancingTreeTestCase0Input.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = SelfBalancingTreeTestCase0Input.txt; sourceTree = "<group>"; };
 		F21D03B91CE25BD0000D2EF9 /* SelfBalancingTreeTestCase0Output.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = SelfBalancingTreeTestCase0Output.txt; sourceTree = "<group>"; };
+		F21D03BB1CE26B79000D2EF9 /* SelfBalancingTreeTestCase1Input.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = SelfBalancingTreeTestCase1Input.txt; sourceTree = "<group>"; };
+		F21D03BD1CE26B92000D2EF9 /* SelfBalancingTreeTestCase1Output.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = SelfBalancingTreeTestCase1Output.txt; sourceTree = "<group>"; };
 		F220C09C1CB561EE00705F52 /* MyStacks.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyStacks.h; sourceTree = "<group>"; };
 		F220C09D1CB561EE00705F52 /* MyStacks.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MyStacks.m; sourceTree = "<group>"; };
 		F220C09F1CB5621100705F52 /* MyQueues.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyQueues.h; sourceTree = "<group>"; };
@@ -267,6 +271,8 @@
 				F21D03B51CE25AFE000D2EF9 /* SelfBalancingTreeTests.m */,
 				F21D03B71CE25BBB000D2EF9 /* SelfBalancingTreeTestCase0Input.txt */,
 				F21D03B91CE25BD0000D2EF9 /* SelfBalancingTreeTestCase0Output.txt */,
+				F21D03BB1CE26B79000D2EF9 /* SelfBalancingTreeTestCase1Input.txt */,
+				F21D03BD1CE26B92000D2EF9 /* SelfBalancingTreeTestCase1Output.txt */,
 			);
 			name = SelfBalancingTree;
 			sourceTree = "<group>";
@@ -392,11 +398,13 @@
 				F21D03B81CE25BBB000D2EF9 /* SelfBalancingTreeTestCase0Input.txt in Resources */,
 				F2ABD99A1CDF187F003EFC8A /* SnakesAndLaddersTestCase6Output.txt in Resources */,
 				F21D03BA1CE25BD0000D2EF9 /* SelfBalancingTreeTestCase0Output.txt in Resources */,
+				F21D03BC1CE26B79000D2EF9 /* SelfBalancingTreeTestCase1Input.txt in Resources */,
 				F2ABD9A71CDFEA3B003EFC8A /* SnakesAndLaddersTestCase5Input.txt in Resources */,
 				F2ABD99C1CDF18AB003EFC8A /* SnakesAndLaddersTestCase3Input.txt in Resources */,
 				F2ABD9961CDF1745003EFC8A /* SnakesAndLaddersTestCase2Output.txt in Resources */,
 				F2ABD9A91CDFEA66003EFC8A /* SnakesAndLaddersTestCase5Output.txt in Resources */,
 				F2ABD9981CDF185A003EFC8A /* SnakesAndLaddersTestCase6Input.txt in Resources */,
+				F21D03BE1CE26B92000D2EF9 /* SelfBalancingTreeTestCase1Output.txt in Resources */,
 				F2ABD9941CDF172B003EFC8A /* SnakesAndLaddersTestCase2Input.txt in Resources */,
 				F2FE7C801CDAB87000C95101 /* SnakesAndLaddersTestCase0Input.txt in Resources */,
 			);

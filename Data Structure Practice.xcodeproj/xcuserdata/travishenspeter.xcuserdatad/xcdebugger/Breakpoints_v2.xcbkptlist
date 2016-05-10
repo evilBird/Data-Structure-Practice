@@ -888,22 +888,6 @@
             shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "Data Structure PracticeTests/SelfBalancingTreeTests.m"
-            timestampString = "484598217.355056"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "56"
-            endingLineNumber = "56"
-            landmarkName = "-testCase0"
-            landmarkType = "5">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
             filePath = "Data Structure Practice/SelfBalancingTree.c"
             timestampString = "484600571.167747"
             startingColumnNumber = "9223372036854775807"
@@ -991,6 +975,22 @@
             startingLineNumber = "177"
             endingLineNumber = "177"
             landmarkName = "PrintResult()"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Data Structure Practice/SelfBalancingTree.c"
+            timestampString = "484602735.655343"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "298"
+            endingLineNumber = "298"
+            landmarkName = "SelfBalancingTreeRunTestCase()"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
