@@ -52,6 +52,7 @@ static NSString *kOutputFileFormat  = @"SelfBalancingTreeTestCase%dOutput";
     SelfBalancingTreeRunTestCase(output, input);
     int result = [TestingIOUtilities output:output matchesExpected:(char *)expected];
     XCTAssert(result==1,"\nFAILED CASE %d\nOUTPUT:\n%s\nEXPECTED:\n%s\n",caseNum,output,expected);
+    printf("\nCASE %d RESULT:\n%s\n\n",caseNum,output);
 }
 
 - (void)testCase_0{
@@ -66,5 +67,19 @@ static NSString *kOutputFileFormat  = @"SelfBalancingTreeTestCase%dOutput";
     [self runCaseNum:caseNum];
 }
 
+- (void)testCase_2{
+    int caseNum = 2;
+    [self runCaseNum:caseNum];
+}
+
+- (void)testCase_4{
+    int caseNum = 4;
+    [self runCaseNum:caseNum];
+}
+
+- (void)testCase_5{
+    int caseNum = 5;
+    [self runCaseNum:caseNum];
+}
 
 @end

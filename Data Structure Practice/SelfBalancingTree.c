@@ -77,24 +77,37 @@ int GetNodeFactor(node *n){
     return factor;
 }
 
-void PrintNode(node *n){
+void PrintNodeIO(node *n){
     
     if (n->left){
-        PrintNode(n->left);
+        PrintNodeIO(n->left);
     }
     
     printf("%d(HT=%d, BF=%d) ",n->val, n->ht,GetNodeFactor(n));
     
     if (n->right) {
-        PrintNode(n->right);
+        PrintNodeIO(n->right);
+    }
+}
+
+void PrintNodePO(node *n){
+    
+    printf("%d(HT=%d, BF=%d) ",n->val, n->ht,GetNodeFactor(n));
+    
+    if (n->left){
+        PrintNodePO(n->left);
+    }
+    
+    if (n->right) {
+        PrintNodePO(n->right);
     }
 }
 
 void PrintTree(node *root){
     
-    PrintNode(root);
+    PrintNodeIO(root);
+    PrintNodePO(root);
     printf("\n");
-    
 }
 
 int PrintNodeResultIO(node *n, char *buf){
@@ -200,7 +213,7 @@ void DoRL(node **n){
 
 void BalanceR(node **n){
     
-    if (GetNodeFactor((*n)->left) == -1){
+    if (GetNodeFactor((*n)->right) == 1){
         DoRL(n);
     }
     
@@ -230,7 +243,7 @@ void DoLR(node **n){
 
 void BalanceL(node **n){
     
-    if (GetNodeFactor((*n)->left) == 1){
+    if (GetNodeFactor((*n)->left) == -1){
         DoLR(n);
     }
     
@@ -284,7 +297,6 @@ int SelfBalancingTreeRunTestCase(char *output, const char *input){
 
     int N;
     int in_bytes_consumed = 0, in_bytes_now = 0;
-    int out_bytes_consumed = 0, out_bytes_now = 0;
     sscanf(input, "%d%n",&N,&in_bytes_now);
     in_bytes_consumed+=in_bytes_now;
     
@@ -303,16 +315,20 @@ int SelfBalancingTreeRunTestCase(char *output, const char *input){
     in_bytes_consumed+=in_bytes_now;
     
 #else
+    
 node * insert(node * root,int val){
+    
 #endif
     
     int flag = 0;
     InsertNode(root,&root,val,&flag);
+#ifdef XCODE_TEST_DEBUG
     PrintTree(root);
-    PrintResult(root,output);
+#endif
 #ifdef XCODE_TEST_RUN
-    
+    PrintResult(root,output);
     return 0;
+    
 #else
     
     return root;
@@ -320,112 +336,3 @@ node * insert(node * root,int val){
     
     
 }
-
-/*
-
-#ifdef XCODE_TEST_RUN
-int SelfBalancingTreeRunTestCase(char *output, const char *input)
-#else
-int main()
-#endif
-{
-    int T;
-#ifndef XCODE_TEST_RUN
-    scanf("%d",&T);
-#else
-    int in_bytes_consumed = 0, in_bytes_now = 0;
-    int out_bytes_consumed = 0, out_bytes_now = 0;
-    sscanf(input, "%d%n",&T,&in_bytes_now);
-    in_bytes_consumed+=in_bytes_now;
-    
-#endif
-    
-    for (int t = 0; t < T; t++){
-        int N;
-        
-        
-#ifndef XCODE_TEST_RUN
-        scanf("%d",&N);
-#else
-        sscanf(input+in_bytes_consumed,"%d%n",&N,&in_bytes_now);
-        in_bytes_consumed+=in_bytes_now;
-#endif
-        
-        int ladders[MAXV+2];
-        memset(ladders, 0, sizeof(int)*(MAXV+2));
-        
-        for (int n = 0; n < N; n++){
-            int start,end;
-#ifndef XCODE_TEST_RUN
-            scanf("%d %d",&start,&end);
-#else
-            sscanf(input+in_bytes_consumed,"%d %d%n",&start,&end,&in_bytes_now);
-            in_bytes_consumed+=in_bytes_now;
-#ifdef XCODE_TEST_DEBUG
-            printf("LADDER %d - %d\n",start,end);
-#endif
-            
-#endif
-            
-            ladders[start] = end;
-            
-        }
-        
-        
-        
-        int M;
-#ifndef XCODE_TEST_RUN
-        scanf("%d",&M);
-#else
-        sscanf(input+in_bytes_consumed, "%d%n",&M,&in_bytes_now);
-        in_bytes_consumed+=in_bytes_now;
-#endif
-        int snakes[MAXV+2];
-        memset(snakes, 0, sizeof(int)*(MAXV+2));
-        
-        for (int m = 0; m < M; m++){
-            int start,end;
-#ifndef XCODE_TEST_RUN
-            scanf("%d %d",&start,&end);
-#else
-            sscanf(input+in_bytes_consumed,"%d %d%n",&start,&end,&in_bytes_now);
-            in_bytes_consumed+=in_bytes_now;
-#ifdef XCODE_TEST_DEBUG
-            printf("SNAKE %d - %d\n",start,end);
-#endif
-            
-#endif
-            snakes[start] = end;
-            
-        }
-        
-        
-        Graph *g = NewGraph(1);
-        InsertSnakesAndLadders(g, ladders, snakes);
-#ifdef XCODE_TEST_DEBUG
-        //PrintGraph(g);
-#endif
-        
-        
-        int rolls = DijkstraShortestPathWithDice(g,1,100);
-        
-#ifndef XCODE_TEST_RUN
-        printf("%d\n",rolls);
-#else
-        printf("%d\n",rolls);
-        
-        if (t){
-            out_bytes_now = sprintf(output+out_bytes_consumed,"\n");
-            out_bytes_consumed+=out_bytes_now;
-        }
-        
-        out_bytes_now = sprintf(output+out_bytes_consumed, "%d",rolls);
-        out_bytes_consumed+=out_bytes_now;
-        
-#endif
-        
-    }
-    return 0;
-}
-
-*/
